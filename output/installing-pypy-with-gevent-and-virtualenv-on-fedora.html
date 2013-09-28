@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Installing PyPy with Gevent and virtualenv on Fedora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jelle Smet">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="http://smetj.net ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">http://smetj.net </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                          <li class="divider-vertical"></li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+						<i class="icon-folder-open icon-large"></i>misc
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+						<i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+						<i class="icon-folder-open icon-large"></i>monitoring
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+						<i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+						<i class="icon-folder-open icon-large"></i>Uncategorized
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="file:///home/smetj/projects/github/smetj.net/output/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Installing PyPy with Gevent and virtualenv on Fedora">
+                                        Installing PyPy with Gevent and virtualenv on Fedora
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2013-06-05T01:26:00">
+        <i class="icon-calendar"></i>Wed 05 June 2013
+</abbr>
+<span class="label">By</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/author/smetj.html"><i class="icon-user"></i>smetj</a>
+<span class="label">Category</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html"><i class="icon-folder-open"></i>Uncategorized</a>.
+
+
+</footer><!-- /.post-info -->                </div>
+                <p>PyPy has been on my radar for a while but I have never really brought
+myself to the point of actually trying it. &nbsp;Recently, a notification
+caught to my attention stating PyPy 2.0.2 was released and had support
+to run Gevent. &nbsp;Good news! I was looking at speed improvements for
+my&nbsp;<a class="reference external" href="https://github.com/smetj/wishbone/tree/0.4">Wishbone library</a> and decided to spend some effort into getting
+PyPy with Gevent up and running. &nbsp;The information available explaining
+how to setup Gevent in PyPy is rather sparse which might be a bit time
+consuming when you have to figure out the bits and pieces. &nbsp;After some
+tinkering I got PyPy with Gevent up and running within virtualenv on a
+Fedora host. &nbsp;Here are my notes, It might be useful for you to and save
+some previous time:</p>
+<p>Before you proceed make sure you have read the
+&quot;<a class="reference external" href="http://pypy.org/download.html#building-from-source">building-from-source</a>&quot; instructions from the PyPy site.</p>
+<div class="section" id="compiling">
+<h2>Compiling</h2>
+<p>PyPy has some binaries available but they can only be used on Ubuntu so
+we'll have to download the source and compile from scratch.</p>
+<p>Start by <a class="reference external" href="http://pypy.org/download.html">downloading the source</a> and unpack the tarball.</p>
+<pre class="literal-block">
+$ tar -xvjf pypy-2.0.2-src.tar.bz2
+</pre>
+<p>Before starting to compile make sure we have all required libraries
+installed:</p>
+<pre class="literal-block">
+$ yum install openssl-devel libffi-devel ncurses-devel expat-devel bzip2-devel
+</pre>
+<p>Move into our unpacked directory and start the compilation. &nbsp;In the
+below examples we use the Python version which comes with your os to run
+the compilation process.</p>
+<pre class="literal-block">
+$ cd pypy-2.0.2-src/pypy/goal
+$ python ../../rpython/bin/rpython --opt=jit targetpypystandalone.py
+</pre>
+<p>The compilation process is fairly lengthy. &nbsp;It took +- 90 minutes(!) on
+my laptop for the process to finish.</p>
+</div>
+<div class="section" id="prepare-the-installation">
+<h2>Prepare the installation</h2>
+<p>When the compilation has finished we should have a file called
+<em>pypy-c</em> in the current directory.</p>
+<p>Best is to move the complete install to the /opt/ directory and
+rename the directory appropriately.</p>
+<pre class="literal-block">
+$ mv pypy-2.0.2-src /opt/pypy-2.0.2
+</pre>
+<p>Now let's use virtualenv to create an isolated instance of PyPy, keeping
+your freshly compiled one clean:</p>
+<pre class="literal-block">
+$ virtualenv -p /opt/pypy-2.0.2/pypy/goal/pypy-c ~/pypy-2.0.2
+$ . ~/pypy-2.0.2/bin/activate
+</pre>
+</div>
+<div class="section" id="gevent">
+<h2>Gevent</h2>
+<p>First make sure you have following library installed:</p>
+<pre class="literal-block">
+$ yum install libev-devel
+</pre>
+<p>Install the <a class="reference external" href="https://pypi.python.org/pypi/cffi">cffi</a> module:</p>
+<pre class="literal-block">
+(pypy-2.0.2)$ pip install cffi
+</pre>
+<p>Install a <a class="reference external" href="https://github.com/schmir/gevent">version of Gevent</a> which has been modified to run on PyPy.
+&nbsp;Make sure we install Gevent inside our virtualenv:</p>
+<pre class="literal-block">
+$ git clone https://github.com/schmir/gevent.git
+$ cd gevent
+$ git checkout pypy-hacks
+$ . ~/pypy-2.0.2/bin/activate
+(pypy-2.0.2)$ pypy setup.py install
+</pre>
+<p>Now we need one last modification which implements gevent.core as cffi
+module:</p>
+<pre class="literal-block">
+$ git clone https://github.com/gevent-on-pypy/pypycore.git
+$ cd pypycore
+$ . ~/pypy-2.0.2/bin/activate
+(pypy-2.0.2)$ CFLAGS=-O2 pip install -e .
+</pre>
+<p>If setup.py complains it can not locate <em>ev.h</em> it's possible the library
+search path isn't complete. &nbsp;In that case locate the location of the
+file and add that directory to pypycore.py (starts at line 207) using
+the <em>include_dirs</em> variable:</p>
+<pre class="literal-block">
+libev = C = ffi.verify(&quot;&quot;&quot;   // passed to the real C compiler
+#include
+
+void gevent_noop(struct ev_loop *_loop, void *watcher, int revents) { }
+&quot;&quot;&quot;, libraries=[&quot;ev&quot;], include_dirs=[&quot;/usr/include/libev&quot;])
+</pre>
+</div>
+<div class="section" id="test">
+<h2>Test</h2>
+<p>Before starting&nbsp;<em>PyPy</em> we have to make sure gevent used the right
+gevent.core:*
+*</p>
+<pre class="literal-block">
+$ export GEVENT_LOOP=pypycore.loop
+</pre>
+<p>Now start PyPy and execute some gevent code:</p>
+<pre class="literal-block">
+$ . ~/pypy-2.0.2/bin/activate
+(pypy-2.0.2)$ pypy
+Python 2.7.3 (5acfe049a5b0cd0de158f62553a98f5ef364fd29, Jun 01 2013, 08:37:22)
+[PyPy 2.0.2 with GCC 4.7.2 20121109 (Red Hat 4.7.2-8)] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+And now for something completely different: ``PyPy 1.3 released (windows
+binaries included)''
+&gt;&gt;&gt;&gt; import gevent
+&gt;&gt;&gt;&gt; for _ in xrange(100):
+....     gevent.spawn(gevent.sleep, 1)
+</pre>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>As you can see setting up PyPy with Gevent requires a bit of work.  Once setup
+into a virtualenv it's really easy to use, experiment and rebuild.</p>
+<p><em>Have a lot of fun running Gevent on PyPy!</em></p>
+</div>
+
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+        </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
+    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+    <i class="icon-folder-open icon-large"></i>misc
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+    <i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+    <i class="icon-folder-open icon-large"></i>monitoring
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+    <i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+    <i class="icon-folder-open icon-large"></i>Uncategorized
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/release.html">
+        <i class="icon-tag icon-large"></i>release
+    </a>
+</li>
+<li class="tag-1">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-0">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringsucks.html">
+        <i class="icon-tag icon-large"></i>monitoringsucks
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>

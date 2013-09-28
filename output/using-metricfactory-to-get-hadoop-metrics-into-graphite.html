@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Using MetricFactory to get Hadoop metrics into Graphite.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jelle Smet">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="http://smetj.net ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">http://smetj.net </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                          <li class="divider-vertical"></li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+						<i class="icon-folder-open icon-large"></i>misc
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+						<i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+						<i class="icon-folder-open icon-large"></i>monitoring
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+						<i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+						<i class="icon-folder-open icon-large"></i>Uncategorized
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="file:///home/smetj/projects/github/smetj.net/output/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Using MetricFactory to get Hadoop metrics into Graphite.">
+                                        Using MetricFactory to get Hadoop metrics into Graphite.
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2013-01-10T00:40:00">
+        <i class="icon-calendar"></i>Thu 10 January 2013
+</abbr>
+<span class="label">By</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/author/smetj.html"><i class="icon-user"></i>smetj</a>
+<span class="label">Category</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html"><i class="icon-folder-open"></i>monitoring</a>.
+
+
+</footer><!-- /.post-info -->                </div>
+                <p>Without metrics we're flying blind and that's very much the case with
+&nbsp;<a class="reference external" href="http://hadoop.apache.org/">Hadoop</a>. &nbsp;Hadoop is a well known framework to build reliable,
+scalable&nbsp;and distributed computing clusters. &nbsp;The Hadoop framework &nbsp;is a
+complex environment which &quot;out of the box&quot; hardly offers any metrics
+oversight on how the different components are performing.</p>
+<p><a class="reference external" href="http://graphite.wikidot.com/">Graphite</a>&nbsp;is king of the hill when it comes to graphing metrics with
+open source. &nbsp;Hadoop doesn't support Graphite's data format and way to
+submit metrics, however it does natively support
+the&nbsp;<a class="reference external" href="http://ganglia.sourceforge.net/">Ganglia</a>&nbsp;graphing framework. &nbsp;That is something we are going to
+use to our advantage.</p>
+<p><a class="reference external" href="https://github.com/smetj/metricfactory">MetricFactory</a>&nbsp;is a modular tool which allows you to build servers
+which can do &quot;stuff&quot; with metrics. &nbsp;In this case &quot;stuff&quot; means accepting
+Ganglia metrics, convert and submit them to the Graphite framework.</p>
+<p>The information this blog post is just another way of doing things which
+might suit your needs better than any other available options.</p>
+<div class="section" id="hadoop-metrics">
+<h2>Hadoop metrics</h2>
+<p>As we already mentioned Hadoop can generate Ganglia formatted metrics.
+&nbsp;Hadoop metrics are controlled by
+/etc/hadoop/conf/hadoop-metrics.properties</p>
+<p>You should have at least following entries:</p>
+<pre class="literal-block">
+dfs.class=org.apache.hadoop.metrics.ganglia.GangliaContext31
+dfs.period=10
+dfs.servers=metricfactory-001
+</pre>
+<pre class="literal-block">
+mapred.class=org.apache.hadoop.metrics.ganglia.GangliaContext31
+mapred.period=10
+mapred.servers=metricfactory-001
+</pre>
+<pre class="literal-block">
+jvm.class=org.apache.hadoop.metrics.ganglia.GangliaContext31
+jvm.period=10
+jvm.servers=metricfactory-001
+</pre>
+<pre class="literal-block">
+rpc.class=org.apache.hadoop.metrics.ganglia.GangliaContext31
+rpc.period=10
+rpc.servers=metricfactory-001
+</pre>
+<p>The rpc.period defines the interval to submit metrics. &nbsp;In this case 10
+seconds.</p>
+</div>
+<div class="section" id="graphite">
+<h2>Graphite</h2>
+<p>The Graphite instance does nothing particular. &nbsp;You can consult the
+graphs by visiting following URL:
+<a class="reference external" href="http://">http://</a><a class="reference external" href="http://graphite-001/dashboard/">http://graphite-001/dashboard/</a></p>
+<p><a class="reference external" href="http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/screenshot-from-2013-01-07-223750/"><img alt="Screenshot from 2013-01-07 22:37:50" src="http://smetj.net/wp-content/uploads/2013/01/Screenshot-from-2013-01-07-223750-300x150.png" /></a></p>
+</div>
+<div class="section" id="metricfactory">
+<h2>MetricFactory</h2>
+<p>MetricFactory's setup is controlled through so called <a class="reference external" href="https://github.com/smetj/experiments/tree/master/metricfactory">bootstrap
+files</a>. &nbsp;These files contain&nbsp;the information on which modules need to
+be loaded, how they are initiated and how &nbsp;they are connected to each
+other.</p>
+<p>For this scenario we need to have at least:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/iomodules/udpserver.py">UDP input</a> (The Ganglia metrics come in over UDP).</li>
+<li><a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/decoders/decodeganglia.py">Ganglia decoder</a>&nbsp;(Deserialize the XDR format into a generic
+format.)</li>
+<li><a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/encoders/encodegraphite.py">Graphite encoder</a> (Convert the generic format into a Graphite
+format.)</li>
+<li><a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/iomodules/tcpclient.py">A TCP client</a> (Write the metrics into Graphite)</li>
+</ul>
+<div class="section" id="a-small-test">
+<h3>A small test</h3>
+<p>First let's make a small test using <a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite2stdout.json">this</a> bootstrapfile. &nbsp;Instead of
+writing the converted data to Graphite, we're going to print it to
+STDOUT. &nbsp;Not very useful, although this way we can verify clearly
+whether we have data coming in and whether the output format is as we
+expect.</p>
+<p>We can start &nbsp;MetricFactory with the debug option so it does not detach
+into the background. &nbsp;CTRL-C stops the process again:</p>
+<pre class="literal-block">
+[vagrant&#64;metricfactory-001 ~]$ metricfactory debug --config /home/vagrant/experiments/metricfactory/ganglia2graphite/ganglia2graphite2stdout.json
+2013-01-07 22:38:06,150 INFO root: Starting MetricFactory in foreground.
+2013-01-07 22:38:06,156 INFO root: Instance #0 started.
+2013-01-07 22:38:06,158 INFO root: Started with pids: 3702, 3703
+2013-01-07 22:38:06,165 INFO Intance #0:buffer: Initiated.
+2013-01-07 22:38:06,168 INFO Intance #0:udpserver: started and listening on port 8649
+2013-01-07 22:38:06,170 INFO Intance #0:ganglia: Initiated.
+2013-01-07 22:38:06,171 INFO Intance #0:graphite: Initiated.
+2013-01-07 22:38:06,172 INFO Intance #0:stdout: Initiated.
+2013-01-07 22:38:06,174 INFO Intance #0:buffer: Started.
+2013-01-07 22:38:06,174 INFO Intance #0:stdout: Started.
+2013-01-07 22:38:06,175 INFO Intance #0:ganglia: Started.
+2013-01-07 22:38:06,175 INFO Intance #0:graphite: Started.
+0 - systems.hadoop-001.jvm.JobTracker.metrics.gcCount 159 1357598286.52
+1 - systems.hadoop-001.jvm.JobTracker.metrics.gcTimeMillis 481 1357598286.52
+2 - systems.hadoop-001.jvm.JobTracker.metrics.logError 0 1357598286.52
+3 - systems.hadoop-001.jvm.JobTracker.metrics.logFatal 0 1357598286.52
+4 - systems.hadoop-001.jvm.JobTracker.metrics.logInfo 57 1357598286.52
+5 - systems.hadoop-001.jvm.JobTracker.metrics.logWarn 1 1357598286.52
+6 - systems.hadoop-001.jvm.JobTracker.metrics.maxMemoryM 3866.6875 1357598286.52
+7 - systems.hadoop-001.jvm.JobTracker.metrics.memHeapCommittedM 15.125 1357598286.52
+8 - systems.hadoop-001.jvm.JobTracker.metrics.memHeapUsedM 7.0045853 1357598286.52
+9 - systems.hadoop-001.jvm.JobTracker.metrics.memNonHeapCommittedM 23.1875 1357598286.52
+10 - systems.hadoop-001.jvm.JobTracker.metrics.memNonHeapUsedM 19.089851 1357598286.52
+11 - systems.hadoop-001.jvm.JobTracker.metrics.threadsBlocked 0 1357598286.52
+12 - systems.hadoop-001.jvm.JobTracker.metrics.threadsNew 0 1357598286.52
+... snip ...
+</pre>
+</div>
+<div class="section" id="a-standalone-instance">
+<h3>A standalone instance</h3>
+<p>We can now start to write the metrics into Graphite. &nbsp;For this we
+require&nbsp;<a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite.json">a bootstrap file</a> which &nbsp;actually writes the data into
+Graphite:</p>
+<pre class="literal-block">
+[vagrant&#64;metricfactory-001 ~]$ metricfactory debug --config /home/vagrant/experiments/metricfactory/ganglia2graphite/ganglia2graphite.json
+</pre>
+</div>
+<div class="section" id="multiple-instances">
+<h3>Multiple instances</h3>
+<p>MetricFactory is build using the Wishbone library, which on its turn
+uses Gevent with green threads on top of a libevent loop. &nbsp;Something to
+keep in mind when working with greenthreads on a libevent loop is that
+they are great to deal with IO bound processing but not with CPU bound
+processing. &nbsp;Because of that (cutting corners here) our whole setup runs
+inside 1 process which doesn't take advantage of a multiple CPU
+architecture. &nbsp;This can become problematic because every time we're
+doing a CPU intensive task, the libevent loop stops, something we want
+to avoid as much as possible.</p>
+<p>A WishBone based setup can be started with the --instances parameter,
+which basically starts a number of identical processes thus taking
+advantage of a multiple CPU architecture. In our case however we can not
+take advantage of this since we require an UDP listener in our setup
+hence we can't have multiple instances bind to that port at the same
+time. &nbsp;So let's get creative and&nbsp;split the setup into 2 parts:</p>
+<div class="section" id="a-decoder-with-multiple-instances">
+<h4>A decoder with multiple instances</h4>
+<p>This setup creates 5 parallel instances. &nbsp;Each instance accepts input
+from its own Unix domain socket.</p>
+<pre class="literal-block">
+[vagrant&#64;metricfactory-001 ~]$&nbsp;metricfactory debug --config /home/vagrant/experiments/metricfactory/ganglia2graphite/uds-ganglia-graphite.json --instances 5 --pid /tmp/uds-ganglia-graphite.pid
+</pre>
+</div>
+<div class="section" id="a-receiver">
+<h4>A receiver</h4>
+<p>Accepts all the data on UDP and distributes that evenly over multiple
+decoders each listening on a domain socket.</p>
+<pre class="literal-block">
+[vagrant&#64;metricfactory-001 ~]$ metricfactory debug --config /home/vagrant/experiments/metricfactory/ganglia2graphite/loadbalance-ganglia.json --pid /tmp/loadbalance-ganglia.pid
+</pre>
+<p><em>`The UDSclient module`_ can be initiated with &quot;pool&quot; set to &quot;True&quot;.When
+enabled the defined path will be considered a directory containing one
+or more Unix domain sockets. The client &quot;round robins&quot; over all domain
+sockets found in that directory. Worth to mention is the buffer module,
+which buffers the Graphite data and when full submits the batch.</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Using this setup we can accept Ganglia metrics over UDP from Hadoop,
+convert using multiple parallel processes the metrics to Graphite format
+in and submit the converted metrics in batches to Graphite. &nbsp;I'm
+planning to add more functionality to MetricFactory. &nbsp;Currently it can
+tackle mod_gearman and Ganglia data. &nbsp;Using the examples in this
+article you should be able to setup your own MetricFactory based setups
+relatively easy. &nbsp;If you require support you can submit a message to the
+<a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/metricfactory">MetricFactory mailing list</a>.</p>
+</div>
+
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+        </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
+    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+    <i class="icon-folder-open icon-large"></i>misc
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+    <i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+    <i class="icon-folder-open icon-large"></i>monitoring
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+    <i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+    <i class="icon-folder-open icon-large"></i>Uncategorized
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/release.html">
+        <i class="icon-tag icon-large"></i>release
+    </a>
+</li>
+<li class="tag-1">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-0">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringsucks.html">
+        <i class="icon-tag icon-large"></i>monitoringsucks
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>

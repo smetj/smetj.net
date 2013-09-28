@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Working with Moncli part2: Creating a simple request</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jelle Smet">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="http://smetj.net ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">http://smetj.net </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                          <li class="divider-vertical"></li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+						<i class="icon-folder-open icon-large"></i>misc
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+						<i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+						<i class="icon-folder-open icon-large"></i>monitoring
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+						<i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+						<i class="icon-folder-open icon-large"></i>Uncategorized
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="file:///home/smetj/projects/github/smetj.net/output/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Working with Moncli part2: Creating a simple request">
+                                        Working with Moncli part2: Creating a simple request
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2012-03-11T22:12:00">
+        <i class="icon-calendar"></i>Sun 11 March 2012
+</abbr>
+<span class="label">By</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/author/smetj.html"><i class="icon-user"></i>smetj</a>
+<span class="label">Category</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html"><i class="icon-folder-open"></i>monitoring</a>.
+
+
+<span class="label">Tags</span>
+	<a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html"><i class="icon-tag"></i>moncli</a>
+	<a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html"><i class="icon-tag"></i>monitoringlove</a>
+</footer><!-- /.post-info -->                </div>
+                <p>In our <a class="reference external" href="http://smetj.net/2012/03/06/working-with-moncli-part1-creating-a-plugin/">previous post</a>&nbsp;we have covered how to &nbsp;create an example plugin
+which allows you to generate the size of directories as a metric. &nbsp;A
+plugin on itself doesn't do that much at all. &nbsp;When a plugin is executed
+it returns the values of that very moment. &nbsp;Executing a plugin is done
+by Moncli itself and we want to have control over that as much as
+possible.</p>
+<div class="section" id="moncli-request">
+<h2>moncli_request</h2>
+<p><a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Request">A request is a JSON document</a> which is submitted to the messagebroker
+on which the Moncli clients are listening for incoming requests.
+&nbsp;Creating and submitting a request could be done&nbsp;by hand, but that's not
+pratical at all. &nbsp;<a class="reference external" href="https://github.com/smetj/moncli_request">Moncli_request</a>&nbsp;is a simple request generator tool
+which generates and submits a valid JSON document to Moncli to work
+with. &nbsp;Let's generate a request for our dir_size plugin we created in
+the previous article. &nbsp;Moncli_request takes a base JSON document and
+completes &nbsp;it with the parameters you feed to it. &nbsp;So let run through
+the required steps:</p>
+<ol class="arabic">
+<li><p class="first">Install moncli_request from git:</p>
+<pre class="literal-block">
+$ git clone https://smetj&#64;github.com/smetj/moncli_request.git /opt/moncli_request
+</pre>
+</li>
+<li><p class="first">Copy the skeleton base document over to a new default check called
+DirSize:</p>
+<pre class="literal-block">
+$ cp /opt/moncli_request/repository/skeleton /opt/moncli_request/repository/.default/DirSize
+</pre>
+</li>
+<li><p class="first">Complete our newly created DirSize base document with the plugin name
+and hash:</p>
+<pre class="literal-block">
+{
+ &quot;plugin&quot;:{
+ &quot;name&quot;:&quot;dir_size&quot;,
+ &quot;hash&quot;:&quot;a1161fc0d2dfcd6b4e9f52651e88a1d0&quot;,
+ &quot;timeout&quot;:60
+ },
+ &quot;report&quot;:{
+ &quot;message&quot;:&quot;&quot;
+ },
+ &quot;request&quot;:{
+ &quot;cycle&quot;:60
+ },
+ &quot;evaluators&quot;:{
+ },
+ &quot;tags&quot;:[]
+}
+</pre>
+<p>The name is the name of the plugin we created in the previous post
+and stored in Moncli's local repository. &nbsp;This actually corresponds
+to the directory name containing the plugin. &nbsp;The hash is the md5sum
+of the plugin. &nbsp;Parameters is a list of parameters we want to feed to
+the script.</p>
+</li>
+<li><p class="first">Now execute moncli_request without the --broker parameter. &nbsp;This
+will print the request which you can submit to Moncli through the
+message broker on STDOUT:</p>
+<pre class="literal-block">
+$ /opt/moncli_request/moncli_request --host indigo --subject 'DirSize' --parameters [\&quot;\'/tmp/test/*\'\&quot;]
+{&quot;request&quot;:{&quot;source&quot;:&quot;indigo&quot;,&quot;month&quot;:3,&quot;week_of_year&quot;:10,&quot;time&quot;:&quot;2012-03-11T19:58:54+01:00&quot;,&quot;day_of_year&quot;:71,&quot;uuid&quot;:&quot;DDB2AFC8-6BA3-11E1-B62D-8DA2DAFBAEBF&quot;,&quot;day&quot;:11,&quot;day_of_week&quot;:7,&quot;cycle&quot;:60,&quot;year&quot;:2012},&quot;plugin&quot;:{&quot;parameters&quot;:[&quot;'/tmp/test/*'&quot;],&quot;hash&quot;:&quot;a1161fc0d2dfcd6b4e9f52651e88a1d0&quot;,&quot;timeout&quot;:60,&quot;name&quot;:&quot;dir_size&quot;},&quot;report&quot;:{&quot;message&quot;:&quot;&quot;},&quot;destination&quot;:{&quot;subject&quot;:&quot;DirSize&quot;,&quot;name&quot;:&quot;indigo&quot;},&quot;evaluators&quot;:{},&quot;tags&quot;:[]}
+</pre>
+<div></div></li>
+<li><p class="first">After verifying the content we can 'inject' the request into the
+message broker on which Moncli is listening:</p>
+</li>
+</ol>
+<pre class="literal-block">
+$ /opt/moncli_request/moncli_request --broker sandbox --host sandbox --subject 'DirSize' --parameters [\&quot;\'/tmp/test/*\'\&quot;]
+A new Report Request (7373E8A2-6B6C-11E1-A438-D193DAFBAEBF) has been submitted.
+</pre>
+<p>Keep in mind that the --broker parameter is the address/hostname of your
+broker and the --host is the hostname of the host on which Moncli is
+started. &nbsp;Each started Moncli instance creates a queue in the broker
+with its hostname as the queue name.</p>
+</div>
+<div class="section" id="report">
+<h2>Report</h2>
+<p>When we consume the result from the broker (<a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/">see this post</a>) we get
+following result:</p>
+<pre class="literal-block">
+{
+   &quot;evaluators&quot;:{
+
+   },
+   &quot;tags&quot;:[
+
+   ],
+   &quot;destination&quot;:{
+      &quot;name&quot;:&quot;indigo&quot;,
+      &quot;subject&quot;:&quot;DirSize&quot;
+   },
+   &quot;request&quot;:{
+      &quot;uuid&quot;:&quot;3FF36DE4-6BA4-11E1-8B44-B4A2DAFBAEBF&quot;,
+      &quot;year&quot;:2012,
+      &quot;day_of_year&quot;:71,
+      &quot;day_of_week&quot;:7,
+      &quot;month&quot;:3,
+      &quot;source&quot;:&quot;indigo&quot;,
+      &quot;week_of_year&quot;:10,
+      &quot;time&quot;:&quot;2012-03-11T20:01:38+01:00&quot;,
+      &quot;day&quot;:11,
+      &quot;cycle&quot;:60
+   },
+   &quot;report&quot;:{
+      &quot;month&quot;:3,
+      &quot;year&quot;:2012,
+      &quot;timezone&quot;:&quot;+0100&quot;,
+      &quot;message&quot;:&quot;&quot;,
+      &quot;day&quot;:11,
+      &quot;uuid&quot;:&quot;35672bb1-2cb8-46ea-8e23-bf5b98cbeaf4&quot;,
+      &quot;day_of_year&quot;:71,
+      &quot;day_of_week&quot;:0,
+      &quot;source&quot;:&quot;indigo&quot;,
+      &quot;week_of_year&quot;:10,
+      &quot;time&quot;:&quot;2012-03-11T19:02:06+0100&quot;
+   },
+   &quot;plugin&quot;:{
+      &quot;metrics&quot;:{
+         &quot;pre_epoch&quot;:1331488926.0,
+         &quot;/tmp/test/2&quot;:&quot;24576&quot;,
+         &quot;/tmp/test/1&quot;:&quot;24576&quot;,
+         &quot;pre_/tmp/test/1&quot;:&quot;24576&quot;,
+         &quot;pre_/tmp/test/3&quot;:&quot;24576&quot;,
+         &quot;pre_/tmp/test/2&quot;:&quot;24576&quot;,
+         &quot;/tmp/test/3&quot;:&quot;24576&quot;,
+         &quot;epoch&quot;:1331488926.0
+      },
+      &quot;raw&quot;:[
+         &quot;/tmp/test/1:24576\n&quot;,
+         &quot;/tmp/test/2:24576\n&quot;,
+         &quot;/tmp/test/3:24576\n&quot;
+      ],
+      &quot;name&quot;:&quot;dir_size&quot;,
+      &quot;verbose&quot;:[
+
+      ]
+   }
+}
+</pre>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion:</h2>
+<p>We have seen how to create a plugin and how to generate a request for
+it. &nbsp;We let Moncli execute the plugin by generating and submitting a
+request with moncli_request and we have verified the incoming results.
+&nbsp;In this request we haven't done any evaluations which is something we
+will cover in the next article in this series.</p>
+</div>
+
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+        </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
+    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+    <i class="icon-folder-open icon-large"></i>misc
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+    <i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+    <i class="icon-folder-open icon-large"></i>monitoring
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+    <i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+    <i class="icon-folder-open icon-large"></i>Uncategorized
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/release.html">
+        <i class="icon-tag icon-large"></i>release
+    </a>
+</li>
+<li class="tag-1">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-0">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringsucks.html">
+        <i class="icon-tag icon-large"></i>monitoringsucks
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>

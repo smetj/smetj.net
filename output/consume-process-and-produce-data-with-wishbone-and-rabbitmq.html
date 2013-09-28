@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Consume, process and produce data with Wishbone and RabbitMQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jelle Smet">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="http://smetj.net ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">http://smetj.net </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                          <li class="divider-vertical"></li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+						<i class="icon-folder-open icon-large"></i>misc
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+						<i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+						<i class="icon-folder-open icon-large"></i>monitoring
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+						<i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+					</a>
+                  </li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+						<i class="icon-folder-open icon-large"></i>Uncategorized
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="file:///home/smetj/projects/github/smetj.net/output/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Consume, process and produce data with Wishbone and RabbitMQ">
+                                        Consume, process and produce data with Wishbone and RabbitMQ
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2013-01-29T22:07:00">
+        <i class="icon-calendar"></i>Tue 29 January 2013
+</abbr>
+<span class="label">By</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/author/smetj.html"><i class="icon-user"></i>smetj</a>
+<span class="label">Category</span>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html"><i class="icon-folder-open"></i>Programming, Python, Wishbone</a>.
+
+
+<span class="label">Tags</span>
+	<a href="file:///home/smetj/projects/github/smetj.net/output/tag/amqp.html"><i class="icon-tag"></i>amqp</a>
+	<a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html"><i class="icon-tag"></i>python</a>
+	<a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html"><i class="icon-tag"></i>rabbitmq</a>
+	<a href="file:///home/smetj/projects/github/smetj.net/output/tag/wishbone.html"><i class="icon-tag"></i>wishbone</a>
+</footer><!-- /.post-info -->                </div>
+                <p>When I first came in touch with the <a class="reference external" href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">messaging</a>&nbsp;concept&nbsp;it was some
+kind of a revelation. &nbsp;Ever since many solutions I work on involve
+message brokers one way or the other. &nbsp;Because of that, a design pattern
+occurred hence the need for a Python framework allowing me to easily
+write solutions to interact with messaging based setups. &nbsp;<a class="reference external" href="https://github.com/smetj/wishbone">Wishbone</a>&nbsp;is
+a Python framework which simplifies writing coroutine event pipelines.
+&nbsp;Wishbone is a framework in which you can load and connect multiple
+modules in order to come to a tailored solution.
+Although Wishbone's scope is larger than that, I would like to
+demonstrate how easy it is to write a daemon which consumes and
+processes messages from <em>`RabbitMQ`_</em>.</p>
+<div class="section" id="preparation">
+<h2>Preparation</h2>
+<p>If you want to be able to execute the examples throughout this article
+you should have a RabbitMQ (with the&nbsp;<a class="reference external" href="http://www.rabbitmq.com/management.html">management plugin</a>)&nbsp;instance&nbsp;up
+and running and install the Wishbone library. &nbsp;There is some great
+RabbitMQ documentation out there explaining you how to install a basic
+stand-alone instance.</p>
+<div class="section" id="installing-wishbone">
+<h3>Installing Wishbone</h3>
+<p>Installing the Wishbone library can be done through&nbsp;<a class="reference external" href="http://pypi.python.org/pypi/wishbone/0.2.2">Cheeseshop</a>&nbsp;or
+from&nbsp;<a class="reference external" href="https://github.com/smetj/wishbone">GitHub</a>:</p>
+<pre class="literal-block">
+[vagrant&#64;wishbone ~]$ sudo easy_install wishbone
+</pre>
+<p><em>On centos I required:&nbsp;gcc-c++ snappy-devel python-dev Cython
+libev-devel</em></p>
+</div>
+<div class="section" id="rabbitmq">
+<h3>RabbitMQ</h3>
+<p>Within RabbitMQ let's create 2 queues we're going to use in this
+article</p>
+<p>Visit the web based RabbitMQ management application listening on port
+55672 and create 3 queues:</p>
+<blockquote>
+<em>wishbone_in, wishbone_even, wishbone_uneven</em></blockquote>
+<p>RabbitMQ Management Interface</p>
+<blockquote>
+<ul class="simple">
+<li>You can&nbsp;achieve the same by using the rabbitmqadmin tool.</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div class="section" id="creating-a-wishbone-setup">
+<h2>Creating a Wishbone Setup</h2>
+<p>Now we have our test environment up and running lets create our first
+daemon.</p>
+<div class="section" id="challenge">
+<h3>Challenge</h3>
+<p>Create a daemon which consumes messages from the wishbone_in queue.
+&nbsp;Each submitted message contains an integer. &nbsp;If this integer is even we
+submit the message to the <em>wishbone_uneven</em> queue while the messages
+with even values should end up in the <em>wishbone_even</em> queue.</p>
+</div>
+<div class="section" id="make-a-server">
+<h3>Make a server</h3>
+<p>Wishbone is made to easily write daemons. &nbsp;It comes with the required
+functionality to minimize all the work which goes along with that:</p>
+<pre class="literal-block">
+#!/usr/bin/env python
+from wishbone.server import BootStrap
+if __name__ == '__main__':
+    BootStrap(name=&quot;BrokerTest&quot;,
+        description=&quot;This setup is just an example.&quot;,
+        version=&quot;0.1&quot;,
+        author=&quot;Your name&quot;
+    )
+</pre>
+<p>Save the content to a file called &quot;brokertest&quot; and make it executable.
+When executing you will get:</p>
+<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli1-2/"><img alt="cli1" src="http://smetj.net/wp-content/uploads/2013/01/cli11-300x188.png" /></a></p>
+<p>And that's it! You have a WishBone server available. &nbsp;Granted it doesn't
+do anything at all at this stage but that's what we'll cover in the next
+paragraph.</p>
+</div>
+<div class="section" id="modules">
+<h3>Modules</h3>
+<p>Wishbone has the concept of <a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/introduction.html#wishbone-modules">modules</a>. &nbsp;A module is a piece of code
+which is plugged into the Wishbone framework which takes data in and
+pushes data out. &nbsp;Our WishBone server needs to know which modules to
+load, how to initialize them and how to tie them together into a
+workflow. &nbsp;This is done using a <a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/bootstrapfiles.html">bootstrap</a> file which is loaded using
+the --config option. &nbsp;A bootstrap file is mandatory, otherwise your
+Wishbone application is just an empty shell.</p>
+<div class="section" id="use-an-existing-module-broker">
+<h4>Use an existing module: Broker</h4>
+<p>Wishbone comes with a bunch of already available modules. One of them
+is the&nbsp;<a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/iomodules.html#wishbone.iomodules.broker.Broker">Broker</a>&nbsp;module which allows you to get RabbitMQ messages in
+and out of Wishbone.</p>
+<p>We are going to initialize the broker module with following
+parameters:</p>
+<pre class="literal-block">
+... snip ...
+&quot;broker&quot;:{
+         &quot;module&quot;:&quot;wishbone.iomodules.broker&quot;,
+         &quot;class&quot;:&quot;Broker&quot;,
+         &quot;variables&quot;:{
+            &quot;host&quot;:&quot;sandbox&quot;,
+            &quot;vhost&quot;:&quot;/&quot;,
+            &quot;username&quot;:&quot;guest&quot;,
+            &quot;password&quot;:&quot;guest&quot;,
+            &quot;consume_queue&quot;:&quot;wishbone_in&quot;,
+            &quot;prefetch_count&quot;:200,
+            &quot;no_ack&quot;:false,
+            &quot;delivery_mode&quot;:2
+         }
+}
+... snip ...
+</pre>
+<p>Most of the parameters speak for themselves. &nbsp;Have a look at the module
+documentation page for details.</p>
+</div>
+<div class="section" id="create-a-new-module-evenuneven">
+<h4>Create a new module: EvenUneven</h4>
+<p>A module to determine whether the number is even/uneven is of course
+not available out of the box. &nbsp;We're going to create this one ourselves.</p>
+<p>WishBone includes a &nbsp;<a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/modules/skeleton.py">skeleton module</a> which can be used as a
+standard to build your new module on.</p>
+<p>The WishBone framework really requires a Python module to load. &nbsp;That
+means you should create a directory called &quot;<em>evenuneven</em>&quot; and paste
+the below code into a file called &nbsp;<em>evenuneven/__init__.py</em></p>
+<p>Wishbone modules are actually regular Python modules. &nbsp;You should really
+try to follow the proper guidelines on how to build, package and install
+Python modules.</p>
+<pre class="literal-block">
+#!/usr/bin/env python
+
+from wishbone.toolkit import PrimitiveActor
+
+class EvenUneven(PrimitiveActor):
+    '''**An example Wishbone module which verifies if the data submitted
+    is even or uneven.**''
+
+    Parameters:
+
+        - name (str):    The instance name when initiated.
+
+    Queues:
+
+        - inbox:    Incoming events.
+        - outbox:   Outgoing events.
+    '''
+
+    def __init__(self, name):
+        PrimitiveActor.__init__(self, name)
+
+    def consume(self,doc):
+        if int(doc[&quot;data&quot;])%2 == 0:
+            self.logging.info('I received an even message.')
+
+            doc[&quot;header&quot;][&quot;broker_exchange&quot;]=''
+            doc[&quot;header&quot;][&quot;broker_key&quot;]='wishbone_even'
+        else:
+            self.logging.info('I received an uneven message.')
+
+            doc[&quot;header&quot;][&quot;broker_exchange&quot;]=''
+            doc[&quot;header&quot;][&quot;broker_key&quot;]='wishbone_uneven'
+
+        self.putData(doc)
+
+    def shutdown(self):
+        self.logging.info('Shutdown')
+</pre>
+<p>Once initiated, this class will run as a (green)thread within the
+Wishbone framework. The initialized instance of the class will
+automatically &quot;inherit&quot; an <em>inbox</em> and <em>outbox</em> queue. All messages
+arriving to the <em>inbox</em> queue will automatically be &quot;consumed&quot; by the
+<em>consume()</em> function. The framework will do that for you, so you don't
+need to worry about that. &nbsp;Once done processing the data it can be place
+into the class's outbox queue, which is done using the <em>putData()</em>
+function (line 34).</p>
+<p>Each document flowing through the framework has following format:</p>
+<blockquote>
+{&quot;header&quot;:{}, &quot;data&quot;:object }</blockquote>
+<p>We're extending the &quot;header&quot; part of the document with 2 variables:
+&quot;<em>broker_exchange</em>&quot; and &quot;<em>broker_key</em>&quot;. When this message will
+arrive back into the broker module it will know to which exchange and
+queue to submit the document to.</p>
+<p>This simple module does not require any variables when initialized, so
+the bootstrap file section to initialize this module would look like:</p>
+<pre class="literal-block">
+... snip ...
+&quot;evenuneven&quot;:{
+         &quot;module&quot;:&quot;evenuneven&quot;,
+         &quot;class&quot;:&quot;EvenUneven&quot;,
+         &quot;variables&quot;:{
+         }
+}
+... snip ...
+</pre>
+</div>
+</div>
+<div class="section" id="bootstrap-file">
+<h3>Bootstrap file</h3>
+<p>The bootstrap file (which is defined through the &nbsp;--config option) tells
+the WishBone server which modules to load and how the data flows through
+the modules.</p>
+<p>The complete bootstrap for our example setup would look like this:</p>
+<pre class="literal-block">
+{
+   &quot;system&quot;:{
+      &quot;metrics&quot;:true,
+      &quot;metrics_interval&quot;:10,
+      &quot;metrics_dst&quot;:&quot;logging&quot;
+   },
+   &quot;bootstrap&quot;:{
+      &quot;broker&quot;:{
+         &quot;module&quot;:&quot;wishbone.iomodules.broker&quot;,
+         &quot;class&quot;:&quot;Broker&quot;,
+         &quot;variables&quot;:{
+            &quot;host&quot;:&quot;sandbox&quot;,
+            &quot;vhost&quot;:&quot;/&quot;,
+            &quot;username&quot;:&quot;guest&quot;,
+            &quot;password&quot;:&quot;guest&quot;,
+            &quot;consume_queue&quot;:&quot;wishbone_in&quot;,
+            &quot;prefetch_count&quot;:200,
+            &quot;no_ack&quot;:true,
+            &quot;delivery_mode&quot;:2
+         }
+      },
+      &quot;evenuneven&quot;:{
+         &quot;module&quot;:&quot;evenuneven&quot;,
+         &quot;class&quot;:&quot;EvenUneven&quot;,
+         &quot;variables&quot;:{
+         }
+      }
+   },
+   &quot;routingtable&quot;:{
+      &quot;broker.inbox&quot;:[
+         &quot;evenuneven.inbox&quot;
+      ],
+      &quot;evenuneven.outbox&quot;:[
+         &quot;broker.outbox&quot;
+      ]
+   }
+}
+</pre>
+<p>The <em>system</em>&nbsp;section of the bootstrap file allows you to control
+Wishbone framework specific items. &nbsp;Currently only options related to
+metrics are available.</p>
+<p>The&nbsp;<em>bootstrap</em> section allows you to initialize the modules and
+assign them to an instance name, which is in this case &quot;<em>broker</em>&quot; and
+&quot;<em>evenuneven</em>&quot;.</p>
+<p>The&nbsp;<em>routingtable</em> section allows you to connect the instance queues
+to each other &nbsp;in order to determine the application's dataflow.
+&nbsp;Normally one connects the <em>outbox</em> queue to the <em>inbox</em> queue. &nbsp;But in
+case of an IOmodule (which the broker module is) the data coming from
+the outside world arrives&nbsp;<em>inbox</em> queue and the data going to the
+outside world should go to the&nbsp;<em>outbox</em> queue.</p>
+</div>
+<div class="section" id="start-your-server-and-test">
+<h3>Start your server and test.</h3>
+<p>To start your server and prevent it to fork into the background you
+should do something like:</p>
+<pre class="literal-block">
+[vagrant&#64;wishbone files]$ ./brokertest debug --config brokertest.json --loglevel debug
+</pre>
+<p>You should get a similar output to following screenshot:</p>
+<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli2/"><img alt="cli2" src="http://smetj.net/wp-content/uploads/2013/01/cli2-300x50.png" /></a></p>
+<p>Now submit a message containing the number &quot;<em>100</em>&quot; through the
+RabbitMQ broker management interface into the <em>wishbone_in</em> queue.</p>
+<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit2/"><img alt="rabbit2" src="http://smetj.net/wp-content/uploads/2013/01/rabbit2-231x300.png" /></a></p>
+<p>If all went well your Wishbone application should create a log entry
+about the data you just submitted:</p>
+<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli3/"><img alt="cli3" src="http://smetj.net/wp-content/uploads/2013/01/cli3-300x56.png" /></a></p>
+<p>Have a look to the <em>wishbone_even</em> queue your message should be arrived
+there.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Although the the example as such isn't that spectacular and it only
+scratches the surface of the possibilities it hopefully shows you how
+easy it is to create a &nbsp;Python based server which interacts with
+RabbitMQ. &nbsp;The Wishbone library also includes other IO modules. &nbsp;Have a
+look at my <a class="reference external" href="https://github.com/smetj/experiments/tree/master/python/wishbone">experiments repository</a> for more examples of Wishbone
+setups.</p>
+</div>
+
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+        </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
+    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
+    <i class="icon-folder-open icon-large"></i>misc
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
+    <i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
+    <i class="icon-folder-open icon-large"></i>monitoring
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
+    <i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
+    <i class="icon-folder-open icon-large"></i>Uncategorized
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/release.html">
+        <i class="icon-tag icon-large"></i>release
+    </a>
+</li>
+<li class="tag-1">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-0">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringsucks.html">
+        <i class="icon-tag icon-large"></i>monitoringsucks
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="file:///home/smetj/projects/github/smetj.net/output/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>

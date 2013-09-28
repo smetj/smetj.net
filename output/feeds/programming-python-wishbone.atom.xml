@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>http://smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="file:///home/smetj/projects/github/smetj.net/output/feeds/programming-python-wishbone.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2013-01-29T22:07:00+01:00</updated><entry><title>Consume, process and produce data with Wishbone and RabbitMQ</title><link href="file:///home/smetj/projects/github/smetj.net/output/consume-process-and-produce-data-with-wishbone-and-rabbitmq.html" rel="alternate"></link><updated>2013-01-29T22:07:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-01-29:consume-process-and-produce-data-with-wishbone-and-rabbitmq.html</id><summary type="html">&lt;p&gt;When I first came in touch with the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol"&gt;messaging&lt;/a&gt;&amp;nbsp;concept&amp;nbsp;it was some
+kind of a revelation. &amp;nbsp;Ever since many solutions I work on involve
+message brokers one way or the other. &amp;nbsp;Because of that, a design pattern
+occurred hence the need for a Python framework allowing me to easily
+write solutions to interact with messaging based setups. &amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;Wishbone&lt;/a&gt;&amp;nbsp;is
+a Python framework which simplifies writing coroutine event pipelines.
+&amp;nbsp;Wishbone is a framework in which you can load and connect multiple
+modules in order to come to a tailored solution.
+Although Wishbone's scope is larger than that, I would like to
+demonstrate how easy it is to write a daemon which consumes and
+processes messages from &lt;em&gt;`RabbitMQ`_&lt;/em&gt;.&lt;/p&gt;
+&lt;div class="section" id="preparation"&gt;
+&lt;h2&gt;Preparation&lt;/h2&gt;
+&lt;p&gt;If you want to be able to execute the examples throughout this article
+you should have a RabbitMQ (with the&amp;nbsp;&lt;a class="reference external" href="http://www.rabbitmq.com/management.html"&gt;management plugin&lt;/a&gt;)&amp;nbsp;instance&amp;nbsp;up
+and running and install the Wishbone library. &amp;nbsp;There is some great
+RabbitMQ documentation out there explaining you how to install a basic
+stand-alone instance.&lt;/p&gt;
+&lt;div class="section" id="installing-wishbone"&gt;
+&lt;h3&gt;Installing Wishbone&lt;/h3&gt;
+&lt;p&gt;Installing the Wishbone library can be done through&amp;nbsp;&lt;a class="reference external" href="http://pypi.python.org/pypi/wishbone/0.2.2"&gt;Cheeseshop&lt;/a&gt;&amp;nbsp;or
+from&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;GitHub&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[vagrant&amp;#64;wishbone ~]$ sudo easy_install wishbone
+&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;On centos I required:&amp;nbsp;gcc-c++ snappy-devel python-dev Cython
+libev-devel&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rabbitmq"&gt;
+&lt;h3&gt;RabbitMQ&lt;/h3&gt;
+&lt;p&gt;Within RabbitMQ let's create 2 queues we're going to use in this
+article&lt;/p&gt;
+&lt;p&gt;Visit the web based RabbitMQ management application listening on port
+55672 and create 3 queues:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;em&gt;wishbone_in, wishbone_even, wishbone_uneven&lt;/em&gt;&lt;/blockquote&gt;
+&lt;p&gt;RabbitMQ Management Interface&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;You can&amp;nbsp;achieve the same by using the rabbitmqadmin tool.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creating-a-wishbone-setup"&gt;
+&lt;h2&gt;Creating a Wishbone Setup&lt;/h2&gt;
+&lt;p&gt;Now we have our test environment up and running lets create our first
+daemon.&lt;/p&gt;
+&lt;div class="section" id="challenge"&gt;
+&lt;h3&gt;Challenge&lt;/h3&gt;
+&lt;p&gt;Create a daemon which consumes messages from the wishbone_in queue.
+&amp;nbsp;Each submitted message contains an integer. &amp;nbsp;If this integer is even we
+submit the message to the &lt;em&gt;wishbone_uneven&lt;/em&gt; queue while the messages
+with even values should end up in the &lt;em&gt;wishbone_even&lt;/em&gt; queue.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="make-a-server"&gt;
+&lt;h3&gt;Make a server&lt;/h3&gt;
+&lt;p&gt;Wishbone is made to easily write daemons. &amp;nbsp;It comes with the required
+functionality to minimize all the work which goes along with that:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/usr/bin/env python
+from wishbone.server import BootStrap
+if __name__ == '__main__':
+    BootStrap(name=&amp;quot;BrokerTest&amp;quot;,
+        description=&amp;quot;This setup is just an example.&amp;quot;,
+        version=&amp;quot;0.1&amp;quot;,
+        author=&amp;quot;Your name&amp;quot;
+    )
+&lt;/pre&gt;
+&lt;p&gt;Save the content to a file called &amp;quot;brokertest&amp;quot; and make it executable.
+When executing you will get:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli1-2/"&gt;&lt;img alt="cli1" src="http://smetj.net/wp-content/uploads/2013/01/cli11-300x188.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And that's it! You have a WishBone server available. &amp;nbsp;Granted it doesn't
+do anything at all at this stage but that's what we'll cover in the next
+paragraph.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="modules"&gt;
+&lt;h3&gt;Modules&lt;/h3&gt;
+&lt;p&gt;Wishbone has the concept of &lt;a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/introduction.html#wishbone-modules"&gt;modules&lt;/a&gt;. &amp;nbsp;A module is a piece of code
+which is plugged into the Wishbone framework which takes data in and
+pushes data out. &amp;nbsp;Our WishBone server needs to know which modules to
+load, how to initialize them and how to tie them together into a
+workflow. &amp;nbsp;This is done using a &lt;a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/bootstrapfiles.html"&gt;bootstrap&lt;/a&gt; file which is loaded using
+the --config option. &amp;nbsp;A bootstrap file is mandatory, otherwise your
+Wishbone application is just an empty shell.&lt;/p&gt;
+&lt;div class="section" id="use-an-existing-module-broker"&gt;
+&lt;h4&gt;Use an existing module: Broker&lt;/h4&gt;
+&lt;p&gt;Wishbone comes with a bunch of already available modules. One of them
+is the&amp;nbsp;&lt;a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/iomodules.html#wishbone.iomodules.broker.Broker"&gt;Broker&lt;/a&gt;&amp;nbsp;module which allows you to get RabbitMQ messages in
+and out of Wishbone.&lt;/p&gt;
+&lt;p&gt;We are going to initialize the broker module with following
+parameters:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+... snip ...
+&amp;quot;broker&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;wishbone.iomodules.broker&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;Broker&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+            &amp;quot;host&amp;quot;:&amp;quot;sandbox&amp;quot;,
+            &amp;quot;vhost&amp;quot;:&amp;quot;/&amp;quot;,
+            &amp;quot;username&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;password&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;consume_queue&amp;quot;:&amp;quot;wishbone_in&amp;quot;,
+            &amp;quot;prefetch_count&amp;quot;:200,
+            &amp;quot;no_ack&amp;quot;:false,
+            &amp;quot;delivery_mode&amp;quot;:2
+         }
+}
+... snip ...
+&lt;/pre&gt;
+&lt;p&gt;Most of the parameters speak for themselves. &amp;nbsp;Have a look at the module
+documentation page for details.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-a-new-module-evenuneven"&gt;
+&lt;h4&gt;Create a new module: EvenUneven&lt;/h4&gt;
+&lt;p&gt;A module to determine whether the number is even/uneven is of course
+not available out of the box. &amp;nbsp;We're going to create this one ourselves.&lt;/p&gt;
+&lt;p&gt;WishBone includes a &amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/modules/skeleton.py"&gt;skeleton module&lt;/a&gt; which can be used as a
+standard to build your new module on.&lt;/p&gt;
+&lt;p&gt;The WishBone framework really requires a Python module to load. &amp;nbsp;That
+means you should create a directory called &amp;quot;&lt;em&gt;evenuneven&lt;/em&gt;&amp;quot; and paste
+the below code into a file called &amp;nbsp;&lt;em&gt;evenuneven/__init__.py&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Wishbone modules are actually regular Python modules. &amp;nbsp;You should really
+try to follow the proper guidelines on how to build, package and install
+Python modules.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/usr/bin/env python
+
+from wishbone.toolkit import PrimitiveActor
+
+class EvenUneven(PrimitiveActor):
+    '''**An example Wishbone module which verifies if the data submitted
+    is even or uneven.**''
+
+    Parameters:
+
+        - name (str):    The instance name when initiated.
+
+    Queues:
+
+        - inbox:    Incoming events.
+        - outbox:   Outgoing events.
+    '''
+
+    def __init__(self, name):
+        PrimitiveActor.__init__(self, name)
+
+    def consume(self,doc):
+        if int(doc[&amp;quot;data&amp;quot;])%2 == 0:
+            self.logging.info('I received an even message.')
+
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_exchange&amp;quot;]=''
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_key&amp;quot;]='wishbone_even'
+        else:
+            self.logging.info('I received an uneven message.')
+
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_exchange&amp;quot;]=''
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_key&amp;quot;]='wishbone_uneven'
+
+        self.putData(doc)
+
+    def shutdown(self):
+        self.logging.info('Shutdown')
+&lt;/pre&gt;
+&lt;p&gt;Once initiated, this class will run as a (green)thread within the
+Wishbone framework. The initialized instance of the class will
+automatically &amp;quot;inherit&amp;quot; an &lt;em&gt;inbox&lt;/em&gt; and &lt;em&gt;outbox&lt;/em&gt; queue. All messages
+arriving to the &lt;em&gt;inbox&lt;/em&gt; queue will automatically be &amp;quot;consumed&amp;quot; by the
+&lt;em&gt;consume()&lt;/em&gt; function. The framework will do that for you, so you don't
+need to worry about that. &amp;nbsp;Once done processing the data it can be place
+into the class's outbox queue, which is done using the &lt;em&gt;putData()&lt;/em&gt;
+function (line 34).&lt;/p&gt;
+&lt;p&gt;Each document flowing through the framework has following format:&lt;/p&gt;
+&lt;blockquote&gt;
+{&amp;quot;header&amp;quot;:{}, &amp;quot;data&amp;quot;:object }&lt;/blockquote&gt;
+&lt;p&gt;We're extending the &amp;quot;header&amp;quot; part of the document with 2 variables:
+&amp;quot;&lt;em&gt;broker_exchange&lt;/em&gt;&amp;quot; and &amp;quot;&lt;em&gt;broker_key&lt;/em&gt;&amp;quot;. When this message will
+arrive back into the broker module it will know to which exchange and
+queue to submit the document to.&lt;/p&gt;
+&lt;p&gt;This simple module does not require any variables when initialized, so
+the bootstrap file section to initialize this module would look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+... snip ...
+&amp;quot;evenuneven&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;evenuneven&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;EvenUneven&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+         }
+}
+... snip ...
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bootstrap-file"&gt;
+&lt;h3&gt;Bootstrap file&lt;/h3&gt;
+&lt;p&gt;The bootstrap file (which is defined through the &amp;nbsp;--config option) tells
+the WishBone server which modules to load and how the data flows through
+the modules.&lt;/p&gt;
+&lt;p&gt;The complete bootstrap for our example setup would look like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+   &amp;quot;system&amp;quot;:{
+      &amp;quot;metrics&amp;quot;:true,
+      &amp;quot;metrics_interval&amp;quot;:10,
+      &amp;quot;metrics_dst&amp;quot;:&amp;quot;logging&amp;quot;
+   },
+   &amp;quot;bootstrap&amp;quot;:{
+      &amp;quot;broker&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;wishbone.iomodules.broker&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;Broker&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+            &amp;quot;host&amp;quot;:&amp;quot;sandbox&amp;quot;,
+            &amp;quot;vhost&amp;quot;:&amp;quot;/&amp;quot;,
+            &amp;quot;username&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;password&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;consume_queue&amp;quot;:&amp;quot;wishbone_in&amp;quot;,
+            &amp;quot;prefetch_count&amp;quot;:200,
+            &amp;quot;no_ack&amp;quot;:true,
+            &amp;quot;delivery_mode&amp;quot;:2
+         }
+      },
+      &amp;quot;evenuneven&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;evenuneven&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;EvenUneven&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+         }
+      }
+   },
+   &amp;quot;routingtable&amp;quot;:{
+      &amp;quot;broker.inbox&amp;quot;:[
+         &amp;quot;evenuneven.inbox&amp;quot;
+      ],
+      &amp;quot;evenuneven.outbox&amp;quot;:[
+         &amp;quot;broker.outbox&amp;quot;
+      ]
+   }
+}
+&lt;/pre&gt;
+&lt;p&gt;The &lt;em&gt;system&lt;/em&gt;&amp;nbsp;section of the bootstrap file allows you to control
+Wishbone framework specific items. &amp;nbsp;Currently only options related to
+metrics are available.&lt;/p&gt;
+&lt;p&gt;The&amp;nbsp;&lt;em&gt;bootstrap&lt;/em&gt; section allows you to initialize the modules and
+assign them to an instance name, which is in this case &amp;quot;&lt;em&gt;broker&lt;/em&gt;&amp;quot; and
+&amp;quot;&lt;em&gt;evenuneven&lt;/em&gt;&amp;quot;.&lt;/p&gt;
+&lt;p&gt;The&amp;nbsp;&lt;em&gt;routingtable&lt;/em&gt; section allows you to connect the instance queues
+to each other &amp;nbsp;in order to determine the application's dataflow.
+&amp;nbsp;Normally one connects the &lt;em&gt;outbox&lt;/em&gt; queue to the &lt;em&gt;inbox&lt;/em&gt; queue. &amp;nbsp;But in
+case of an IOmodule (which the broker module is) the data coming from
+the outside world arrives&amp;nbsp;&lt;em&gt;inbox&lt;/em&gt; queue and the data going to the
+outside world should go to the&amp;nbsp;&lt;em&gt;outbox&lt;/em&gt; queue.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="start-your-server-and-test"&gt;
+&lt;h3&gt;Start your server and test.&lt;/h3&gt;
+&lt;p&gt;To start your server and prevent it to fork into the background you
+should do something like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[vagrant&amp;#64;wishbone files]$ ./brokertest debug --config brokertest.json --loglevel debug
+&lt;/pre&gt;
+&lt;p&gt;You should get a similar output to following screenshot:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli2/"&gt;&lt;img alt="cli2" src="http://smetj.net/wp-content/uploads/2013/01/cli2-300x50.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Now submit a message containing the number &amp;quot;&lt;em&gt;100&lt;/em&gt;&amp;quot; through the
+RabbitMQ broker management interface into the &lt;em&gt;wishbone_in&lt;/em&gt; queue.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit2/"&gt;&lt;img alt="rabbit2" src="http://smetj.net/wp-content/uploads/2013/01/rabbit2-231x300.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If all went well your Wishbone application should create a log entry
+about the data you just submitted:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli3/"&gt;&lt;img alt="cli3" src="http://smetj.net/wp-content/uploads/2013/01/cli3-300x56.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Have a look to the &lt;em&gt;wishbone_even&lt;/em&gt; queue your message should be arrived
+there.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Although the the example as such isn't that spectacular and it only
+scratches the surface of the possibilities it hopefully shows you how
+easy it is to create a &amp;nbsp;Python based server which interacts with
+RabbitMQ. &amp;nbsp;The Wishbone library also includes other IO modules. &amp;nbsp;Have a
+look at my &lt;a class="reference external" href="https://github.com/smetj/experiments/tree/master/python/wishbone"&gt;experiments repository&lt;/a&gt; for more examples of Wishbone
+setups.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="amqp"></category><category term="python"></category><category term="rabbitmq"></category><category term="wishbone"></category></entry></feed>

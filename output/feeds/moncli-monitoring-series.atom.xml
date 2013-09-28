@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>http://smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="file:///home/smetj/projects/github/smetj.net/output/feeds/moncli-monitoring-series.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2012-02-11T18:08:00+01:00</updated><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="file:///home/smetj/projects/github/smetj.net/output/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
+&lt;h2&gt;What's in a name?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Krolyk-300x185.jpg" /&gt;&lt;/a&gt;Before we go into more detail on how to execute plugins,
+manipulate and evaluate data with Moncli we first have to take a look
+how we are going to consume the data produced by Moncli from RabbitMQ.
+&amp;nbsp;I found myself quite often in the situation where I had to write again
+and again a daemon or process which consumes data from RabbitMQ and do
+something with it. &amp;nbsp;I already started to write &lt;a class="reference external" href="https://github.com/smetj/krolyk"&gt;Krolyk&lt;/a&gt;&amp;nbsp;which initial
+goal was to consume Nagios passive check results from RabbitMQ and write
+them into the Nagios command pipe. &amp;nbsp;I found that too specific, so I
+changed Krolyk into a more &lt;a class="reference external" href="https://github.com/smetj/krolyk/tree/master/lib/plugins"&gt;modular or plugin system&lt;/a&gt;, which allows you
+to write a &lt;a class="reference external" href="https://github.com/smetj/krolyk/blob/master/lib/plugins/skeleton.py"&gt;simple Python class&lt;/a&gt; which consumes data from RabbitMQ.
+&amp;nbsp;The nice thing about it is when you write a plugin for Krolyk, it will
+start one or more &amp;nbsp;parallel consumers without you having to worry about
+how to organize all that. &amp;nbsp;This makes writing consumers for RabbitMQ
+easy and accessible to more people. &amp;nbsp;Krolyk's use is however &lt;strong&gt;not&lt;/strong&gt;limited to the monitoring and metrics collection scope. &amp;nbsp;It's intended
+to be generic, allowing one to easily write parallel RabbitMQ consumers.&lt;/p&gt;
+&lt;p&gt;Consuming Moncli data from RabbitMQ&lt;/p&gt;
+&lt;p&gt;So let's setup Krolyk to consume and simply display data produced by
+Moncli.&lt;/p&gt;
+&lt;p&gt;To realize this we can use the &lt;a class="reference external" href="https://github.com/smetj/krolyk/blob/master/lib/plugins/skeleton.py"&gt;skeleton.py&lt;/a&gt; plugin. &amp;nbsp;The &lt;em&gt;skeleton&lt;/em&gt;
+plugin can be used as a base for your new and more complex plugins.
+&amp;nbsp;What skeleton does out of the box is just print the content it consumes
+from the broker to stdout and acknowledge it back to the broker so it's
+removed from the queue. &amp;nbsp;Just have a look at the &lt;em&gt;consume&lt;/em&gt; function.
+&amp;nbsp;This should pretty much give you an idea of what you can do with it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuration"&gt;
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Krolyk has a config file in which you can define parameters to connect
+to RabbitMQ and parameters which are available to the plugin you write.
+&amp;nbsp;If we take a look at krolyk.cfg we can see under the [&amp;quot;plugins&amp;quot;]
+section a configuration section for each individual plugin. &amp;nbsp;You have to
+make sure that the name of the plugin section is exactly the same
+(including case) as the name of your class.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[ccnbw_ini width=&amp;quot;500&amp;quot; lines=&amp;quot;-1&amp;quot; ]
+[ &amp;quot;plugins&amp;quot; ]
+    [[ &amp;quot;Skeleton&amp;quot; ]]
+        &amp;quot;_enabled&amp;quot;       = False
+        &amp;quot;_workers&amp;quot;       = 5
+        &amp;quot;_broker&amp;quot;        = &amp;quot;sandbox&amp;quot;
+        &amp;quot;_queue&amp;quot;         = &amp;quot;moncli_reports&amp;quot;
+        &amp;quot;_user&amp;quot;          = &amp;quot;guest&amp;quot;
+        &amp;quot;_password&amp;quot;      = &amp;quot;guest&amp;quot;
+        &amp;quot;blah1&amp;quot;          = &amp;quot;whatever&amp;quot;
+        &amp;quot;fu&amp;quot;             = &amp;quot;bar&amp;quot;
+[/ccnbw_ini]
+&lt;/pre&gt;
+&lt;p&gt;Each plugin/class should have at minimal the parameters defined required
+to &amp;nbsp;connect to the RabbitMQ broker. &amp;nbsp;These parameters all start with an
+underscore. &amp;nbsp;All other variables you define will be available to your
+class as a dictionary called &amp;quot;self.configuration&amp;quot;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-practical-example"&gt;
+&lt;h2&gt;A practical example&lt;/h2&gt;
+&lt;p&gt;So let's start an instance of Krolyk which consumes data produced by
+Moncli and prints it to stdout. &amp;nbsp;Keep in mind Krolyk that if the queue
+doesn't exist, Krolyk will create a durable one for you.&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Start Krolyk in the foreground with a config file which works for
+your environment:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+jelle&amp;#64;indigo:~$ /opt/krolyk/bin/krolyk debug --config /opt/krolyk/etc/krolyk.cfg
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Submit a test string to the AMQP default exchange:&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk_rabbit1/"&gt;&lt;img alt="image1" src="http://smetj.net/wp-content/uploads/2012/02/krolyk_rabbit1-150x150.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;And see it appear on the command line:&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk_rabbit2/"&gt;&lt;img alt="image2" src="http://smetj.net/wp-content/uploads/2012/02/krolyk_rabbit2-300x91.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This example isn't really doing anything exciting but, I at least it
+gives you an idea on what functionality Krolyk offers. &amp;nbsp;Using the
+information from this post you should be able to display the data
+generated by Moncli, so you have an idea what comes out of it.&lt;/p&gt;
+&lt;p&gt;In the next post we will be creating Requests and Reports with Moncli.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="krolyk"></category><category term="moncli"></category><category term="monitoringsucks"></category><category term="rabbitmq"></category></entry></feed>
