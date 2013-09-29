@@ -2,7 +2,7 @@ Moncli - An introduction
 ########################
 :date: 2012-02-09 00:20
 :author: smetj
-:category: monitoring
+:category: #monitoringlove
 :tags: moncli, monitoringlove, rabbitmq
 :slug: moncli-an-introduction
 

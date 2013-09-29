@@ -46,7 +46,7 @@
     <link rel="apple-touch-icon" sizes="72x72" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-114x114.png">
 
-    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="http://smetj.net ATOM Feed" />
+    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="smetj.net ATOM Feed" />
 
   </head>
 
@@ -60,33 +60,28 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">http://smetj.net </a>
+          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">smetj.net </a>
           <div class="nav-collapse">
             <ul class="nav">
                           <li class="divider-vertical"></li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/development.html">
+						<i class="icon-folder-open icon-large"></i>development
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/events.html">
+						<i class="icon-folder-open icon-large"></i>events
+					</a>
+                  </li>
                   <li >
                     <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
 						<i class="icon-folder-open icon-large"></i>misc
 					</a>
                   </li>
                   <li >
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
-						<i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
-					</a>
-                  </li>
-                  <li class="active">
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
-						<i class="icon-folder-open icon-large"></i>monitoring
-					</a>
-                  </li>
-                  <li >
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
-						<i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
-					</a>
-                  </li>
-                  <li >
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
-						<i class="icon-folder-open icon-large"></i>Uncategorized
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoringlove.html">
+						<i class="icon-folder-open icon-large"></i>#monitoringlove
 					</a>
                   </li>
 
@@ -125,7 +120,7 @@
 <span class="label">By</span>
 <a href="file:///home/smetj/projects/github/smetj.net/output/author/smetj.html"><i class="icon-user"></i>smetj</a>
 <span class="label">Category</span>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html"><i class="icon-folder-open"></i>monitoring</a>.
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/events.html"><i class="icon-folder-open"></i>events</a>.
 
 
 <span class="label">Tags</span>
@@ -266,7 +261,7 @@ $ metricfactory debug --config hammer.json
 <p>With this particular setup metricfactory will create 1 TCP connection
 per metric. &nbsp;So it might take a while until all metrics are actually
 submitted. &nbsp;Depending on the available resources your mileage may vary.</p>
-<p><a class="reference external" href="http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite1/"><img alt="graphite1" src="http://smetj.net/wp-content/uploads/2013/04/graphite1.png" /></a></p>
+<p><a class="reference external" href="pics/graphite1.png"><img alt="graphite1" src="pics/graphite1.png" /></a></p>
 <p>When reviewing the self generated Graphite metrics we can see we
 actually have received 10000 metrics.</p>
 <p>When you have more than one carbon-relay server you can extend the
@@ -409,7 +404,7 @@ Setting a value of 1 means one metric will be produced every second.
 that means data is produced at a higher rate than you can submit to
 Graphite. In that case you might want to raise the events variable (line
 34) which allows you to submit larger chunks of data per connection.</p>
-<p><img alt="graphite3" src="http://smetj.net/wp-content/uploads/2013/04/graphite3.png" /></p>
+<p><img alt="graphite3" src="pics/graphite3.png" /></p>
 <p><a class="reference external" href="http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite2/">The difference in Graphite throughput by changing the buffer
 events variable (line 34) from 100 to 1000.</a></p>
 <p>Depending on your settings Metricfactory can generate a significant
@@ -438,76 +433,35 @@ throughput of your Graphite setup.</p>
                 <div class="span3 well sidebar-nav" id="sidebar">
 <ul class="nav nav-list">
 <li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
-<li><a href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
     <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
     <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
 
 <li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/development.html">
+    <i class="icon-folder-open icon-large"></i>development
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/events.html">
+    <i class="icon-folder-open icon-large"></i>events
+</a>
+</li>
 <li>
 <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
     <i class="icon-folder-open icon-large"></i>misc
 </a>
 </li>
 <li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
-    <i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
-</a>
-</li>
-<li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
-    <i class="icon-folder-open icon-large"></i>monitoring
-</a>
-</li>
-<li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
-    <i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
-</a>
-</li>
-<li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
-    <i class="icon-folder-open icon-large"></i>Uncategorized
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoringlove.html">
+    <i class="icon-folder-open icon-large"></i>#monitoringlove
 </a>
 </li>
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
-        <i class="icon-tag icon-large"></i>graphite
-    </a>
-</li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
-        <i class="icon-tag icon-large"></i>python
-    </a>
-</li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
-        <i class="icon-tag icon-large"></i>tools
-    </a>
-</li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/release.html">
-        <i class="icon-tag icon-large"></i>release
-    </a>
-</li>
-<li class="tag-1">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
-        <i class="icon-tag icon-large"></i>monitoringlove
-    </a>
-</li>
 <li class="tag-0">
     <a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html">
         <i class="icon-tag icon-large"></i>moncli
-    </a>
-</li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
-        <i class="icon-tag icon-large"></i>rabbitmq
-    </a>
-</li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
-        <i class="icon-tag icon-large"></i>metricfactory
     </a>
 </li>
 <li class="tag-4">
@@ -520,14 +474,9 @@ throughput of your Graphite setup.</p>
         <i class="icon-tag icon-large"></i>wishbone
     </a>
 </li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringsucks.html">
-        <i class="icon-tag icon-large"></i>monitoringsucks
-    </a>
-</li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
-        <i class="icon-tag icon-large"></i>metrics
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
     </a>
 </li>
 <li class="tag-2">
@@ -541,13 +490,53 @@ throughput of your Graphite setup.</p>
     </a>
 </li>
 <li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-4">
     <a href="file:///home/smetj/projects/github/smetj.net/output/tag/molog.html">
         <i class="icon-tag icon-large"></i>molog
     </a>
 </li>
 <li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
-        <i class="icon-tag icon-large"></i>krolyk
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/gevent.html">
+        <i class="icon-tag icon-large"></i>gevent
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-1">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/pypy.html">
+        <i class="icon-tag icon-large"></i>pypy
     </a>
 </li>
 

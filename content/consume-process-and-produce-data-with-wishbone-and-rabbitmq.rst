@@ -2,7 +2,7 @@ Consume, process and produce data with Wishbone and RabbitMQ
 ############################################################
 :date: 2013-01-29 22:07
 :author: smetj
-:category: Programming, Python, Wishbone
+:category: events
 :tags: amqp, python, rabbitmq, wishbone
 :slug: consume-process-and-produce-data-with-wishbone-and-rabbitmq
 
@@ -350,13 +350,17 @@ setups.
 .. _skeleton module: https://github.com/smetj/wishbone/blob/master/wishbone/modules/skeleton.py
 .. _experiments repository: https://github.com/smetj/experiments/tree/master/python/wishbone
 
-.. |RabbitMQ Management Interface| image:: http://smetj.net/wp-content/uploads/2013/01/rabbit1-300x288.png
-   :target: http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit1/
-.. |cli1| image:: http://smetj.net/wp-content/uploads/2013/01/cli11-300x188.png
-   :target: http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli1-2/
-.. |cli2| image:: http://smetj.net/wp-content/uploads/2013/01/cli2-300x50.png
-   :target: http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli2/
-.. |rabbit2| image:: http://smetj.net/wp-content/uploads/2013/01/rabbit2-231x300.png
-   :target: http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit2/
-.. |cli3| image:: http://smetj.net/wp-content/uploads/2013/01/cli3-300x56.png
-   :target: http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli3/
+.. |RabbitMQ Management Interface| image:: pics/rabbit1-300x288.png
+   :target: pics/rabbit1.png
+
+.. |cli1| image:: pics/cli11-300x188.png
+   :target: pics/cli11.png
+
+.. |cli2| image:: pics/cli2-300x50.png
+   :target: pics/cli2.png
+
+.. |rabbit2| image:: pics/rabbit2-231x300.png
+   :target: pics/rabbit2.png
+
+.. |cli3| image:: pics/cli3-300x56.png
+   :target: pics/cli3.png

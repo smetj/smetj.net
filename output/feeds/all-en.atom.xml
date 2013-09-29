@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>http://smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="file:///home/smetj/projects/github/smetj.net/output/feeds/all-en.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2013-06-05T01:26:00+02:00</updated><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="file:///home/smetj/projects/github/smetj.net/output/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
+<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2013-06-05T01:26:00+02:00</updated><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="file:///home/smetj/projects/github/smetj.net/output/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
 myself to the point of actually trying it. &amp;nbsp;Recently, a notification
 caught to my attention stating PyPy 2.0.2 was released and had support
 to run Gevent. &amp;nbsp;Good news! I was looking at speed improvements for
@@ -118,7 +118,7 @@ binaries included)''
 into a virtualenv it's really easy to use, experiment and rebuild.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Have a lot of fun running Gevent on PyPy!&lt;/em&gt;&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory</title><link href="file:///home/smetj/projects/github/smetj.net/output/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html" rel="alternate"></link><updated>2013-05-10T15:59:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-05-10:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
+</summary><category term="python"></category><category term="gevent"></category><category term="pypy"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory</title><link href="file:///home/smetj/projects/github/smetj.net/output/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html" rel="alternate"></link><updated>2013-05-10T15:59:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-05-10:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
 for many. &amp;nbsp;I would have abandoned it if there weren't projects like
 &lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,&amp;nbsp;&lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;Mod_Gearman&lt;/a&gt;&amp;nbsp;and&amp;nbsp;&lt;a class="reference external" href="http://www.thruk.org/"&gt;Thruk&lt;/a&gt;&amp;nbsp;which to my opinion should
 never be missing from any Nagios setup. &amp;nbsp;Mod_Gearman, the framework
@@ -159,7 +159,7 @@ all available system memory is consumed. &amp;nbsp;Setting the value to&amp;nbsp
 will append all performance data to the queue without overwriting old
 data. &amp;nbsp;When enabled you can execute the&amp;nbsp;&lt;em&gt;gearman_top&lt;/em&gt; command and you
 should see the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue appear:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/05/10/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top/"&gt;&lt;img alt="gearman_top" src="http://smetj.net/wp-content/uploads/2013/05/gearman_top.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/gearman_top.png"&gt;&lt;img alt="gearman_top" src="pics/gearman_top.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;The Jobs Waiting column indicates how many performance data is currently
 stored in the queue. &amp;nbsp;Ideally this should be 0 or as low as possible and
 never grow otherwise that might indicate the performance data is not
@@ -168,7 +168,7 @@ performance data. &amp;nbsp;If you want to be sure whether a plugin produces
 performance data, have a look in Thruk (or other Nagios interface) and
 verify in the service or host details whether &lt;em&gt;Performance Data&lt;/em&gt;
 actually contains valid perfdata.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/05/10/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata/"&gt;&lt;img alt="perfdata" src="http://smetj.net/wp-content/uploads/2013/05/perfdata.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/perfdata.png"&gt;&lt;img alt="perfdata" src="pics/perfdata.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="metricfactory"&gt;
 &lt;h2&gt;Metricfactory&lt;/h2&gt;
@@ -570,7 +570,7 @@ $ metricfactory debug --config hammer.json
 &lt;p&gt;With this particular setup metricfactory will create 1 TCP connection
 per metric. &amp;nbsp;So it might take a while until all metrics are actually
 submitted. &amp;nbsp;Depending on the available resources your mileage may vary.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite1/"&gt;&lt;img alt="graphite1" src="http://smetj.net/wp-content/uploads/2013/04/graphite1.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/graphite1.png"&gt;&lt;img alt="graphite1" src="pics/graphite1.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;When reviewing the self generated Graphite metrics we can see we
 actually have received 10000 metrics.&lt;/p&gt;
 &lt;p&gt;When you have more than one carbon-relay server you can extend the
@@ -713,7 +713,7 @@ Setting a value of 1 means one metric will be produced every second.
 that means data is produced at a higher rate than you can submit to
 Graphite. In that case you might want to raise the events variable (line
 34) which allows you to submit larger chunks of data per connection.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="graphite3" src="http://smetj.net/wp-content/uploads/2013/04/graphite3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="graphite3" src="pics/graphite3.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite2/"&gt;The difference in Graphite throughput by changing the buffer
 events variable (line 34) from 100 to 1000.&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Depending on your settings Metricfactory can generate a significant
@@ -804,7 +804,7 @@ if __name__ == '__main__':
 &lt;/pre&gt;
 &lt;p&gt;Save the content to a file called &amp;quot;brokertest&amp;quot; and make it executable.
 When executing you will get:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli1-2/"&gt;&lt;img alt="cli1" src="http://smetj.net/wp-content/uploads/2013/01/cli11-300x188.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/cli11.png"&gt;&lt;img alt="cli1" src="pics/cli11-300x188.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;And that's it! You have a WishBone server available. &amp;nbsp;Granted it doesn't
 do anything at all at this stage but that's what we'll cover in the next
 paragraph.&lt;/p&gt;
@@ -992,13 +992,13 @@ should do something like:&lt;/p&gt;
 [vagrant&amp;#64;wishbone files]$ ./brokertest debug --config brokertest.json --loglevel debug
 &lt;/pre&gt;
 &lt;p&gt;You should get a similar output to following screenshot:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli2/"&gt;&lt;img alt="cli2" src="http://smetj.net/wp-content/uploads/2013/01/cli2-300x50.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/cli2.png"&gt;&lt;img alt="cli2" src="pics/cli2-300x50.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Now submit a message containing the number &amp;quot;&lt;em&gt;100&lt;/em&gt;&amp;quot; through the
 RabbitMQ broker management interface into the &lt;em&gt;wishbone_in&lt;/em&gt; queue.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit2/"&gt;&lt;img alt="rabbit2" src="http://smetj.net/wp-content/uploads/2013/01/rabbit2-231x300.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/rabbit2.png"&gt;&lt;img alt="rabbit2" src="pics/rabbit2-231x300.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;If all went well your Wishbone application should create a log entry
 about the data you just submitted:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli3/"&gt;&lt;img alt="cli3" src="http://smetj.net/wp-content/uploads/2013/01/cli3-300x56.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/cli3.png"&gt;&lt;img alt="cli3" src="pics/cli3-300x56.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Have a look to the &lt;em&gt;wishbone_even&lt;/em&gt; queue your message should be arrived
 there.&lt;/p&gt;
 &lt;/div&gt;
@@ -1061,7 +1061,7 @@ seconds.&lt;/p&gt;
 &lt;p&gt;The Graphite instance does nothing particular. &amp;nbsp;You can consult the
 graphs by visiting following URL:
 &lt;a class="reference external" href="http://"&gt;http://&lt;/a&gt;&lt;a class="reference external" href="http://graphite-001/dashboard/"&gt;http://graphite-001/dashboard/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/screenshot-from-2013-01-07-223750/"&gt;&lt;img alt="Screenshot from 2013-01-07 22:37:50" src="http://smetj.net/wp-content/uploads/2013/01/Screenshot-from-2013-01-07-223750-300x150.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/Screenshot-from-2013-01-07-223750.png"&gt;&lt;img alt="Screenshot from 2013-01-07 22:37:50" src="pics/Screenshot-from-2013-01-07-223750-300x150.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="metricfactory"&gt;
 &lt;h2&gt;MetricFactory&lt;/h2&gt;
@@ -1071,12 +1071,12 @@ be loaded, how they are initiated and how &amp;nbsp;they are connected to each
 other.&lt;/p&gt;
 &lt;p&gt;For this scenario we need to have at least:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/iomodules/udpserver.py"&gt;UDP input&lt;/a&gt; (The Ganglia metrics come in over UDP).&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;UDP input&lt;/a&gt; (The Ganglia metrics come in over UDP).&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/decoders/decodeganglia.py"&gt;Ganglia decoder&lt;/a&gt;&amp;nbsp;(Deserialize the XDR format into a generic
 format.)&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/encoders/encodegraphite.py"&gt;Graphite encoder&lt;/a&gt; (Convert the generic format into a Graphite
 format.)&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/iomodules/tcpclient.py"&gt;A TCP client&lt;/a&gt; (Write the metrics into Graphite)&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;A TCP client&lt;/a&gt; (Write the metrics into Graphite)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="section" id="a-small-test"&gt;
 &lt;h3&gt;A small test&lt;/h3&gt;
@@ -1480,7 +1480,7 @@ can have multiple versions of the plugin inside the directory.&lt;/p&gt;
 &lt;p&gt;In part2 we will cover how to generate a request so we can test and use
 our newly created plugin.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="monitoringlove"></category><category term="moncli"></category></entry><entry><title>Moncli 0.2.4</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-0-2-4.html" rel="alternate"></link><updated>2012-03-05T18:28:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-03-05:moncli-0-2-4.html</id><summary type="html">&lt;p&gt;A new version of Moncli is released:&lt;/p&gt;
+</summary><category term="moncli"></category></entry><entry><title>Moncli 0.2.4</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-0-2-4.html" rel="alternate"></link><updated>2012-03-05T18:28:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-03-05:moncli-0-2-4.html</id><summary type="html">&lt;p&gt;A new version of Moncli is released:&lt;/p&gt;
 &lt;p&gt;This release immediately follows&amp;nbsp;the 0.2.3 release to fix 2 issues which
 got unnoticed during &amp;nbsp;that release:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -1490,7 +1490,7 @@ got unnoticed during &amp;nbsp;that release:&lt;/p&gt;
 &lt;p&gt;Both issues have been tackled.&lt;/p&gt;
 &lt;p&gt;For support please post a message to the &lt;a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/moncli"&gt;mailing list&lt;/a&gt;&amp;nbsp;or submit a
 &lt;a class="reference external" href="https://github.com/smetj/moncli/issues"&gt;bug report&lt;/a&gt;.&lt;/p&gt;
-</summary><category term="moncli"></category><category term="release"></category></entry><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="file:///home/smetj/projects/github/smetj.net/output/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
+</summary><category term="moncli"></category></entry><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="file:///home/smetj/projects/github/smetj.net/output/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
 &lt;h2&gt;What's in a name?&lt;/h2&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Krolyk-300x185.jpg" /&gt;&lt;/a&gt;Before we go into more detail on how to execute plugins,
 manipulate and evaluate data with Moncli we first have to take a look
@@ -1567,7 +1567,7 @@ information from this post you should be able to display the data
 generated by Moncli, so you have an idea what comes out of it.&lt;/p&gt;
 &lt;p&gt;In the next post we will be creating Requests and Reports with Moncli.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="krolyk"></category><category term="moncli"></category><category term="monitoringsucks"></category><category term="rabbitmq"></category></entry><entry><title>Moncli - An introduction</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-an-introduction.html" rel="alternate"></link><updated>2012-02-09T00:20:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-09:moncli-an-introduction.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/moncli_architecture_1-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Moncli_architecture_11-300x231.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+</summary><category term="krolyk"></category><category term="moncli"></category><category term="monitoringlove"></category><category term="rabbitmq"></category></entry><entry><title>Moncli - An introduction</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-an-introduction.html" rel="alternate"></link><updated>2012-02-09T00:20:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-09:moncli-an-introduction.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/moncli_architecture_1-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Moncli_architecture_11-300x231.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;One of the classic tasks one has to deal with when working with a
 monitoring framework is have the ability to retrieve metrics from an OS
 or server which aren't available just like that over the network. There

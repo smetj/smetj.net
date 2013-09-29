@@ -2,8 +2,8 @@ Consuming Moncli data from RabbitMQ using Krolyk
 ################################################
 :date: 2012-02-11 18:08
 :author: smetj
-:category: Moncli, Monitoring, Series
-:tags: krolyk, moncli, monitoringsucks, rabbitmq
+:category: events
+:tags: krolyk, moncli, monitoringlove, rabbitmq
 :slug: consuming-moncli-data-from-rabbitmq-using-krolyk
 
 What's in a name?

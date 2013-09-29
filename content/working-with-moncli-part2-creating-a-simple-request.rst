@@ -2,7 +2,7 @@ Working with Moncli part2: Creating a simple request
 ####################################################
 :date: 2012-03-11 22:12
 :author: smetj
-:category: monitoring
+:category: #monitoringlove
 :tags: moncli, monitoringlove
 :slug: working-with-moncli-part2-creating-a-simple-request
 

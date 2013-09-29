@@ -2,7 +2,7 @@ After a long hiatus
 ###################
 :date: 2012-09-30 23:46
 :author: smetj
-:category: monitoring
+:category: misc
 :tags: molog, monitoring
 :slug: after-a-long-hiatus
 

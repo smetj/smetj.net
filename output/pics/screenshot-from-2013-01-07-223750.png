@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>  Screenshot from 2013-01-07 22:37:50</title>
+
+        <!-- Mobile Viewport Fix ( j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag ) -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <link rel="profile" href="http://gmpg.org/xfn/11" />
+        
+        <link rel="pingback" href="http://smetj.net/xmlrpc.php" />
+
+        <link rel="stylesheet" href="http://smetj.net/wp-content/themes/rtpanel/style.css" type="text/css" media="all" />
+
+        <!--[if lt IE 9]>
+            <script src="http://smetj.net/wp-content/themes/rtpanel/js/html5.js"></script>
+        <![endif]-->
+
+        <link rel="alternate" type="application/rss+xml" title="Jelle Smet &raquo; Feed" href="http://smetj.net/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Jelle Smet &raquo; Comments Feed" href="http://smetj.net/comments/feed/" />
+
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.3 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-40703057-1']);
+				            _gaq.push(['_setCustomVar',1,'post_type','attachment',3],['_setCustomVar',4,'categories','',3],['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
+			<link rel="alternate" type="application/rss+xml" title="Jelle Smet &raquo; Screenshot from 2013-01-07 22:37:50 Comments Feed" href="http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/screenshot-from-2013-01-07-223750/feed/" />
+<link rel='stylesheet' id='wp-syntax-css-css'  href='http://smetj.net/wp-content/plugins/wp-syntax/css/wp-syntax.css?ver=1.0' type='text/css' media='all' />
+<script type='text/javascript' src='http://smetj.net/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://smetj.net/wp-includes/js/comment-reply.min.js?ver=3.5.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://smetj.net/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://smetj.net/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.5.1" />
+<link rel='canonical' href='http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/screenshot-from-2013-01-07-223750/' />
+    </head>
+    <body class="attachment single single-attachment postid-426 attachmentid-426 attachment-png unknown linux"><!-- ends in footer.php -->
+
+        
+        <div id="main-wrapper" class="rtp-container-12 clearfix"><!-- ends in footer.php -->
+
+            
+                        <header id="header-wrapper" role="banner" class="rtp-container-12 clearfix">
+
+                
+                <div id="header" class="rtp-grid-12 clearfix">
+                    
+                                                <h2 class="rtp-site-logo clearfix"><a role="link" href="http://smetj.net/" title="Jelle Smet">Jelle Smet</a></h2>
+                        
+                            <h2 class="tagline">Curiosity driven development.  Python &#8211; Monitoring &#8211; Metrics &#8211; Events &#8211; Automation &#8211; Infrastructure.</h2>
+                </div><!-- #header -->
+
+                <nav id="rtp-primary-menu" role="navigation" class="rtp-grid-12 rtp-mobile-nav"><ul class="menu" id="rtp-nav-menu"></ul></nav>
+            </header><!-- #header-wrapper -->
+
+            <div id="content-wrapper" class="rtp-container-12 clearfix"><!-- ends in footer.php -->
+                
+
+    <section id="content" class="rtp-image-attachment rtp-grid-12">
+        
+                        <div class="rtp-navigation clearfix">
+                    <div class="alignleft"><a role="link" href="http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/">&larr; Using MetricFactory to get Hadoop metrics into Graphite.</a></div>
+                </div>
+            <article class="post-426 attachment type-attachment status-inherit hentry rtp-image-box">
+                
+                <header class="post-header clearfix">
+                    
+                    <h1 class="post-title rtp-has-comments">Screenshot from 2013-01-07 22:37:50</h1>
+
+                    
+                    
+                </header><!-- .post-title -->
+
+                <div class="post-content clearfix">
+                    
+                    
+                    <figure role="img" class="wp-caption aligncenter" aria-describedby="figcaption_attachment_426" style="width: 786px";>
+                        <a role="link" href="http://smetj.net/wp-content/uploads/2013/01/Screenshot-from-2013-01-07-223750.png" title="Screenshot from 2013-01-07 22:37:50" rel="attachment"><img width="786" height="395" src="http://smetj.net/wp-content/uploads/2013/01/Screenshot-from-2013-01-07-223750.png" class="attachment-full" alt="Screenshot from 2013-01-07 22:37:50" /></a>                    </figure>
+
+                    
+                                                    <ul role="list" class="rtp-sibling-attachments rtp-container-12 rtp-alpha rtp-omega clearfix">                                </ul>
+                    
+                </div><!-- .post-content -->
+
+                
+                            </article><!-- .rtp-post-box -->
+<div id="disqus_thread">
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/screenshot-from-2013-01-07-223750/';
+    var disqus_identifier = '426 http://smetj.net/wp-content/uploads/2013/01/Screenshot-from-2013-01-07-223750.png';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'smetj';
+    var disqus_title = "Screenshot from 2013-01-07 22:37:50";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+        config.language = '';
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=426';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/smetj.net\/2013\/01\/10\/using-metricfactory-to-get-hadoop-metrics-into-graphite\/screenshot-from-2013-01-07-223750\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+            </section><!-- #content -->
+
+
+                            </div><!-- #content-wrapper -->
+
+            <footer id="footer-wrapper" role="contentinfo" class="clearfix rtp-container-12 rtp-section-separator">
+                                    
+                <div id="footer" class="rtp-grid-12">
+                    <div>&copy; 2013 - Jelle Smet</div>
+                    <div><em>Designed on <a role="link" href="http://rtcamp.com/rtpanel/" class="rtp-common-link" title="rtPanel WordPress Theme Framework">rtPanel WordPress Theme Framework</a>.</em></div>
+                </div><!-- #footer -->
+
+                
+            </footer><!-- #footer-wrapper-->
+
+            
+        </div><!-- #main-wrapper -->
+
+        <script type='text/javascript' src='http://smetj.net/wp-content/themes/rtpanel/js/rtp-mobile.js?ver=3.5.1'></script>
+
+        
+    </body>
+</html>

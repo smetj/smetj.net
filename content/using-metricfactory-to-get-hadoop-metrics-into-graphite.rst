@@ -2,7 +2,7 @@ Using MetricFactory to get Hadoop metrics into Graphite.
 ########################################################
 :date: 2013-01-10 00:40
 :author: smetj
-:category: monitoring
+:category: #monitoringlove
 :tag: graphite, hadoop, metrics
 :slug: using-metricfactory-to-get-hadoop-metrics-into-graphite
 
@@ -203,10 +203,10 @@ relatively easy.  If you require support you can submit a message to the
 .. _Ganglia: http://ganglia.sourceforge.net/
 .. _MetricFactory: https://github.com/smetj/metricfactory
 .. _bootstrap files: https://github.com/smetj/experiments/tree/master/metricfactory
-.. _UDP input: https://github.com/smetj/wishbone/blob/master/wishbone/iomodules/udpserver.py
+.. _UDP input: https://github.com/smetj/wishboneModules
 .. _Ganglia decoder: https://github.com/smetj/metricfactory/blob/master/metricfactory/decoders/decodeganglia.py
 .. _Graphite encoder: https://github.com/smetj/metricfactory/blob/master/metricfactory/encoders/encodegraphite.py
-.. _A TCP client: https://github.com/smetj/wishbone/blob/master/wishbone/iomodules/tcpclient.py
+.. _A TCP client: https://github.com/smetj/wishboneModules
 .. _this: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite2stdout.json
 .. _a bootstrap file: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite.json
 .. _A decoder with multiple instances: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/uds-ganglia-graphite.json
@@ -214,5 +214,5 @@ relatively easy.  If you require support you can submit a message to the
 .. _The UDSclient module: http://smetj.github.com/wishbone/docs/build/html/iomodules.html#wishbone.iomodules.udsclient.UDSClient
 .. _MetricFactory mailing list: https://groups.google.com/forum/?fromgroups#!forum/metricfactory
 
-.. |Screenshot from 2013-01-07 22:37:50| image:: http://smetj.net/wp-content/uploads/2013/01/Screenshot-from-2013-01-07-223750-300x150.png
-   :target: http://smetj.net/2013/01/10/using-metricfactory-to-get-hadoop-metrics-into-graphite/screenshot-from-2013-01-07-223750/
+.. |Screenshot from 2013-01-07 22:37:50| image:: pics/Screenshot-from-2013-01-07-223750-300x150.png
+   :target: pics/Screenshot-from-2013-01-07-223750.png

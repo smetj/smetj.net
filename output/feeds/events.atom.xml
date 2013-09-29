@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="file:///home/smetj/projects/github/smetj.net/output/feeds/events.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2013-04-28T22:14:00+02:00</updated><entry><title>Testing Graphite with MetricFactory</title><link href="file:///home/smetj/projects/github/smetj.net/output/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;p&gt;Graphite is great. &amp;nbsp;Not only because it's a great piece of software but
+also because of the community around it which brings forth all kinds of
+metrics goodness. &amp;nbsp;Although it's pretty straightforward to get Graphite
+up and running on one node, it gets a bit more complex to get it up and
+running in a clustered/sharded/federated mode. &amp;nbsp;I found &lt;a class="reference external" href="http://bitprophet.org/blog/2013/03/07/graphite/"&gt;Jeff
+Forcier's Clustering Graphite&lt;/a&gt; and &lt;a class="reference external" href="http://rcrowley.org/articles/federated-graphite.html"&gt;Richard Crowley's Federated
+Graphite&lt;/a&gt;&amp;nbsp;to be very helpful. &amp;nbsp;Once you have your clustered Graphite
+setup up and running you might want to test its behavior and get
+acquainted with its different settings and modules before going to
+production. &amp;nbsp;That's where &lt;a class="reference external" href="https://github.com/smetj/metricfactory"&gt;Metricfactory&lt;/a&gt;&amp;nbsp;might help you out.&lt;/p&gt;
+&lt;p&gt;Metricfactory is a modular framework based on &lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;Wishbone&lt;/a&gt; aimed to
+quickly assemble servers which process metrics in one way or the other.
+&amp;nbsp;So why not use it to generate random metrics and write them to Graphite
+in a controlled way? &amp;nbsp;With this article I would like to take you through
+a couple of use cases.&lt;/p&gt;
+&lt;div class="section" id="installation"&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Installing metricfactory is a matter of checking out the project from
+Git and running the installer. &amp;nbsp;All dependencies should be downloaded
+automatically.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ git clone https://github.com/smetj/metricfactory
+$ cd metricfactory
+$ sudo python setup.py install
+&lt;/pre&gt;
+&lt;p&gt;We will also require some extra &lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Wishbone modules&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo easy_install wb_tippingbucket
+$ sudo easy_install wb_tcpclient
+&lt;/pre&gt;
+&lt;p&gt;One or more of following packages might be required to successfully
+finish the install:&lt;/p&gt;
+&lt;blockquote&gt;
+gcc, gcc-c++, make, python-devel, Cython&lt;/blockquote&gt;
+&lt;p&gt;Once installed you can execute following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory list
+&lt;/pre&gt;
+&lt;p&gt;That should return a list of all available modules. &amp;nbsp;You should see at
+least TCPClient, TippingBucket, Hammer and Graphite.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bootstrap"&gt;
+&lt;h2&gt;Bootstrap&lt;/h2&gt;
+&lt;p&gt;Starting Metricfactory requires a bootstrap file. &amp;nbsp;A bootstrap file is a
+JSON formatted file containing the configuration of which modules to
+initiate and which path events will follow through these module
+instances.&lt;/p&gt;
+&lt;p&gt;A base bootstrap file you can found &lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hammerGraphite/hammer.json"&gt;here&lt;/a&gt;. &amp;nbsp;We will be adapting it to
+suit our needs. &amp;nbsp;Going through the content it should give you an idea
+what the possibilities are.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-1-submit-unbuffered-unique-metrics-to-carbon-relay"&gt;
+&lt;h2&gt;Scenario 1: Submit unbuffered unique metrics to carbon-relay.&lt;/h2&gt;
+&lt;p&gt;Let's say we have 1 carbon-relay instance running which forwards our
+metrics to 1 or more carbon instance. &amp;nbsp;We want to verify whether all our
+metrics actually arrive. &amp;nbsp;Each metric will be submitted as a separate
+TCP connection. &amp;nbsp;This is quite inefficient, we should bundle metrics and
+submit them in bulk but for the sake of testing we'll do so.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+  &amp;quot;metrics&amp;quot;: {
+    &amp;quot;enable&amp;quot;: true,
+    &amp;quot;group&amp;quot;: &amp;quot;wishbone.metrics&amp;quot;,
+    &amp;quot;interval&amp;quot;: 60,
+    &amp;quot;module&amp;quot;: &amp;quot;Log&amp;quot;,
+    &amp;quot;variables&amp;quot;: {
+    }
+  },
+  &amp;quot;bootstrap&amp;quot;: {
+    &amp;quot;hammer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.test&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Hammer&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;mode&amp;quot;:&amp;quot;sequential&amp;quot;,
+        &amp;quot;total&amp;quot;:0,
+        &amp;quot;sleep&amp;quot;:0,
+        &amp;quot;host&amp;quot;:100,
+        &amp;quot;metric&amp;quot;:100,
+        &amp;quot;value&amp;quot;:10000000
+      }
+    },
+    &amp;quot;encodegraphite&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.encoder&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Graphite&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;prefix&amp;quot;:&amp;quot;hammer&amp;quot;
+      }
+    },
+    &amp;quot;buffer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TippingBucket&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;events&amp;quot;: 100,
+        &amp;quot;age&amp;quot;: 10
+      }
+    },
+    &amp;quot;tcpout&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TCPClient&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;pool&amp;quot;: [&amp;quot;graphite-001:2013&amp;quot;]
+      }
+    }
+  },
+  &amp;quot;routingtable&amp;quot;: {
+    &amp;quot;hammer.inbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
+    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;tcpout.inbox&amp;quot; ]
+  }
+}
+&lt;/pre&gt;
+&lt;p&gt;The hammer module (line 11) is the module which actually generates the
+metrics. &amp;nbsp;We initialize the module in sequential mode (line 15). &amp;nbsp;That
+means each individual metric is unique in terms of
+&lt;em&gt;hostname.metricname&lt;/em&gt;. &amp;nbsp;The amount of metrics to generate is determined
+by the host (line 18) and metric (line 19) variables. &amp;nbsp;This means we're
+generating 100 unique metrics for 100 different nodes resulting into a
+total of 10000 metrics.&lt;/p&gt;
+&lt;p&gt;The routing table (line 46) tells us events are travelling through the
+modules in following order: hammer -&amp;gt; encodegraphite -&amp;gt; tcpout. &amp;nbsp;The
+tcpout module (line 38) submits the metrics over TCP to the destination
+defined with the pool variable (line 42).&lt;/p&gt;
+&lt;p&gt;The buffer module (line 30) is initialized but not included in our
+routing table. &amp;nbsp;That means it's not processing any metrics for the
+moment. &amp;nbsp;We will come back to that in one of the following scenarios.&lt;/p&gt;
+&lt;p&gt;Start a metricfactory in the foreground using following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config hammer.json
+&lt;/pre&gt;
+&lt;p&gt;You can stop metricfactory by pressing CTRL+C.&lt;/p&gt;
+&lt;p&gt;With this particular setup metricfactory will create 1 TCP connection
+per metric. &amp;nbsp;So it might take a while until all metrics are actually
+submitted. &amp;nbsp;Depending on the available resources your mileage may vary.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite1/"&gt;&lt;img alt="graphite1" src="http://smetj.net/wp-content/uploads/2013/04/graphite1.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When reviewing the self generated Graphite metrics we can see we
+actually have received 10000 metrics.&lt;/p&gt;
+&lt;p&gt;When you have more than one carbon-relay server you can extend the
+pool variable (line 42) accordingly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-2-submit-buffered-unique-metrics-to-carbon-relay"&gt;
+&lt;h2&gt;Scenario 2: Submit buffered unique metrics to carbon-relay.&lt;/h2&gt;
+&lt;p&gt;You might want to limit the number of connections by grouping metrics
+and submit them in bulk to carbon-relay. &amp;nbsp;We have already initialized
+the buffer module (line 30). &amp;nbsp;The only thing left compared to our
+previous scenario is to include the buffer module in our &lt;em&gt;routingtable&lt;/em&gt;
+section (line 48-49).&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+  &amp;quot;metrics&amp;quot;: {
+    &amp;quot;enable&amp;quot;: true,
+    &amp;quot;group&amp;quot;: &amp;quot;wishbone.metrics&amp;quot;,
+    &amp;quot;interval&amp;quot;: 60,
+    &amp;quot;module&amp;quot;: &amp;quot;Log&amp;quot;,
+    &amp;quot;variables&amp;quot;: {
+    }
+  },
+  &amp;quot;bootstrap&amp;quot;: {
+    &amp;quot;hammer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.test&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Hammer&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;mode&amp;quot;:&amp;quot;sequential&amp;quot;,
+        &amp;quot;total&amp;quot;:0,
+        &amp;quot;sleep&amp;quot;:0,
+        &amp;quot;host&amp;quot;:100,
+        &amp;quot;metric&amp;quot;:100,
+        &amp;quot;value&amp;quot;:10000000
+      }
+    },
+    &amp;quot;encodegraphite&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.encoder&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Graphite&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;prefix&amp;quot;:&amp;quot;hammer&amp;quot;
+      }
+    },
+    &amp;quot;buffer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TippingBucket&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;events&amp;quot;: 100,
+        &amp;quot;age&amp;quot;: 10
+      }
+    },
+    &amp;quot;tcpout&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TCPClient&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;pool&amp;quot;: [&amp;quot;graphite-001:2013&amp;quot;]
+      }
+    }
+  },
+  &amp;quot;routingtable&amp;quot;: {
+    &amp;quot;hammer.inbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
+    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;buffer.inbox&amp;quot; ],
+    &amp;quot;buffer.outbox&amp;quot;: [ &amp;quot;tcpout.inbox&amp;quot; ]
+  }
+}
+&lt;/pre&gt;
+&lt;p&gt;The events variable (line 34) makes the buffer flush when 100 events are
+available. &amp;nbsp;The age variable (line 35) make the buffer flush when the
+last added metric added is X seconds old. &amp;nbsp;With this scenario we would
+only require 10 TCP connections compared to 10000 to submit the same
+number of metrics.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-3-generate-a-constant-stream-of-random-metrics"&gt;
+&lt;h2&gt;Scenario 3: Generate a constant stream of random metrics.&lt;/h2&gt;
+&lt;p&gt;To generate a continuous stream of random metrics we can set the &lt;em&gt;mode&lt;/em&gt;
+variable (line 15) to random. &amp;nbsp;This gives a different meaning to the
+host (line 18) and metric (line 19) variables. &amp;nbsp;They now become for each
+metric the maximum value of a random integer to choose from starting
+from 0. &amp;nbsp;Hostnames will have the format &lt;em&gt;host_1234&lt;/em&gt; and metrics
+&lt;em&gt;metric_1234.&lt;/em&gt;&amp;nbsp; Depending upon your specific needs, you might want to
+choose a higher value to avoid duplicate values being generated.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+  &amp;quot;metrics&amp;quot;: {
+    &amp;quot;enable&amp;quot;: true,
+    &amp;quot;group&amp;quot;: &amp;quot;wishbone.metrics&amp;quot;,
+    &amp;quot;interval&amp;quot;: 60,
+    &amp;quot;module&amp;quot;: &amp;quot;Log&amp;quot;,
+    &amp;quot;variables&amp;quot;: {
+    }
+  },
+  &amp;quot;bootstrap&amp;quot;: {
+    &amp;quot;hammer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.test&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Hammer&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;mode&amp;quot;:&amp;quot;random&amp;quot;,
+        &amp;quot;total&amp;quot;:0,
+        &amp;quot;sleep&amp;quot;:0,
+        &amp;quot;host&amp;quot;:1000,
+        &amp;quot;metric&amp;quot;:1000,
+        &amp;quot;value&amp;quot;:10000000
+      }
+    },
+    &amp;quot;encodegraphite&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.encoder&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Graphite&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;prefix&amp;quot;:&amp;quot;hammer&amp;quot;
+      }
+    },
+    &amp;quot;buffer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TippingBucket&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;events&amp;quot;: 100,
+        &amp;quot;age&amp;quot;: 10
+      }
+    },
+    &amp;quot;tcpout&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TCPClient&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;pool&amp;quot;: [&amp;quot;graphite-001:2013&amp;quot;]
+      }
+    }
+  },
+  &amp;quot;routingtable&amp;quot;: {
+    &amp;quot;hammer.inbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
+    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;buffer.inbox&amp;quot; ],
+    &amp;quot;buffer.outbox&amp;quot;: [ &amp;quot;tcpout.inbox&amp;quot; ]
+  }
+}
+&lt;/pre&gt;
+&lt;p&gt;The sleep variable (line 17) determines how much time to wait between
+generating each metric. That might be useful when you want to limit CPU
+usage or control the interval between metrics. A value of 0 means
+Metricfactory will drain your CPU trying to produce as much as possible.
+Setting a value of 1 means one metric will be produced every second.
+&amp;nbsp;When&amp;nbsp;you notice Metricfactory gradually consumes all memory available
+that means data is produced at a higher rate than you can submit to
+Graphite. In that case you might want to raise the events variable (line
+34) which allows you to submit larger chunks of data per connection.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="graphite3" src="http://smetj.net/wp-content/uploads/2013/04/graphite3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite2/"&gt;The difference in Graphite throughput by changing the buffer
+events variable (line 34) from 100 to 1000.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Depending on your settings Metricfactory can generate a significant
+amount of metrics. &amp;nbsp;You could even raise that by starting multiple
+parallel processes:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config hammer.json --instances 4
+&lt;/pre&gt;
+&lt;p&gt;This will start 4 parallel processes each executing exactly the same.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Generating a predictable number of metrics can be practical to verify whether
+your Graphite setup behaves as expected under different scenarios. &amp;nbsp;It becomes
+more&amp;nbsp;meaningful&amp;nbsp;if you have a more complex environment with a number of
+relays, sharding and duplication policies. &amp;nbsp;By generating large batches of
+continuous&amp;nbsp;data with different sizing it's possible to get an idea about the
+throughput of your Graphite setup.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="python"></category></entry><entry><title>Consume, process and produce data with Wishbone and RabbitMQ</title><link href="file:///home/smetj/projects/github/smetj.net/output/consume-process-and-produce-data-with-wishbone-and-rabbitmq.html" rel="alternate"></link><updated>2013-01-29T22:07:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-01-29:consume-process-and-produce-data-with-wishbone-and-rabbitmq.html</id><summary type="html">&lt;p&gt;When I first came in touch with the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol"&gt;messaging&lt;/a&gt;&amp;nbsp;concept&amp;nbsp;it was some
+kind of a revelation. &amp;nbsp;Ever since many solutions I work on involve
+message brokers one way or the other. &amp;nbsp;Because of that, a design pattern
+occurred hence the need for a Python framework allowing me to easily
+write solutions to interact with messaging based setups. &amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;Wishbone&lt;/a&gt;&amp;nbsp;is
+a Python framework which simplifies writing coroutine event pipelines.
+&amp;nbsp;Wishbone is a framework in which you can load and connect multiple
+modules in order to come to a tailored solution.
+Although Wishbone's scope is larger than that, I would like to
+demonstrate how easy it is to write a daemon which consumes and
+processes messages from &lt;em&gt;`RabbitMQ`_&lt;/em&gt;.&lt;/p&gt;
+&lt;div class="section" id="preparation"&gt;
+&lt;h2&gt;Preparation&lt;/h2&gt;
+&lt;p&gt;If you want to be able to execute the examples throughout this article
+you should have a RabbitMQ (with the&amp;nbsp;&lt;a class="reference external" href="http://www.rabbitmq.com/management.html"&gt;management plugin&lt;/a&gt;)&amp;nbsp;instance&amp;nbsp;up
+and running and install the Wishbone library. &amp;nbsp;There is some great
+RabbitMQ documentation out there explaining you how to install a basic
+stand-alone instance.&lt;/p&gt;
+&lt;div class="section" id="installing-wishbone"&gt;
+&lt;h3&gt;Installing Wishbone&lt;/h3&gt;
+&lt;p&gt;Installing the Wishbone library can be done through&amp;nbsp;&lt;a class="reference external" href="http://pypi.python.org/pypi/wishbone/0.2.2"&gt;Cheeseshop&lt;/a&gt;&amp;nbsp;or
+from&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;GitHub&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[vagrant&amp;#64;wishbone ~]$ sudo easy_install wishbone
+&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;On centos I required:&amp;nbsp;gcc-c++ snappy-devel python-dev Cython
+libev-devel&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rabbitmq"&gt;
+&lt;h3&gt;RabbitMQ&lt;/h3&gt;
+&lt;p&gt;Within RabbitMQ let's create 2 queues we're going to use in this
+article&lt;/p&gt;
+&lt;p&gt;Visit the web based RabbitMQ management application listening on port
+55672 and create 3 queues:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;em&gt;wishbone_in, wishbone_even, wishbone_uneven&lt;/em&gt;&lt;/blockquote&gt;
+&lt;p&gt;RabbitMQ Management Interface&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;You can&amp;nbsp;achieve the same by using the rabbitmqadmin tool.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creating-a-wishbone-setup"&gt;
+&lt;h2&gt;Creating a Wishbone Setup&lt;/h2&gt;
+&lt;p&gt;Now we have our test environment up and running lets create our first
+daemon.&lt;/p&gt;
+&lt;div class="section" id="challenge"&gt;
+&lt;h3&gt;Challenge&lt;/h3&gt;
+&lt;p&gt;Create a daemon which consumes messages from the wishbone_in queue.
+&amp;nbsp;Each submitted message contains an integer. &amp;nbsp;If this integer is even we
+submit the message to the &lt;em&gt;wishbone_uneven&lt;/em&gt; queue while the messages
+with even values should end up in the &lt;em&gt;wishbone_even&lt;/em&gt; queue.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="make-a-server"&gt;
+&lt;h3&gt;Make a server&lt;/h3&gt;
+&lt;p&gt;Wishbone is made to easily write daemons. &amp;nbsp;It comes with the required
+functionality to minimize all the work which goes along with that:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/usr/bin/env python
+from wishbone.server import BootStrap
+if __name__ == '__main__':
+    BootStrap(name=&amp;quot;BrokerTest&amp;quot;,
+        description=&amp;quot;This setup is just an example.&amp;quot;,
+        version=&amp;quot;0.1&amp;quot;,
+        author=&amp;quot;Your name&amp;quot;
+    )
+&lt;/pre&gt;
+&lt;p&gt;Save the content to a file called &amp;quot;brokertest&amp;quot; and make it executable.
+When executing you will get:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli1-2/"&gt;&lt;img alt="cli1" src="http://smetj.net/wp-content/uploads/2013/01/cli11-300x188.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And that's it! You have a WishBone server available. &amp;nbsp;Granted it doesn't
+do anything at all at this stage but that's what we'll cover in the next
+paragraph.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="modules"&gt;
+&lt;h3&gt;Modules&lt;/h3&gt;
+&lt;p&gt;Wishbone has the concept of &lt;a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/introduction.html#wishbone-modules"&gt;modules&lt;/a&gt;. &amp;nbsp;A module is a piece of code
+which is plugged into the Wishbone framework which takes data in and
+pushes data out. &amp;nbsp;Our WishBone server needs to know which modules to
+load, how to initialize them and how to tie them together into a
+workflow. &amp;nbsp;This is done using a &lt;a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/bootstrapfiles.html"&gt;bootstrap&lt;/a&gt; file which is loaded using
+the --config option. &amp;nbsp;A bootstrap file is mandatory, otherwise your
+Wishbone application is just an empty shell.&lt;/p&gt;
+&lt;div class="section" id="use-an-existing-module-broker"&gt;
+&lt;h4&gt;Use an existing module: Broker&lt;/h4&gt;
+&lt;p&gt;Wishbone comes with a bunch of already available modules. One of them
+is the&amp;nbsp;&lt;a class="reference external" href="http://smetj.github.com/wishbone/docs/build/html/iomodules.html#wishbone.iomodules.broker.Broker"&gt;Broker&lt;/a&gt;&amp;nbsp;module which allows you to get RabbitMQ messages in
+and out of Wishbone.&lt;/p&gt;
+&lt;p&gt;We are going to initialize the broker module with following
+parameters:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+... snip ...
+&amp;quot;broker&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;wishbone.iomodules.broker&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;Broker&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+            &amp;quot;host&amp;quot;:&amp;quot;sandbox&amp;quot;,
+            &amp;quot;vhost&amp;quot;:&amp;quot;/&amp;quot;,
+            &amp;quot;username&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;password&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;consume_queue&amp;quot;:&amp;quot;wishbone_in&amp;quot;,
+            &amp;quot;prefetch_count&amp;quot;:200,
+            &amp;quot;no_ack&amp;quot;:false,
+            &amp;quot;delivery_mode&amp;quot;:2
+         }
+}
+... snip ...
+&lt;/pre&gt;
+&lt;p&gt;Most of the parameters speak for themselves. &amp;nbsp;Have a look at the module
+documentation page for details.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-a-new-module-evenuneven"&gt;
+&lt;h4&gt;Create a new module: EvenUneven&lt;/h4&gt;
+&lt;p&gt;A module to determine whether the number is even/uneven is of course
+not available out of the box. &amp;nbsp;We're going to create this one ourselves.&lt;/p&gt;
+&lt;p&gt;WishBone includes a &amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone/blob/master/wishbone/modules/skeleton.py"&gt;skeleton module&lt;/a&gt; which can be used as a
+standard to build your new module on.&lt;/p&gt;
+&lt;p&gt;The WishBone framework really requires a Python module to load. &amp;nbsp;That
+means you should create a directory called &amp;quot;&lt;em&gt;evenuneven&lt;/em&gt;&amp;quot; and paste
+the below code into a file called &amp;nbsp;&lt;em&gt;evenuneven/__init__.py&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Wishbone modules are actually regular Python modules. &amp;nbsp;You should really
+try to follow the proper guidelines on how to build, package and install
+Python modules.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/usr/bin/env python
+
+from wishbone.toolkit import PrimitiveActor
+
+class EvenUneven(PrimitiveActor):
+    '''**An example Wishbone module which verifies if the data submitted
+    is even or uneven.**''
+
+    Parameters:
+
+        - name (str):    The instance name when initiated.
+
+    Queues:
+
+        - inbox:    Incoming events.
+        - outbox:   Outgoing events.
+    '''
+
+    def __init__(self, name):
+        PrimitiveActor.__init__(self, name)
+
+    def consume(self,doc):
+        if int(doc[&amp;quot;data&amp;quot;])%2 == 0:
+            self.logging.info('I received an even message.')
+
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_exchange&amp;quot;]=''
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_key&amp;quot;]='wishbone_even'
+        else:
+            self.logging.info('I received an uneven message.')
+
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_exchange&amp;quot;]=''
+            doc[&amp;quot;header&amp;quot;][&amp;quot;broker_key&amp;quot;]='wishbone_uneven'
+
+        self.putData(doc)
+
+    def shutdown(self):
+        self.logging.info('Shutdown')
+&lt;/pre&gt;
+&lt;p&gt;Once initiated, this class will run as a (green)thread within the
+Wishbone framework. The initialized instance of the class will
+automatically &amp;quot;inherit&amp;quot; an &lt;em&gt;inbox&lt;/em&gt; and &lt;em&gt;outbox&lt;/em&gt; queue. All messages
+arriving to the &lt;em&gt;inbox&lt;/em&gt; queue will automatically be &amp;quot;consumed&amp;quot; by the
+&lt;em&gt;consume()&lt;/em&gt; function. The framework will do that for you, so you don't
+need to worry about that. &amp;nbsp;Once done processing the data it can be place
+into the class's outbox queue, which is done using the &lt;em&gt;putData()&lt;/em&gt;
+function (line 34).&lt;/p&gt;
+&lt;p&gt;Each document flowing through the framework has following format:&lt;/p&gt;
+&lt;blockquote&gt;
+{&amp;quot;header&amp;quot;:{}, &amp;quot;data&amp;quot;:object }&lt;/blockquote&gt;
+&lt;p&gt;We're extending the &amp;quot;header&amp;quot; part of the document with 2 variables:
+&amp;quot;&lt;em&gt;broker_exchange&lt;/em&gt;&amp;quot; and &amp;quot;&lt;em&gt;broker_key&lt;/em&gt;&amp;quot;. When this message will
+arrive back into the broker module it will know to which exchange and
+queue to submit the document to.&lt;/p&gt;
+&lt;p&gt;This simple module does not require any variables when initialized, so
+the bootstrap file section to initialize this module would look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+... snip ...
+&amp;quot;evenuneven&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;evenuneven&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;EvenUneven&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+         }
+}
+... snip ...
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bootstrap-file"&gt;
+&lt;h3&gt;Bootstrap file&lt;/h3&gt;
+&lt;p&gt;The bootstrap file (which is defined through the &amp;nbsp;--config option) tells
+the WishBone server which modules to load and how the data flows through
+the modules.&lt;/p&gt;
+&lt;p&gt;The complete bootstrap for our example setup would look like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+   &amp;quot;system&amp;quot;:{
+      &amp;quot;metrics&amp;quot;:true,
+      &amp;quot;metrics_interval&amp;quot;:10,
+      &amp;quot;metrics_dst&amp;quot;:&amp;quot;logging&amp;quot;
+   },
+   &amp;quot;bootstrap&amp;quot;:{
+      &amp;quot;broker&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;wishbone.iomodules.broker&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;Broker&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+            &amp;quot;host&amp;quot;:&amp;quot;sandbox&amp;quot;,
+            &amp;quot;vhost&amp;quot;:&amp;quot;/&amp;quot;,
+            &amp;quot;username&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;password&amp;quot;:&amp;quot;guest&amp;quot;,
+            &amp;quot;consume_queue&amp;quot;:&amp;quot;wishbone_in&amp;quot;,
+            &amp;quot;prefetch_count&amp;quot;:200,
+            &amp;quot;no_ack&amp;quot;:true,
+            &amp;quot;delivery_mode&amp;quot;:2
+         }
+      },
+      &amp;quot;evenuneven&amp;quot;:{
+         &amp;quot;module&amp;quot;:&amp;quot;evenuneven&amp;quot;,
+         &amp;quot;class&amp;quot;:&amp;quot;EvenUneven&amp;quot;,
+         &amp;quot;variables&amp;quot;:{
+         }
+      }
+   },
+   &amp;quot;routingtable&amp;quot;:{
+      &amp;quot;broker.inbox&amp;quot;:[
+         &amp;quot;evenuneven.inbox&amp;quot;
+      ],
+      &amp;quot;evenuneven.outbox&amp;quot;:[
+         &amp;quot;broker.outbox&amp;quot;
+      ]
+   }
+}
+&lt;/pre&gt;
+&lt;p&gt;The &lt;em&gt;system&lt;/em&gt;&amp;nbsp;section of the bootstrap file allows you to control
+Wishbone framework specific items. &amp;nbsp;Currently only options related to
+metrics are available.&lt;/p&gt;
+&lt;p&gt;The&amp;nbsp;&lt;em&gt;bootstrap&lt;/em&gt; section allows you to initialize the modules and
+assign them to an instance name, which is in this case &amp;quot;&lt;em&gt;broker&lt;/em&gt;&amp;quot; and
+&amp;quot;&lt;em&gt;evenuneven&lt;/em&gt;&amp;quot;.&lt;/p&gt;
+&lt;p&gt;The&amp;nbsp;&lt;em&gt;routingtable&lt;/em&gt; section allows you to connect the instance queues
+to each other &amp;nbsp;in order to determine the application's dataflow.
+&amp;nbsp;Normally one connects the &lt;em&gt;outbox&lt;/em&gt; queue to the &lt;em&gt;inbox&lt;/em&gt; queue. &amp;nbsp;But in
+case of an IOmodule (which the broker module is) the data coming from
+the outside world arrives&amp;nbsp;&lt;em&gt;inbox&lt;/em&gt; queue and the data going to the
+outside world should go to the&amp;nbsp;&lt;em&gt;outbox&lt;/em&gt; queue.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="start-your-server-and-test"&gt;
+&lt;h3&gt;Start your server and test.&lt;/h3&gt;
+&lt;p&gt;To start your server and prevent it to fork into the background you
+should do something like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[vagrant&amp;#64;wishbone files]$ ./brokertest debug --config brokertest.json --loglevel debug
+&lt;/pre&gt;
+&lt;p&gt;You should get a similar output to following screenshot:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli2/"&gt;&lt;img alt="cli2" src="http://smetj.net/wp-content/uploads/2013/01/cli2-300x50.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Now submit a message containing the number &amp;quot;&lt;em&gt;100&lt;/em&gt;&amp;quot; through the
+RabbitMQ broker management interface into the &lt;em&gt;wishbone_in&lt;/em&gt; queue.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit2/"&gt;&lt;img alt="rabbit2" src="http://smetj.net/wp-content/uploads/2013/01/rabbit2-231x300.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If all went well your Wishbone application should create a log entry
+about the data you just submitted:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli3/"&gt;&lt;img alt="cli3" src="http://smetj.net/wp-content/uploads/2013/01/cli3-300x56.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Have a look to the &lt;em&gt;wishbone_even&lt;/em&gt; queue your message should be arrived
+there.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Although the the example as such isn't that spectacular and it only
+scratches the surface of the possibilities it hopefully shows you how
+easy it is to create a &amp;nbsp;Python based server which interacts with
+RabbitMQ. &amp;nbsp;The Wishbone library also includes other IO modules. &amp;nbsp;Have a
+look at my &lt;a class="reference external" href="https://github.com/smetj/experiments/tree/master/python/wishbone"&gt;experiments repository&lt;/a&gt; for more examples of Wishbone
+setups.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="amqp"></category><category term="python"></category><category term="rabbitmq"></category><category term="wishbone"></category></entry><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="file:///home/smetj/projects/github/smetj.net/output/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
+&lt;h2&gt;What's in a name?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Krolyk-300x185.jpg" /&gt;&lt;/a&gt;Before we go into more detail on how to execute plugins,
+manipulate and evaluate data with Moncli we first have to take a look
+how we are going to consume the data produced by Moncli from RabbitMQ.
+&amp;nbsp;I found myself quite often in the situation where I had to write again
+and again a daemon or process which consumes data from RabbitMQ and do
+something with it. &amp;nbsp;I already started to write &lt;a class="reference external" href="https://github.com/smetj/krolyk"&gt;Krolyk&lt;/a&gt;&amp;nbsp;which initial
+goal was to consume Nagios passive check results from RabbitMQ and write
+them into the Nagios command pipe. &amp;nbsp;I found that too specific, so I
+changed Krolyk into a more &lt;a class="reference external" href="https://github.com/smetj/krolyk/tree/master/lib/plugins"&gt;modular or plugin system&lt;/a&gt;, which allows you
+to write a &lt;a class="reference external" href="https://github.com/smetj/krolyk/blob/master/lib/plugins/skeleton.py"&gt;simple Python class&lt;/a&gt; which consumes data from RabbitMQ.
+&amp;nbsp;The nice thing about it is when you write a plugin for Krolyk, it will
+start one or more &amp;nbsp;parallel consumers without you having to worry about
+how to organize all that. &amp;nbsp;This makes writing consumers for RabbitMQ
+easy and accessible to more people. &amp;nbsp;Krolyk's use is however &lt;strong&gt;not&lt;/strong&gt;limited to the monitoring and metrics collection scope. &amp;nbsp;It's intended
+to be generic, allowing one to easily write parallel RabbitMQ consumers.&lt;/p&gt;
+&lt;p&gt;Consuming Moncli data from RabbitMQ&lt;/p&gt;
+&lt;p&gt;So let's setup Krolyk to consume and simply display data produced by
+Moncli.&lt;/p&gt;
+&lt;p&gt;To realize this we can use the &lt;a class="reference external" href="https://github.com/smetj/krolyk/blob/master/lib/plugins/skeleton.py"&gt;skeleton.py&lt;/a&gt; plugin. &amp;nbsp;The &lt;em&gt;skeleton&lt;/em&gt;
+plugin can be used as a base for your new and more complex plugins.
+&amp;nbsp;What skeleton does out of the box is just print the content it consumes
+from the broker to stdout and acknowledge it back to the broker so it's
+removed from the queue. &amp;nbsp;Just have a look at the &lt;em&gt;consume&lt;/em&gt; function.
+&amp;nbsp;This should pretty much give you an idea of what you can do with it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuration"&gt;
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Krolyk has a config file in which you can define parameters to connect
+to RabbitMQ and parameters which are available to the plugin you write.
+&amp;nbsp;If we take a look at krolyk.cfg we can see under the [&amp;quot;plugins&amp;quot;]
+section a configuration section for each individual plugin. &amp;nbsp;You have to
+make sure that the name of the plugin section is exactly the same
+(including case) as the name of your class.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[ccnbw_ini width=&amp;quot;500&amp;quot; lines=&amp;quot;-1&amp;quot; ]
+[ &amp;quot;plugins&amp;quot; ]
+    [[ &amp;quot;Skeleton&amp;quot; ]]
+        &amp;quot;_enabled&amp;quot;       = False
+        &amp;quot;_workers&amp;quot;       = 5
+        &amp;quot;_broker&amp;quot;        = &amp;quot;sandbox&amp;quot;
+        &amp;quot;_queue&amp;quot;         = &amp;quot;moncli_reports&amp;quot;
+        &amp;quot;_user&amp;quot;          = &amp;quot;guest&amp;quot;
+        &amp;quot;_password&amp;quot;      = &amp;quot;guest&amp;quot;
+        &amp;quot;blah1&amp;quot;          = &amp;quot;whatever&amp;quot;
+        &amp;quot;fu&amp;quot;             = &amp;quot;bar&amp;quot;
+[/ccnbw_ini]
+&lt;/pre&gt;
+&lt;p&gt;Each plugin/class should have at minimal the parameters defined required
+to &amp;nbsp;connect to the RabbitMQ broker. &amp;nbsp;These parameters all start with an
+underscore. &amp;nbsp;All other variables you define will be available to your
+class as a dictionary called &amp;quot;self.configuration&amp;quot;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-practical-example"&gt;
+&lt;h2&gt;A practical example&lt;/h2&gt;
+&lt;p&gt;So let's start an instance of Krolyk which consumes data produced by
+Moncli and prints it to stdout. &amp;nbsp;Keep in mind Krolyk that if the queue
+doesn't exist, Krolyk will create a durable one for you.&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Start Krolyk in the foreground with a config file which works for
+your environment:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+jelle&amp;#64;indigo:~$ /opt/krolyk/bin/krolyk debug --config /opt/krolyk/etc/krolyk.cfg
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Submit a test string to the AMQP default exchange:&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk_rabbit1/"&gt;&lt;img alt="image1" src="http://smetj.net/wp-content/uploads/2012/02/krolyk_rabbit1-150x150.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;And see it appear on the command line:&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk_rabbit2/"&gt;&lt;img alt="image2" src="http://smetj.net/wp-content/uploads/2012/02/krolyk_rabbit2-300x91.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This example isn't really doing anything exciting but, I at least it
+gives you an idea on what functionality Krolyk offers. &amp;nbsp;Using the
+information from this post you should be able to display the data
+generated by Moncli, so you have an idea what comes out of it.&lt;/p&gt;
+&lt;p&gt;In the next post we will be creating Requests and Reports with Moncli.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="krolyk"></category><category term="moncli"></category><category term="monitoringlove"></category><category term="rabbitmq"></category></entry></feed>

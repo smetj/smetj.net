@@ -46,7 +46,7 @@
     <link rel="apple-touch-icon" sizes="72x72" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="file:///home/smetj/projects/github/smetj.net/output/theme/images/apple-touch-icon-114x114.png">
 
-    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="http://smetj.net ATOM Feed" />
+    <link href="file:///home/smetj/projects/github/smetj.net/output/" type="application/atom+xml" rel="alternate" title="smetj.net ATOM Feed" />
 
   </head>
 
@@ -60,33 +60,28 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">http://smetj.net </a>
+          <a class="brand" href="file:///home/smetj/projects/github/smetj.net/output/index.html">smetj.net </a>
           <div class="nav-collapse">
             <ul class="nav">
                           <li class="divider-vertical"></li>
+                  <li >
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/development.html">
+						<i class="icon-folder-open icon-large"></i>development
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/events.html">
+						<i class="icon-folder-open icon-large"></i>events
+					</a>
+                  </li>
                   <li >
                     <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
 						<i class="icon-folder-open icon-large"></i>misc
 					</a>
                   </li>
                   <li >
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
-						<i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
-					</a>
-                  </li>
-                  <li >
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
-						<i class="icon-folder-open icon-large"></i>monitoring
-					</a>
-                  </li>
-                  <li class="active">
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
-						<i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
-					</a>
-                  </li>
-                  <li >
-                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
-						<i class="icon-folder-open icon-large"></i>Uncategorized
+                    <a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoringlove.html">
+						<i class="icon-folder-open icon-large"></i>#monitoringlove
 					</a>
                   </li>
 
@@ -125,7 +120,7 @@
 <span class="label">By</span>
 <a href="file:///home/smetj/projects/github/smetj.net/output/author/smetj.html"><i class="icon-user"></i>smetj</a>
 <span class="label">Category</span>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html"><i class="icon-folder-open"></i>Programming, Python, Wishbone</a>.
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/events.html"><i class="icon-folder-open"></i>events</a>.
 
 
 <span class="label">Tags</span>
@@ -205,7 +200,7 @@ if __name__ == '__main__':
 </pre>
 <p>Save the content to a file called &quot;brokertest&quot; and make it executable.
 When executing you will get:</p>
-<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli1-2/"><img alt="cli1" src="http://smetj.net/wp-content/uploads/2013/01/cli11-300x188.png" /></a></p>
+<p><a class="reference external" href="pics/cli11.png"><img alt="cli1" src="pics/cli11-300x188.png" /></a></p>
 <p>And that's it! You have a WishBone server available. &nbsp;Granted it doesn't
 do anything at all at this stage but that's what we'll cover in the next
 paragraph.</p>
@@ -393,13 +388,13 @@ should do something like:</p>
 [vagrant&#64;wishbone files]$ ./brokertest debug --config brokertest.json --loglevel debug
 </pre>
 <p>You should get a similar output to following screenshot:</p>
-<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli2/"><img alt="cli2" src="http://smetj.net/wp-content/uploads/2013/01/cli2-300x50.png" /></a></p>
+<p><a class="reference external" href="pics/cli2.png"><img alt="cli2" src="pics/cli2-300x50.png" /></a></p>
 <p>Now submit a message containing the number &quot;<em>100</em>&quot; through the
 RabbitMQ broker management interface into the <em>wishbone_in</em> queue.</p>
-<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/rabbit2/"><img alt="rabbit2" src="http://smetj.net/wp-content/uploads/2013/01/rabbit2-231x300.png" /></a></p>
+<p><a class="reference external" href="pics/rabbit2.png"><img alt="rabbit2" src="pics/rabbit2-231x300.png" /></a></p>
 <p>If all went well your Wishbone application should create a log entry
 about the data you just submitted:</p>
-<p><a class="reference external" href="http://smetj.net/2013/01/29/consume-process-and-produce-data-with-wishbone-and-rabbitmq/cli3/"><img alt="cli3" src="http://smetj.net/wp-content/uploads/2013/01/cli3-300x56.png" /></a></p>
+<p><a class="reference external" href="pics/cli3.png"><img alt="cli3" src="pics/cli3-300x56.png" /></a></p>
 <p>Have a look to the <em>wishbone_even</em> queue your message should be arrived
 there.</p>
 </div>
@@ -422,76 +417,35 @@ setups.</p>
                 <div class="span3 well sidebar-nav" id="sidebar">
 <ul class="nav nav-list">
 <li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
-<li><a href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
     <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
     <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
 
 <li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/development.html">
+    <i class="icon-folder-open icon-large"></i>development
+</a>
+</li>
+<li>
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/events.html">
+    <i class="icon-folder-open icon-large"></i>events
+</a>
+</li>
 <li>
 <a href="file:///home/smetj/projects/github/smetj.net/output/category/misc.html">
     <i class="icon-folder-open icon-large"></i>misc
 </a>
 </li>
 <li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/moncli-monitoring-series.html">
-    <i class="icon-folder-open icon-large"></i>Moncli, Monitoring, Series
-</a>
-</li>
-<li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoring.html">
-    <i class="icon-folder-open icon-large"></i>monitoring
-</a>
-</li>
-<li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/programming-python-wishbone.html">
-    <i class="icon-folder-open icon-large"></i>Programming, Python, Wishbone
-</a>
-</li>
-<li>
-<a href="file:///home/smetj/projects/github/smetj.net/output/category/uncategorized.html">
-    <i class="icon-folder-open icon-large"></i>Uncategorized
+<a href="file:///home/smetj/projects/github/smetj.net/output/category/monitoringlove.html">
+    <i class="icon-folder-open icon-large"></i>#monitoringlove
 </a>
 </li>
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
-        <i class="icon-tag icon-large"></i>graphite
-    </a>
-</li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
-        <i class="icon-tag icon-large"></i>python
-    </a>
-</li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
-        <i class="icon-tag icon-large"></i>tools
-    </a>
-</li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/release.html">
-        <i class="icon-tag icon-large"></i>release
-    </a>
-</li>
-<li class="tag-1">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
-        <i class="icon-tag icon-large"></i>monitoringlove
-    </a>
-</li>
 <li class="tag-0">
     <a href="file:///home/smetj/projects/github/smetj.net/output/tag/moncli.html">
         <i class="icon-tag icon-large"></i>moncli
-    </a>
-</li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
-        <i class="icon-tag icon-large"></i>rabbitmq
-    </a>
-</li>
-<li class="tag-2">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
-        <i class="icon-tag icon-large"></i>metricfactory
     </a>
 </li>
 <li class="tag-4">
@@ -504,14 +458,9 @@ setups.</p>
         <i class="icon-tag icon-large"></i>wishbone
     </a>
 </li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringsucks.html">
-        <i class="icon-tag icon-large"></i>monitoringsucks
-    </a>
-</li>
-<li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
-        <i class="icon-tag icon-large"></i>metrics
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
     </a>
 </li>
 <li class="tag-2">
@@ -525,13 +474,53 @@ setups.</p>
     </a>
 </li>
 <li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-4">
     <a href="file:///home/smetj/projects/github/smetj.net/output/tag/molog.html">
         <i class="icon-tag icon-large"></i>molog
     </a>
 </li>
 <li class="tag-4">
-    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/krolyk.html">
-        <i class="icon-tag icon-large"></i>krolyk
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/gevent.html">
+        <i class="icon-tag icon-large"></i>gevent
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-2">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-1">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-4">
+    <a href="file:///home/smetj/projects/github/smetj.net/output/tag/pypy.html">
+        <i class="icon-tag icon-large"></i>pypy
     </a>
 </li>
 

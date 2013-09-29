@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>http://smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="file:///home/smetj/projects/github/smetj.net/output/feeds/misc.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2012-12-31T14:27:00+01:00</updated><entry><title>New Year Python Meme 2012</title><link href="file:///home/smetj/projects/github/smetj.net/output/new-year-python-meme-2012.html" rel="alternate"></link><updated>2012-12-31T14:27:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-12-31:new-year-python-meme-2012.html</id><summary type="html">&lt;p&gt;Following &lt;a class="reference external" href="http://blog.ziade.org/2012/12/23/new-years-python-meme-2012/"&gt;Tarek Ziadé's idea for a 2012 New Year Python Meme&lt;/a&gt; here's
+<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="file:///home/smetj/projects/github/smetj.net/output/feeds/misc.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2012-12-31T14:27:00+01:00</updated><entry><title>New Year Python Meme 2012</title><link href="file:///home/smetj/projects/github/smetj.net/output/new-year-python-meme-2012.html" rel="alternate"></link><updated>2012-12-31T14:27:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-12-31:new-year-python-meme-2012.html</id><summary type="html">&lt;p&gt;Following &lt;a class="reference external" href="http://blog.ziade.org/2012/12/23/new-years-python-meme-2012/"&gt;Tarek Ziadé's idea for a 2012 New Year Python Meme&lt;/a&gt; here's
 mine&lt;/p&gt;
 &lt;div class="section" id="what-is-the-coolest-python-application-framework-or-library-you-have-discovered-in-2012"&gt;
 &lt;h2&gt;What is the coolest Python application, framework or library you have discovered in 2012?&lt;/h2&gt;
@@ -56,4 +56,27 @@ proven to be a great source of Python info.&lt;/p&gt;
 &lt;p&gt;A killer bookmark manager in my browser to manage my delicious
 bookmarks.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry></feed>
+</summary></entry><entry><title>After a long hiatus</title><link href="file:///home/smetj/projects/github/smetj.net/output/after-a-long-hiatus.html" rel="alternate"></link><updated>2012-09-30T23:46:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-09-30:after-a-long-hiatus.html</id><summary type="html">&lt;p&gt;Finally after finishing a whole bunch of private &amp;quot;projects&amp;quot;, I'm able to
+spend some more time again to the &lt;a class="reference external" href="https://github.com/smetj"&gt;various open source projects&lt;/a&gt; I've
+been working on until now. &amp;nbsp;I have gathered a whole bunch of new ideas,
+processed good and bad feedback, experienced that some ideas just don't
+work out while others are quite encouraging.&lt;/p&gt;
+&lt;p&gt;I haven't been totally unproductive though. &amp;nbsp;I have been able to spend
+time writing the Python&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;Wishbone&lt;/a&gt;&amp;nbsp;library. &amp;nbsp;The Wishbone library is
+a lightweight way of writing multiple gevent based parallel processes
+which connect multiple modules through an internal message passing
+interface into a clean workflow.&lt;/p&gt;
+&lt;p&gt;I have also created &lt;a class="reference external" href="https://github.com/smetj/monfs"&gt;MonFS&lt;/a&gt;&amp;nbsp;which is a Fuse filesystem plugin allowing
+you to store your Nagios (or compatible) configuration into a MongoDB
+and mount that database as a read-only filesystem containing Nagios
+configuration files.&lt;/p&gt;
+&lt;p&gt;The projects which currently gets most attention is &lt;a class="reference external" href="https://github.com/smetj/molog/tree/wishbone_based"&gt;MoLog&lt;/a&gt;. &amp;nbsp;The
+latest development which is a complete rewrite, is currently sitting in
+the &lt;em&gt;molog_based&lt;/em&gt; branch. &amp;nbsp;I've split MoLog into 3 &amp;nbsp;parts: &amp;nbsp;The main
+engine, a RESTful API and a CLI. &amp;nbsp;The main engine has been
+rewritten&amp;nbsp;using the Wishbone and it seems to work reasonably fast even
+without doing any optimization and without doing any profiling to
+identify existing hot spots.&lt;/p&gt;
+&lt;p&gt;It's time to roll up the sleeves and start to do some&amp;nbsp;useful&amp;nbsp;tinkering
+and coding again.&lt;/p&gt;
+</summary><category term="molog"></category><category term="monitoring"></category></entry></feed>

@@ -2,8 +2,8 @@ Working with Moncli part1: Creating a plugin
 ############################################
 :date: 2012-03-06 23:25
 :author: smetj
-:category: monitoring
-:tags: monitoringlove, moncli
+:category: #monitoringlove
+:tags: moncli
 :slug: working-with-moncli-part1-creating-a-plugin
 
 Producing data

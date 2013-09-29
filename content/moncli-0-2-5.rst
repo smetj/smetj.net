@@ -2,7 +2,7 @@ Moncli 0.2.5
 ############
 :date: 2012-03-11 22:07
 :author: smetj
-:category: monitoring
+:category: #monitoringlove
 :tags: moncli
 :slug: moncli-0-2-5
 
