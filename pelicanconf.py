@@ -30,12 +30,13 @@ STATIC_PATHS = [
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/smetj'),
           ('github', 'http://github.com/smetj'),)
-
 DEFAULT_PAGINATION = 10
 FEED_DOMAIN = None
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 FEED_ATOM = None
 TAG_FEED = None
+DISQUS_SITENAME = "smetj"
+GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
