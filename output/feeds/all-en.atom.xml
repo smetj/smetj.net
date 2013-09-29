@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="file:///home/smetj/projects/github/smetj.net/output/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>file:///home/smetj/projects/github/smetj.net/output/</id><updated>2013-06-05T01:26:00+02:00</updated><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="file:///home/smetj/projects/github/smetj.net/output/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
+<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-06-05T01:26:00+02:00</updated><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="http://smetj.net/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
 myself to the point of actually trying it. &amp;nbsp;Recently, a notification
 caught to my attention stating PyPy 2.0.2 was released and had support
 to run Gevent. &amp;nbsp;Good news! I was looking at speed improvements for
@@ -118,7 +118,7 @@ binaries included)''
 into a virtualenv it's really easy to use, experiment and rebuild.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Have a lot of fun running Gevent on PyPy!&lt;/em&gt;&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="gevent"></category><category term="pypy"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory</title><link href="file:///home/smetj/projects/github/smetj.net/output/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html" rel="alternate"></link><updated>2013-05-10T15:59:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-05-10:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
+</summary><category term="python"></category><category term="gevent"></category><category term="pypy"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html" rel="alternate"></link><updated>2013-05-10T15:59:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-05-10:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
 for many. &amp;nbsp;I would have abandoned it if there weren't projects like
 &lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,&amp;nbsp;&lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;Mod_Gearman&lt;/a&gt;&amp;nbsp;and&amp;nbsp;&lt;a class="reference external" href="http://www.thruk.org/"&gt;Thruk&lt;/a&gt;&amp;nbsp;which to my opinion should
 never be missing from any Nagios setup. &amp;nbsp;Mod_Gearman, the framework
@@ -438,7 +438,7 @@ ModGearman and submit that to Graphite. &amp;nbsp;We covered in detail how data
 changes when traveling through the different modules to get a better
 understanding of the whole process.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="file:///home/smetj/projects/github/smetj.net/output/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;p&gt;Graphite is great. &amp;nbsp;Not only because it's a great piece of software but
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;p&gt;Graphite is great. &amp;nbsp;Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of
 metrics goodness. &amp;nbsp;Although it's pretty straightforward to get Graphite
 up and running on one node, it gets a bit more complex to get it up and
@@ -733,7 +733,7 @@ relays, sharding and duplication policies. &amp;nbsp;By generating large batches
 continuous&amp;nbsp;data with different sizing it's possible to get an idea about the
 throughput of your Graphite setup.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="python"></category></entry><entry><title>Consume, process and produce data with Wishbone and RabbitMQ</title><link href="file:///home/smetj/projects/github/smetj.net/output/consume-process-and-produce-data-with-wishbone-and-rabbitmq.html" rel="alternate"></link><updated>2013-01-29T22:07:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-01-29:consume-process-and-produce-data-with-wishbone-and-rabbitmq.html</id><summary type="html">&lt;p&gt;When I first came in touch with the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol"&gt;messaging&lt;/a&gt;&amp;nbsp;concept&amp;nbsp;it was some
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="python"></category></entry><entry><title>Consume, process and produce data with Wishbone and RabbitMQ</title><link href="http://smetj.net/consume-process-and-produce-data-with-wishbone-and-rabbitmq.html" rel="alternate"></link><updated>2013-01-29T22:07:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-01-29:consume-process-and-produce-data-with-wishbone-and-rabbitmq.html</id><summary type="html">&lt;p&gt;When I first came in touch with the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol"&gt;messaging&lt;/a&gt;&amp;nbsp;concept&amp;nbsp;it was some
 kind of a revelation. &amp;nbsp;Ever since many solutions I work on involve
 message brokers one way or the other. &amp;nbsp;Because of that, a design pattern
 occurred hence the need for a Python framework allowing me to easily
@@ -1012,7 +1012,7 @@ RabbitMQ. &amp;nbsp;The Wishbone library also includes other IO modules. &amp;nb
 look at my &lt;a class="reference external" href="https://github.com/smetj/experiments/tree/master/python/wishbone"&gt;experiments repository&lt;/a&gt; for more examples of Wishbone
 setups.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="amqp"></category><category term="python"></category><category term="rabbitmq"></category><category term="wishbone"></category></entry><entry><title>Using MetricFactory to get Hadoop metrics into Graphite.</title><link href="file:///home/smetj/projects/github/smetj.net/output/using-metricfactory-to-get-hadoop-metrics-into-graphite.html" rel="alternate"></link><updated>2013-01-10T00:40:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2013-01-10:using-metricfactory-to-get-hadoop-metrics-into-graphite.html</id><summary type="html">&lt;p&gt;Without metrics we're flying blind and that's very much the case with
+</summary><category term="amqp"></category><category term="python"></category><category term="rabbitmq"></category><category term="wishbone"></category></entry><entry><title>Using MetricFactory to get Hadoop metrics into Graphite.</title><link href="http://smetj.net/using-metricfactory-to-get-hadoop-metrics-into-graphite.html" rel="alternate"></link><updated>2013-01-10T00:40:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-01-10:using-metricfactory-to-get-hadoop-metrics-into-graphite.html</id><summary type="html">&lt;p&gt;Without metrics we're flying blind and that's very much the case with
 &amp;nbsp;&lt;a class="reference external" href="http://hadoop.apache.org/"&gt;Hadoop&lt;/a&gt;. &amp;nbsp;Hadoop is a well known framework to build reliable,
 scalable&amp;nbsp;and distributed computing clusters. &amp;nbsp;The Hadoop framework &amp;nbsp;is a
 complex environment which &amp;quot;out of the box&amp;quot; hardly offers any metrics
@@ -1177,7 +1177,7 @@ article you should be able to setup your own MetricFactory based setups
 relatively easy. &amp;nbsp;If you require support you can submit a message to the
 &lt;a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/metricfactory"&gt;MetricFactory mailing list&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>New Year Python Meme 2012</title><link href="file:///home/smetj/projects/github/smetj.net/output/new-year-python-meme-2012.html" rel="alternate"></link><updated>2012-12-31T14:27:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-12-31:new-year-python-meme-2012.html</id><summary type="html">&lt;p&gt;Following &lt;a class="reference external" href="http://blog.ziade.org/2012/12/23/new-years-python-meme-2012/"&gt;Tarek Ziadé's idea for a 2012 New Year Python Meme&lt;/a&gt; here's
+</summary></entry><entry><title>New Year Python Meme 2012</title><link href="http://smetj.net/new-year-python-meme-2012.html" rel="alternate"></link><updated>2012-12-31T14:27:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-12-31:new-year-python-meme-2012.html</id><summary type="html">&lt;p&gt;Following &lt;a class="reference external" href="http://blog.ziade.org/2012/12/23/new-years-python-meme-2012/"&gt;Tarek Ziadé's idea for a 2012 New Year Python Meme&lt;/a&gt; here's
 mine&lt;/p&gt;
 &lt;div class="section" id="what-is-the-coolest-python-application-framework-or-library-you-have-discovered-in-2012"&gt;
 &lt;h2&gt;What is the coolest Python application, framework or library you have discovered in 2012?&lt;/h2&gt;
@@ -1234,7 +1234,7 @@ proven to be a great source of Python info.&lt;/p&gt;
 &lt;p&gt;A killer bookmark manager in my browser to manage my delicious
 bookmarks.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>After a long hiatus</title><link href="file:///home/smetj/projects/github/smetj.net/output/after-a-long-hiatus.html" rel="alternate"></link><updated>2012-09-30T23:46:00+02:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-09-30:after-a-long-hiatus.html</id><summary type="html">&lt;p&gt;Finally after finishing a whole bunch of private &amp;quot;projects&amp;quot;, I'm able to
+</summary></entry><entry><title>After a long hiatus</title><link href="http://smetj.net/after-a-long-hiatus.html" rel="alternate"></link><updated>2012-09-30T23:46:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-09-30:after-a-long-hiatus.html</id><summary type="html">&lt;p&gt;Finally after finishing a whole bunch of private &amp;quot;projects&amp;quot;, I'm able to
 spend some more time again to the &lt;a class="reference external" href="https://github.com/smetj"&gt;various open source projects&lt;/a&gt; I've
 been working on until now. &amp;nbsp;I have gathered a whole bunch of new ideas,
 processed good and bad feedback, experienced that some ideas just don't
@@ -1257,7 +1257,7 @@ without doing any optimization and without doing any profiling to
 identify existing hot spots.&lt;/p&gt;
 &lt;p&gt;It's time to roll up the sleeves and start to do some&amp;nbsp;useful&amp;nbsp;tinkering
 and coding again.&lt;/p&gt;
-</summary><category term="molog"></category><category term="monitoring"></category></entry><entry><title>Working with Moncli part2: Creating a simple request</title><link href="file:///home/smetj/projects/github/smetj.net/output/working-with-moncli-part2-creating-a-simple-request.html" rel="alternate"></link><updated>2012-03-11T22:12:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-03-11:working-with-moncli-part2-creating-a-simple-request.html</id><summary type="html">&lt;p&gt;In our &lt;a class="reference external" href="http://smetj.net/2012/03/06/working-with-moncli-part1-creating-a-plugin/"&gt;previous post&lt;/a&gt;&amp;nbsp;we have covered how to &amp;nbsp;create an example plugin
+</summary><category term="molog"></category><category term="monitoring"></category></entry><entry><title>Working with Moncli part2: Creating a simple request</title><link href="http://smetj.net/working-with-moncli-part2-creating-a-simple-request.html" rel="alternate"></link><updated>2012-03-11T22:12:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-03-11:working-with-moncli-part2-creating-a-simple-request.html</id><summary type="html">&lt;p&gt;In our &lt;a class="reference external" href="http://smetj.net/2012/03/06/working-with-moncli-part1-creating-a-plugin/"&gt;previous post&lt;/a&gt;&amp;nbsp;we have covered how to &amp;nbsp;create an example plugin
 which allows you to generate the size of directories as a metric. &amp;nbsp;A
 plugin on itself doesn't do that much at all. &amp;nbsp;When a plugin is executed
 it returns the values of that very moment. &amp;nbsp;Executing a plugin is done
@@ -1406,7 +1406,7 @@ request with moncli_request and we have verified the incoming results.
 &amp;nbsp;In this request we haven't done any evaluations which is something we
 will cover in the next article in this series.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="moncli"></category><category term="monitoringlove"></category></entry><entry><title>Moncli 0.2.5</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-0-2-5.html" rel="alternate"></link><updated>2012-03-11T22:07:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-03-11:moncli-0-2-5.html</id><summary type="html">&lt;p&gt;A new version of Moncli is released:&lt;/p&gt;
+</summary><category term="moncli"></category><category term="monitoringlove"></category></entry><entry><title>Moncli 0.2.5</title><link href="http://smetj.net/moncli-0-2-5.html" rel="alternate"></link><updated>2012-03-11T22:07:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-03-11:moncli-0-2-5.html</id><summary type="html">&lt;p&gt;A new version of Moncli is released:&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://bit.ly/zE7XeN"&gt;Version 0.2.5&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;This release fixes 1 important bug and introduces a new feature:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -1417,7 +1417,7 @@ processes.&lt;/li&gt;
 &lt;div&gt;&lt;p&gt;It is advised to upgrade to this version.&lt;/p&gt;
 &lt;/div&gt;&lt;p&gt;For support please post a message to the&amp;nbsp;&lt;a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/moncli"&gt;mailing list&lt;/a&gt;&amp;nbsp;or submit
 a&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/moncli/issues"&gt;bug report&lt;/a&gt;.&lt;/p&gt;
-</summary><category term="moncli"></category></entry><entry><title>Working with Moncli part1: Creating a plugin</title><link href="file:///home/smetj/projects/github/smetj.net/output/working-with-moncli-part1-creating-a-plugin.html" rel="alternate"></link><updated>2012-03-06T23:25:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-03-06:working-with-moncli-part1-creating-a-plugin.html</id><summary type="html">&lt;div class="section" id="producing-data"&gt;
+</summary><category term="moncli"></category></entry><entry><title>Working with Moncli part1: Creating a plugin</title><link href="http://smetj.net/working-with-moncli-part1-creating-a-plugin.html" rel="alternate"></link><updated>2012-03-06T23:25:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-03-06:working-with-moncli-part1-creating-a-plugin.html</id><summary type="html">&lt;div class="section" id="producing-data"&gt;
 &lt;h2&gt;Producing data&lt;/h2&gt;
 &lt;p&gt;In the previous 2 posts we had an &lt;a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/"&gt;introduction about Moncli&lt;/a&gt; and we
 have seen how to&amp;nbsp;&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/"&gt;consume Moncli data (reports) from the Message
@@ -1480,7 +1480,7 @@ can have multiple versions of the plugin inside the directory.&lt;/p&gt;
 &lt;p&gt;In part2 we will cover how to generate a request so we can test and use
 our newly created plugin.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="moncli"></category></entry><entry><title>Moncli 0.2.4</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-0-2-4.html" rel="alternate"></link><updated>2012-03-05T18:28:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-03-05:moncli-0-2-4.html</id><summary type="html">&lt;p&gt;A new version of Moncli is released:&lt;/p&gt;
+</summary><category term="moncli"></category></entry><entry><title>Moncli 0.2.4</title><link href="http://smetj.net/moncli-0-2-4.html" rel="alternate"></link><updated>2012-03-05T18:28:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-03-05:moncli-0-2-4.html</id><summary type="html">&lt;p&gt;A new version of Moncli is released:&lt;/p&gt;
 &lt;p&gt;This release immediately follows&amp;nbsp;the 0.2.3 release to fix 2 issues which
 got unnoticed during &amp;nbsp;that release:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -1490,7 +1490,7 @@ got unnoticed during &amp;nbsp;that release:&lt;/p&gt;
 &lt;p&gt;Both issues have been tackled.&lt;/p&gt;
 &lt;p&gt;For support please post a message to the &lt;a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/moncli"&gt;mailing list&lt;/a&gt;&amp;nbsp;or submit a
 &lt;a class="reference external" href="https://github.com/smetj/moncli/issues"&gt;bug report&lt;/a&gt;.&lt;/p&gt;
-</summary><category term="moncli"></category></entry><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="file:///home/smetj/projects/github/smetj.net/output/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
+</summary><category term="moncli"></category></entry><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="http://smetj.net/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
 &lt;h2&gt;What's in a name?&lt;/h2&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Krolyk-300x185.jpg" /&gt;&lt;/a&gt;Before we go into more detail on how to execute plugins,
 manipulate and evaluate data with Moncli we first have to take a look
@@ -1567,7 +1567,7 @@ information from this post you should be able to display the data
 generated by Moncli, so you have an idea what comes out of it.&lt;/p&gt;
 &lt;p&gt;In the next post we will be creating Requests and Reports with Moncli.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="krolyk"></category><category term="moncli"></category><category term="monitoringlove"></category><category term="rabbitmq"></category></entry><entry><title>Moncli - An introduction</title><link href="file:///home/smetj/projects/github/smetj.net/output/moncli-an-introduction.html" rel="alternate"></link><updated>2012-02-09T00:20:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-02-09:moncli-an-introduction.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/moncli_architecture_1-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Moncli_architecture_11-300x231.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+</summary><category term="krolyk"></category><category term="moncli"></category><category term="monitoringlove"></category><category term="rabbitmq"></category></entry><entry><title>Moncli - An introduction</title><link href="http://smetj.net/moncli-an-introduction.html" rel="alternate"></link><updated>2012-02-09T00:20:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-02-09:moncli-an-introduction.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/moncli_architecture_1-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Moncli_architecture_11-300x231.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;One of the classic tasks one has to deal with when working with a
 monitoring framework is have the ability to retrieve metrics from an OS
 or server which aren't available just like that over the network. There
@@ -1657,7 +1657,7 @@ called &lt;a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_
 RabbitMQ.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="moncli"></category><category term="monitoringlove"></category><category term="rabbitmq"></category></entry><entry><title>Monitoring and metric collection across teams.</title><link href="file:///home/smetj/projects/github/smetj.net/output/monitoring-and-metrics-collection-across-teams.html" rel="alternate"></link><updated>2012-01-29T17:02:00+01:00</updated><author><name>smetj</name></author><id>tag:file:///home/smetj/projects/github/smetj.net/output,2012-01-29:monitoring-and-metrics-collection-across-teams.html</id><summary type="html">&lt;p&gt;There' s currently a lot of activity going on the monitoring and
+</summary><category term="moncli"></category><category term="monitoringlove"></category><category term="rabbitmq"></category></entry><entry><title>Monitoring and metric collection across teams.</title><link href="http://smetj.net/monitoring-and-metrics-collection-across-teams.html" rel="alternate"></link><updated>2012-01-29T17:02:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-01-29:monitoring-and-metrics-collection-across-teams.html</id><summary type="html">&lt;p&gt;There' s currently a lot of activity going on the monitoring and
 metrics collection landscape and I couldn't be more happy about that as
 it's on of those things which also keep me busy in a professional way.
 When looking at the growth of information, blogs and projects I can see
