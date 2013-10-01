@@ -156,7 +156,7 @@ into a virtualenv it's really easy to use, experiment and rebuild.
 
 *Have a lot of fun running Gevent on PyPy!*
 
-.. _Wishbone library: https://github.com/smetj/wishbone/tree/0.4
+.. _Wishbone library: https://github.com/smetj/wishbone
 .. _building-from-source: http://pypy.org/download.html#building-from-source
 .. _downloading the source: http://pypy.org/download.html
 .. _cffi: https://pypi.python.org/pypi/cffi

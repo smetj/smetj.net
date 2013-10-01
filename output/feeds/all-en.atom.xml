@@ -3,7 +3,7 @@
 myself to the point of actually trying it. &amp;nbsp;Recently, a notification
 caught to my attention stating PyPy 2.0.2 was released and had support
 to run Gevent. &amp;nbsp;Good news! I was looking at speed improvements for
-my&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone/tree/0.4"&gt;Wishbone library&lt;/a&gt; and decided to spend some effort into getting
+my&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/wishbone"&gt;Wishbone library&lt;/a&gt; and decided to spend some effort into getting
 PyPy with Gevent up and running. &amp;nbsp;The information available explaining
 how to setup Gevent in PyPy is rather sparse which might be a bit time
 consuming when you have to figure out the bits and pieces. &amp;nbsp;After some
