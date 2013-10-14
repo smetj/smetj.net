@@ -9,7 +9,7 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
 
 
-THEME = '/home/smetj/Apps/pelican-themes/bootstrap2'
+THEME = '/home/smetj/projects/github/pelican-themes/bootstrap2'
 GITHUB_URL = 'http://github.com/smetj/'
 
 # Feed generation is usually not desired when developing
@@ -35,6 +35,7 @@ FEED_DOMAIN = None
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 FEED_ATOM = None
+FEED_RSS = None
 TAG_FEED = None
 DISQUS_SITENAME = "smetj"
 GOOGLE_ANALYTICS = "UA-40703057-1"
