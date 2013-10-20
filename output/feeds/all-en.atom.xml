@@ -1816,7 +1816,7 @@ got unnoticed during &amp;nbsp;that release:&lt;/p&gt;
 &lt;a class="reference external" href="https://github.com/smetj/moncli/issues"&gt;bug report&lt;/a&gt;.&lt;/p&gt;
 </summary><category term="moncli"></category></entry><entry><title>Consuming Moncli data from RabbitMQ using Krolyk</title><link href="http://smetj.net/consuming-moncli-data-from-rabbitmq-using-krolyk.html" rel="alternate"></link><updated>2012-02-11T18:08:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2012-02-11:consuming-moncli-data-from-rabbitmq-using-krolyk.html</id><summary type="html">&lt;div class="section" id="what-s-in-a-name"&gt;
 &lt;h2&gt;What's in a name?&lt;/h2&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/2012/02/11/consuming-moncli-data-from-rabbitmq-using-krolyk/krolyk-2/"&gt;&lt;img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Krolyk-300x185.jpg" /&gt;&lt;/a&gt;Before we go into more detail on how to execute plugins,
+&lt;p&gt;Before we go into more detail on how to execute plugins,
 manipulate and evaluate data with Moncli we first have to take a look
 how we are going to consume the data produced by Moncli from RabbitMQ.
 &amp;nbsp;I found myself quite often in the situation where I had to write again

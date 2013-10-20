@@ -9,7 +9,7 @@ Consuming Moncli data from RabbitMQ using Krolyk
 What's in a name?
 ~~~~~~~~~~~~~~~~~
 
-|image0|\ Before we go into more detail on how to execute plugins,
+Before we go into more detail on how to execute plugins,
 manipulate and evaluate data with Moncli we first have to take a look
 how we are going to consume the data produced by Moncli from RabbitMQ.
  I found myself quite often in the situation where I had to write again
