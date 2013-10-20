@@ -118,7 +118,7 @@ hammer -&amp;gt; encodegraphite -&amp;gt; tcp&lt;/blockquote&gt;
 defined with the host (line 18) and port (line 19)&lt;/p&gt;
 &lt;p&gt;Start the server in the foreground using following command:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-$ metricfactory debug --config hammer.yaml
+$ metricfactory debug --config hammer_scenario_1.yaml
 &lt;/pre&gt;
 &lt;p&gt;You can stop by pressing ctrl+c.&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="pics/testing-graphite-with-metricfactory-revisited-001.png"&gt;&lt;img alt="graphite1" src="pics/testing-graphite-with-metricfactory-revisited-001.png" /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -233,7 +233,7 @@ routingtable:
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Start the server in the foreground using following command:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-$ metricfactory debug --config hammer.yaml
+$ metricfactory debug --config hammer_scenario_2.yaml
 &lt;/pre&gt;
 &lt;p&gt;You can stop by pressing ctrl+c.&lt;/p&gt;
 &lt;p&gt;The above example will send 10 batches (line 7) of 100 sets (line 8) of 100

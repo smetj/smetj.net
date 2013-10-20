@@ -128,13 +128,13 @@
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/metrics.html">
-        <i class="icon-tag icon-large"></i>metrics
+    <a href="http://smetj.net/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/krolyk.html">
-        <i class="icon-tag icon-large"></i>krolyk
+    <a href="http://smetj.net/tag/gevent.html">
+        <i class="icon-tag icon-large"></i>gevent
     </a>
 </li>
 <li class="tag-4">
@@ -143,18 +143,18 @@
     </a>
 </li>
 <li class="tag-0">
+    <a href="http://smetj.net/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-0">
     <a href="http://smetj.net/tag/monitoringlove.html">
         <i class="icon-tag icon-large"></i>monitoringlove
     </a>
 </li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/python.html">
-        <i class="icon-tag icon-large"></i>python
-    </a>
-</li>
-<li class="tag-2">
-    <a href="http://smetj.net/tag/metricfactory.html">
-        <i class="icon-tag icon-large"></i>metricfactory
+<li class="tag-4">
+    <a href="http://smetj.net/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
     </a>
 </li>
 <li class="tag-2">
@@ -163,8 +163,23 @@
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/wishbone.html">
-        <i class="icon-tag icon-large"></i>wishbone
+    <a href="http://smetj.net/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
     </a>
 </li>
 <li class="tag-4">
@@ -177,34 +192,19 @@
         <i class="icon-tag icon-large"></i>pypy
     </a>
 </li>
-<li class="tag-0">
-    <a href="http://smetj.net/tag/moncli.html">
-        <i class="icon-tag icon-large"></i>moncli
-    </a>
-</li>
 <li class="tag-4">
     <a href="http://smetj.net/tag/company.html">
         <i class="icon-tag icon-large"></i>company
     </a>
 </li>
 <li class="tag-2">
-    <a href="http://smetj.net/tag/graphite.html">
-        <i class="icon-tag icon-large"></i>graphite
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/amqp.html">
-        <i class="icon-tag icon-large"></i>amqp
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/gevent.html">
-        <i class="icon-tag icon-large"></i>gevent
+    <a href="http://smetj.net/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
     </a>
 </li>
 <li class="tag-2">
-    <a href="http://smetj.net/tag/rabbitmq.html">
-        <i class="icon-tag icon-large"></i>rabbitmq
+    <a href="http://smetj.net/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
     </a>
 </li>
 
@@ -360,7 +360,7 @@ hammer -&gt; encodegraphite -&gt; tcp</blockquote>
 defined with the host (line 18) and port (line 19)</p>
 <p>Start the server in the foreground using following command:</p>
 <pre class="literal-block">
-$ metricfactory debug --config hammer.yaml
+$ metricfactory debug --config hammer_scenario_1.yaml
 </pre>
 <p>You can stop by pressing ctrl+c.</p>
 <p><a class="reference external" href="pics/testing-graphite-with-metricfactory-revisited-001.png"><img alt="graphite1" src="pics/testing-graphite-with-metricfactory-revisited-001.png" /></a></p>
@@ -475,7 +475,7 @@ routingtable:
 </pre></div>
 </td></tr></table><p>Start the server in the foreground using following command:</p>
 <pre class="literal-block">
-$ metricfactory debug --config hammer.yaml
+$ metricfactory debug --config hammer_scenario_2.yaml
 </pre>
 <p>You can stop by pressing ctrl+c.</p>
 <p>The above example will send 10 batches (line 7) of 100 sets (line 8) of 100
