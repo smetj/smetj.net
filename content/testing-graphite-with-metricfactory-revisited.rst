@@ -229,34 +229,31 @@ For this we use the below bootstrap file:
 .. code-block:: identifier
   :linenos: table
 
-  .. code-block:: identifier
-  :linenos: table
+  ---
+  modules:
 
-    ---
-    modules:
+      hammer:
+          module: metricfactory.test.hammer
+          arguments:
+              batch: 0
+              batch_size: 100
+              set_size: 100
+              value: 1000
 
-        hammer:
-            module: metricfactory.test.hammer
-            arguments:
-                batch: 0
-                batch_size: 100
-                set_size: 100
-                value: 1000
+      encodegraphite:
+          module: wishbone.builtin.metrics.graphite
 
-        encodegraphite:
-            module: wishbone.builtin.metrics.graphite
+      tcp:
+          module: wishbone.output.tcp
+          arguments:
+              host: graphite-001
+              port: 2013
 
-        tcp:
-            module: wishbone.output.tcp
-            arguments:
-                host: graphite-001
-                port: 2013
+  routingtable:
 
-    routingtable:
-
-        - hammer.outbox             -> encodegraphite.inbox
-        - encodegraphite.outbox     -> tcp.inbox
-    ...
+      - hammer.outbox             -> encodegraphite.inbox
+      - encodegraphite.outbox     -> tcp.inbox
+  ...
 
 By setting the batch argument (line 10) to 0, we indefinitely send the defined
 batch.  If we overflow Metricfactory because we can't write metrics out fast
