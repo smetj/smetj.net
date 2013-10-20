@@ -1,6 +1,6 @@
 Testing Graphite with MetricFactory revisited
 #############################################
-:date: 2013-10-09 22:14
+:date: 2013-10-20 20:42
 :author: smetj
 :category: #monitoringlove
 :tags: monitoringlove, graphite, metricfactory, python
