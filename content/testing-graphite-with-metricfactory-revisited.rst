@@ -273,11 +273,11 @@ Conclusion
 ~~~~~~~~~~
 
 Generating a predictable number of metrics can be practical to verify whether
-your Graphite setup behaves as expected under different scenarios.  It becomes
-more meaningful if you have a more complex environment with a number of
-relays, sharding and duplication policies.  By generating large batches of
-continuously data with different sizing it's possible to get an idea about the
-throughput of your Graphite setup.
+Graphite behaves as expected in different scenarios.  It becomes even more
+meaningful when you have a more complex environment with a number of relays
+with sharding and duplication policies.  By generating batches of continuous
+mertics it's possible to get an idea about the throughput of your Graphite
+setup.
 
 .. _Metricfactory: https://github.com/smetj/metricfactory
 .. _Wishbone: https://github.com/smetj/wishbone

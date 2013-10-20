@@ -311,11 +311,11 @@ processing on average 1117000 metrics/s.&lt;/p&gt;
 &lt;div class="section" id="conclusion"&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Generating a predictable number of metrics can be practical to verify whether
-your Graphite setup behaves as expected under different scenarios. &amp;nbsp;It becomes
-more&amp;nbsp;meaningful&amp;nbsp;if you have a more complex environment with a number of
-relays, sharding and duplication policies. &amp;nbsp;By generating large batches of
-continuously data with different sizing it's possible to get an idea about the
-throughput of your Graphite setup.&lt;/p&gt;
+Graphite behaves as expected in different scenarios.  It becomes even more
+meaningful when you have a more complex environment with a number of relays
+with sharding and duplication policies. &amp;nbsp;By generating batches of continuous
+mertics it's possible to get an idea about the throughput of your Graphite
+setup.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="python"></category></entry><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="http://smetj.net/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
 myself to the point of actually trying it. &amp;nbsp;Recently, a notification
