@@ -126,7 +126,7 @@ Start the server in the foreground using following command:
 
 ::
 
-    $ metricfactory debug --config hammer.yaml
+    $ metricfactory debug --config hammer_scenario_1.yaml
 
 You can stop by pressing ctrl+c.
 
@@ -209,7 +209,7 @@ Start the server in the foreground using following command:
 
 ::
 
-    $ metricfactory debug --config hammer.yaml
+    $ metricfactory debug --config hammer_scenario_2.yaml
 
 You can stop by pressing ctrl+c.
 
