@@ -15,10 +15,15 @@ $ git clone https://github.com/smetj/metricfactory
 $ cd metricfactory
 $ sudo python setup.py install
 &lt;/pre&gt;
-&lt;p&gt;We will also require an extra &lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Wishbone module&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;An additional &lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Wishbone module&lt;/a&gt;:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp"&gt;https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;pre class="literal-block"&gt;
+$ git clone https://github.com/smetj/wishboneModules
+$ cd wishboneModules/wb_output_tcp/
+$ sudo python setup.py install
+&lt;/pre&gt;
 &lt;p&gt;One or more of following packages might be required to successfully
 finish the install:&lt;/p&gt;
 &lt;blockquote&gt;

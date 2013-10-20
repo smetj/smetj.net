@@ -128,43 +128,13 @@
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/company.html">
-        <i class="icon-tag icon-large"></i>company
-    </a>
-</li>
-<li class="tag-0">
-    <a href="http://smetj.net/tag/moncli.html">
-        <i class="icon-tag icon-large"></i>moncli
-    </a>
-</li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/python.html">
-        <i class="icon-tag icon-large"></i>python
+    <a href="http://smetj.net/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/molog.html">
-        <i class="icon-tag icon-large"></i>molog
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/gevent.html">
-        <i class="icon-tag icon-large"></i>gevent
-    </a>
-</li>
-<li class="tag-2">
-    <a href="http://smetj.net/tag/metricfactory.html">
-        <i class="icon-tag icon-large"></i>metricfactory
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/wishbone.html">
-        <i class="icon-tag icon-large"></i>wishbone
-    </a>
-</li>
-<li class="tag-2">
-    <a href="http://smetj.net/tag/rabbitmq.html">
-        <i class="icon-tag icon-large"></i>rabbitmq
+    <a href="http://smetj.net/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
     </a>
 </li>
 <li class="tag-4">
@@ -177,19 +147,29 @@
         <i class="icon-tag icon-large"></i>monitoringlove
     </a>
 </li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
 <li class="tag-2">
-    <a href="http://smetj.net/tag/graphite.html">
-        <i class="icon-tag icon-large"></i>graphite
+    <a href="http://smetj.net/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/krolyk.html">
-        <i class="icon-tag icon-large"></i>krolyk
+    <a href="http://smetj.net/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
     </a>
 </li>
 <li class="tag-4">
-    <a href="http://smetj.net/tag/metrics.html">
-        <i class="icon-tag icon-large"></i>metrics
+    <a href="http://smetj.net/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
     </a>
 </li>
 <li class="tag-4">
@@ -197,14 +177,34 @@
         <i class="icon-tag icon-large"></i>pypy
     </a>
 </li>
+<li class="tag-0">
+    <a href="http://smetj.net/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
 <li class="tag-4">
     <a href="http://smetj.net/tag/amqp.html">
         <i class="icon-tag icon-large"></i>amqp
     </a>
 </li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/gevent.html">
+        <i class="icon-tag icon-large"></i>gevent
+    </a>
+</li>
 <li class="tag-2">
-    <a href="http://smetj.net/tag/monitoring.html">
-        <i class="icon-tag icon-large"></i>monitoring
+    <a href="http://smetj.net/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
     </a>
 </li>
 
@@ -257,10 +257,15 @@ $ git clone https://github.com/smetj/metricfactory
 $ cd metricfactory
 $ sudo python setup.py install
 </pre>
-<p>We will also require an extra <a class="reference external" href="https://github.com/smetj/wishboneModules">Wishbone module</a>:</p>
+<p>An additional <a class="reference external" href="https://github.com/smetj/wishboneModules">Wishbone module</a>:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp">https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp</a></li>
 </ul>
+<pre class="literal-block">
+$ git clone https://github.com/smetj/wishboneModules
+$ cd wishboneModules/wb_output_tcp/
+$ sudo python setup.py install
+</pre>
 <p>One or more of following packages might be required to successfully
 finish the install:</p>
 <blockquote>

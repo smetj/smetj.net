@@ -24,13 +24,19 @@ automatically.
 
 ::
 
-    $ git clone https://github.com/smetj/metricfactory
-    $ cd metricfactory
-    $ sudo python setup.py install
+  $ git clone https://github.com/smetj/metricfactory
+  $ cd metricfactory
+  $ sudo python setup.py install
 
-We will also require an extra `Wishbone module`_:
+An additional `Wishbone module`_:
 
 - https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp
+
+::
+
+  $ git clone https://github.com/smetj/wishboneModules
+  $ cd wishboneModules/wb_output_tcp/
+  $ sudo python setup.py install
 
 One or more of following packages might be required to successfully
 finish the install:
