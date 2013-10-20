@@ -7,7 +7,7 @@ Testing Graphite with MetricFactory revisited
 :slug: testing-graphite-with-metricfactory-revisited
 
 In this post we revisit a previously posted article on how we can test and
-stress test a Graphite setup. This is basiscally a rewrite of that article
+stress test a Graphite setup. This is basically a rewrite of that article
 since the Wishbone and MetricFactory software have meanwhile changed
 enough to dedicate a new article to it.
 
