@@ -43,9 +43,7 @@ least tcp, hammer and graphite.&lt;/p&gt;
 &lt;p&gt;Starting Metricfactory requires a bootstrap file. &amp;nbsp;A bootstrap file is a YAML
 formatted file containing the configuration of which modules to initiate and
 which path events will follow through these module instances.&lt;/p&gt;
-&lt;p&gt;A base bootstrap file you can found &lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hammerGraphite"&gt;here&lt;/a&gt;. &amp;nbsp;We will be adapting it to
-suit our needs. &amp;nbsp;Going through the content it should give you an idea
-what the possibilities are.&lt;/p&gt;
+&lt;p&gt;All bootstrap files used throughout this article can be found &lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hammerGraphite"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="scenario-1-submit-fixed-number-of-metrics-to-graphite"&gt;
 &lt;h2&gt;Scenario 1: Submit fixed number of metrics to graphite.&lt;/h2&gt;

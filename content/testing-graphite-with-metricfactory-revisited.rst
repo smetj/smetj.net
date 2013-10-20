@@ -62,9 +62,7 @@ Starting Metricfactory requires a bootstrap file.  A bootstrap file is a YAML
 formatted file containing the configuration of which modules to initiate and
 which path events will follow through these module instances.
 
-A base bootstrap file you can found `here`_.  We will be adapting it to
-suit our needs.  Going through the content it should give you an idea
-what the possibilities are.
+All bootstrap files used throughout this article can be found `here`_.
 
 Scenario 1: Submit fixed number of metrics to graphite.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
