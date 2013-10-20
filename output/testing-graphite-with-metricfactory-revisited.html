@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Testing Graphite with MetricFactory revisited</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jelle Smet">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="http://smetj.net/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="http://smetj.net/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="http://smetj.net/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="http://smetj.net/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="http://smetj.net/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="http://smetj.net/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="http://smetj.net/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="http://smetj.net/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="http://smetj.net/" type="application/atom+xml" rel="alternate" title="smetj.net ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="http://smetj.net/index.html">smetj.net </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                          <li class="divider-vertical"></li>
+                  <li >
+                    <a href="http://smetj.net/category/development.html">
+						<i class="icon-folder-open icon-large"></i>development
+					</a>
+                  </li>
+                  <li >
+                    <a href="http://smetj.net/category/engineering.html">
+						<i class="icon-folder-open icon-large"></i>engineering
+					</a>
+                  </li>
+                  <li >
+                    <a href="http://smetj.net/category/misc.html">
+						<i class="icon-folder-open icon-large"></i>misc
+					</a>
+                  </li>
+                  <li class="active">
+                    <a href="http://smetj.net/category/monitoringlove.html">
+						<i class="icon-folder-open icon-large"></i>#monitoringlove
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="http://smetj.net/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
+    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="http://smetj.net/category/development.html">
+    <i class="icon-folder-open icon-large"></i>development
+</a>
+</li>
+<li>
+<a href="http://smetj.net/category/engineering.html">
+    <i class="icon-folder-open icon-large"></i>engineering
+</a>
+</li>
+<li>
+<a href="http://smetj.net/category/misc.html">
+    <i class="icon-folder-open icon-large"></i>misc
+</a>
+</li>
+<li>
+<a href="http://smetj.net/category/monitoringlove.html">
+    <i class="icon-folder-open icon-large"></i>#monitoringlove
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-0">
+    <a href="http://smetj.net/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/pypy.html">
+        <i class="icon-tag icon-large"></i>pypy
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/gevent.html">
+        <i class="icon-tag icon-large"></i>gevent
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-0">
+    <a href="http://smetj.net/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Testing Graphite with MetricFactory revisited">
+                                        Testing Graphite with MetricFactory revisited
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2013-10-09T22:14:00">
+        <i class="icon-calendar"></i>Wed 09 October 2013
+</abbr>
+<span class="label">By</span>
+<a href="http://smetj.net/author/smetj.html"><i class="icon-user"></i>smetj</a>
+<span class="label">Category</span>
+<a href="http://smetj.net/category/monitoringlove.html"><i class="icon-folder-open"></i>#monitoringlove</a>.
+
+
+<span class="label">Tags</span>
+	<a href="http://smetj.net/tag/monitoringlove.html"><i class="icon-tag"></i>monitoringlove</a>
+	<a href="http://smetj.net/tag/graphite.html"><i class="icon-tag"></i>graphite</a>
+	<a href="http://smetj.net/tag/metricfactory.html"><i class="icon-tag"></i>metricfactory</a>
+	<a href="http://smetj.net/tag/python.html"><i class="icon-tag"></i>python</a>
+</footer><!-- /.post-info -->                </div>
+                <p>In this post we revisit a previously posted article on how we can test and
+stress test a Graphite setup. This is basiscally a rewrite of that article
+since the Wishbone and MetricFactory software have meanwhile changed
+enough to dedicate a new article to it.</p>
+<p>Our end-goal still stands.  We want to test and understand the behavior of a
+Graphite setup by writing metrics into it using different scenarios.</p>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>Installing metricfactory is a matter of checking out the project from
+Git and running the installer. &nbsp;All dependencies should be downloaded
+automatically.</p>
+<pre class="literal-block">
+$ git clone https://github.com/smetj/metricfactory
+$ cd metricfactory
+$ sudo python setup.py install
+</pre>
+<p>We will also require an extra <a class="reference external" href="https://github.com/smetj/wishboneModules">Wishbone module</a>:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp">https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp</a></li>
+</ul>
+<p>One or more of following packages might be required to successfully
+finish the install:</p>
+<blockquote>
+gcc, gcc-c++, make, python-devel, Cython</blockquote>
+<p>Once installed you can execute following command:</p>
+<pre class="literal-block">
+$ metricfactory list
+$ metricfactory list --group metricfactory.encoder
+$ metricfactory list --group metricfactory.decoder
+$ metricfactory list --group metricfactory.test
+</pre>
+<p>That should return a list of all available modules. &nbsp;You should see at
+least tcp, hammer and graphite.</p>
+</div>
+<div class="section" id="bootstrap">
+<h2>Bootstrap</h2>
+<p>Starting Metricfactory requires a bootstrap file. &nbsp;A bootstrap file is a YAML
+formatted file containing the configuration of which modules to initiate and
+which path events will follow through these module instances.</p>
+<p>A base bootstrap file you can found <a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hammerGraphite">here</a>. &nbsp;We will be adapting it to
+suit our needs. &nbsp;Going through the content it should give you an idea
+what the possibilities are.</p>
+</div>
+<div class="section" id="scenario-1-submit-fixed-number-of-metrics-to-graphite">
+<h2>Scenario 1: Submit fixed number of metrics to graphite.</h2>
+<p>Let's say we have a Graphite setup of 1 carbon-relay instance which forwards
+metrics to 1 or more carbon instances. &nbsp;We want to see how Graphite behaves
+under a predictable load.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre>---
+modules:
+
+    hammer:
+        module: metricfactory.test.hammer
+        arguments:
+            batch: 1
+            batch_size: 100
+            set_size: 100
+            value: 1000
+
+    encodegraphite:
+        module: wishbone.builtin.metrics.graphite
+
+    tcp:
+        module: wishbone.output.tcp
+        arguments:
+            host: graphite-001
+            port: 2013
+
+routingtable:
+
+    - hammer.outbox             -&gt; encodegraphite.inbox
+    - encodegraphite.outbox     -&gt; tcp.inbox
+...
+</pre></div>
+</td></tr></table><p>The hammer module (line 4) is the module which generates metrics in a generic
+format. The module is initialized to produce 1 batch (line 7) of metrics
+consisting out of 100 unique sets (line 8) each containing 100 metrics
+(line9). This means 10000 unique metrics are generated. Batch (line 7)
+determines how many times we want to regenerate this collection of metrics.  A
+value of 0 would mean indefinitely.  The sleep parameter (not used, default 1)
+determines the time in seconds between each batch. The value parameter (line
+10) determines the maximum value the random generated metric value can be.</p>
+<p>The routing table (line 21) tells us events are traveling through the modules
+in following order:</p>
+<blockquote>
+hammer -&gt; encodegraphite -&gt; tcp</blockquote>
+<p>The tcp module (line 15) submits the metrics over TCP to the destination
+defined with the host (line 18) and port (line 19)</p>
+<p>Start the server in the foreground using following command:</p>
+<pre class="literal-block">
+$ metricfactory debug --config hammer.yaml
+</pre>
+<p>You can stop by pressing ctrl+c.</p>
+<p><a class="reference external" href="pics/testing-graphite-with-metricfactory-revisited-001.png"><img alt="graphite1" src="pics/testing-graphite-with-metricfactory-revisited-001.png" /></a></p>
+<p>When reviewing the metricsReceived values of both the carbon.relay as
+carbon.cache we see we have received the expected amount of metrics.</p>
+<p>Keep in mind since each generated metric is unique, <strong>10000 wsp files</strong> are
+created. It's likely that after running this test,  you will only find a
+subset of the generated data stored in Graphite.  This is because Graphite
+does rate limiting and is not creating all wsp files in order not to hammer
+the disks.  You might want to tweak Graphite to meet your expectations and
+rerun the above setup to test your setup.</p>
+</div>
+<div class="section" id="scenario-2-submit-a-fixed-number-of-metrics-to-2-carbon-relays">
+<h2>Scenario 2: Submit a fixed number of metrics to 2 carbon-relays</h2>
+<p>Let's say we have a setup with 2 carbon relays with multiple carbon-caches
+behind that.  In this case you might want to verify whether you can really
+afford to loose a relay node.  We can use the same approach as we did in
+scenario 1 and produce and submit a known number of metrics.</p>
+<p>The below bootstrap file is setup in such a way that produced metrics are
+spread over 2 tcp destinations.  You might want to execute a couple of runs
+while killing parts of your Graphite setup to verify it behaves as expected
+and whether there is no metric loss.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre>---
+modules:
+
+    hammer:
+        module: metricfactory.test.hammer
+        arguments:
+            batch: 10
+            batch_size: 100
+            set_size: 100
+            value: 1000
+            sleep: 1
+
+    encodegraphite:
+        module: wishbone.builtin.metrics.graphite
+
+    funnel:
+        module: wishbone.builtin.flow.funnel
+
+    balance:
+        module: wishbone.builtin.flow.roundrobin
+
+    tcp1:
+        module: wishbone.output.tcp
+        arguments:
+            host: graphite-001
+            port: 2013
+
+    tcp2:
+        module: wishbone.output.tcp
+        arguments:
+            host: graphite-002
+            port: 2013
+
+routingtable:
+
+    - hammer.outbox             -&gt; encodegraphite.inbox
+    - encodegraphite.outbox     -&gt; funnel.two
+
+    - funnel.outbox             -&gt; balance.inbox
+    - balance.one               -&gt; tcp1.inbox
+    - balance.two               -&gt; tcp2.inbox
+
+    - tcp1.failed               -&gt; funnel.one
+    - tcp2.failed               -&gt; funnel.three
+...
+</pre></div>
+</td></tr></table><p>Start the server in the foreground using following command:</p>
+<pre class="literal-block">
+$ metricfactory debug --config hammer.yaml
+</pre>
+<p>You can stop by pressing ctrl+c.</p>
+<p>The above example will send 10 batches (line 7) of 100 sets (line 8) of 100
+metrics (line 9) resulting into 100000 unique metrics.  Between each batch
+10000 metrics we wait 1 second (line 11).</p>
+</div>
+<div class="section" id="scenario-3-determine-the-maximum-throughput-of-metrics">
+<h2>Scenario 3: Determine the maximum throughput of metrics</h2>
+<p>Let's say we want to have a ballpark number of how many metrics per second our
+Graphite instance is able to receive.</p>
+<p>For this we use the below bootstrap file:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre>.. code-block:: identifier
+:linenos: table
+
+  ---
+  modules:
+
+      hammer:
+          module: metricfactory.test.hammer
+          arguments:
+              batch: 0
+              batch_size: 100
+              set_size: 100
+              value: 1000
+
+      encodegraphite:
+          module: wishbone.builtin.metrics.graphite
+
+      tcp:
+          module: wishbone.output.tcp
+          arguments:
+              host: graphite-001
+              port: 2013
+
+  routingtable:
+
+      - hammer.outbox             -&gt; encodegraphite.inbox
+      - encodegraphite.outbox     -&gt; tcp.inbox
+  ...
+</pre></div>
+</td></tr></table><p>By setting the batch argument (line 10) to 0, we indefinitely send the defined
+batch.  If we overflow Metricfactory because we can't write metrics out fast
+enough , throttling will be enabled automatically.</p>
+<p>You could even start X amount of similar parallel processes by using the
+--instances parameter when bootstrapping:</p>
+<pre class="literal-block">
+$ metricfactory debug --config hammer_scenario_3.yaml --instances 4
+</pre>
+<p><img alt="graphite3" src="pics/scenario_3.png" /></p>
+<p>As you can see we're maxing out the cpu usage of the relay server while
+processing on average 1117000 metrics/s.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Generating a predictable number of metrics can be practical to verify whether
+your Graphite setup behaves as expected under different scenarios. &nbsp;It becomes
+more&nbsp;meaningful&nbsp;if you have a more complex environment with a number of
+relays, sharding and duplication policies. &nbsp;By generating large batches of
+continuously data with different sizing it's possible to get an idea about the
+throughput of your Graphite setup.</p>
+</div>
+
+                </div><!-- /.entry-content -->
+                <div class="comments">
+                <h2>Comments !</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "testing-graphite-with-metricfactory-revisited.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://smetj.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
+                </div>
+        </article>
+</section>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-40703057-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<script type="text/javascript">
+    var disqus_shortname = 'smetj';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://smetj.net/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="http://smetj.net/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>

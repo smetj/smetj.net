@@ -2,7 +2,7 @@ Consume, process and produce data with Wishbone and RabbitMQ
 ############################################################
 :date: 2013-01-29 22:07
 :author: smetj
-:category: events
+:category: engineering
 :tags: amqp, python, rabbitmq, wishbone
 :slug: consume-process-and-produce-data-with-wishbone-and-rabbitmq
 

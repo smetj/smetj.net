@@ -2,7 +2,7 @@ Testing Graphite with MetricFactory
 ###################################
 :date: 2013-04-28 22:14
 :author: smetj
-:category: events
+:category: #monitoringlove
 :tags: monitoringlove, graphite, metricfactory, python
 :slug: testing-graphite-with-metricfactory
 

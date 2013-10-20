@@ -1,5 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-06-05T01:26:00+02:00</updated><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="http://smetj.net/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
+<feed xmlns="http://www.w3.org/2005/Atom"><title>smetj.net</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-10-09T22:14:00+02:00</updated><entry><title>Testing Graphite with MetricFactory revisited</title><link href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html" rel="alternate"></link><updated>2013-10-09T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-10-09:testing-graphite-with-metricfactory-revisited.html</id><summary type="html">&lt;p&gt;In this post we revisit a previously posted article on how we can test and
+stress test a Graphite setup. This is basiscally a rewrite of that article
+since the Wishbone and MetricFactory software have meanwhile changed
+enough to dedicate a new article to it.&lt;/p&gt;
+&lt;p&gt;Our end-goal still stands.  We want to test and understand the behavior of a
+Graphite setup by writing metrics into it using different scenarios.&lt;/p&gt;
+&lt;div class="section" id="installation"&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Installing metricfactory is a matter of checking out the project from
+Git and running the installer. &amp;nbsp;All dependencies should be downloaded
+automatically.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ git clone https://github.com/smetj/metricfactory
+$ cd metricfactory
+$ sudo python setup.py install
+&lt;/pre&gt;
+&lt;p&gt;We will also require an extra &lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Wishbone module&lt;/a&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp"&gt;https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One or more of following packages might be required to successfully
+finish the install:&lt;/p&gt;
+&lt;blockquote&gt;
+gcc, gcc-c++, make, python-devel, Cython&lt;/blockquote&gt;
+&lt;p&gt;Once installed you can execute following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory list
+$ metricfactory list --group metricfactory.encoder
+$ metricfactory list --group metricfactory.decoder
+$ metricfactory list --group metricfactory.test
+&lt;/pre&gt;
+&lt;p&gt;That should return a list of all available modules. &amp;nbsp;You should see at
+least tcp, hammer and graphite.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bootstrap"&gt;
+&lt;h2&gt;Bootstrap&lt;/h2&gt;
+&lt;p&gt;Starting Metricfactory requires a bootstrap file. &amp;nbsp;A bootstrap file is a YAML
+formatted file containing the configuration of which modules to initiate and
+which path events will follow through these module instances.&lt;/p&gt;
+&lt;p&gt;A base bootstrap file you can found &lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hammerGraphite"&gt;here&lt;/a&gt;. &amp;nbsp;We will be adapting it to
+suit our needs. &amp;nbsp;Going through the content it should give you an idea
+what the possibilities are.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-1-submit-fixed-number-of-metrics-to-graphite"&gt;
+&lt;h2&gt;Scenario 1: Submit fixed number of metrics to graphite.&lt;/h2&gt;
+&lt;p&gt;Let's say we have a Graphite setup of 1 carbon-relay instance which forwards
+metrics to 1 or more carbon instances. &amp;nbsp;We want to see how Graphite behaves
+under a predictable load.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;---
+modules:
+
+    hammer:
+        module: metricfactory.test.hammer
+        arguments:
+            batch: 1
+            batch_size: 100
+            set_size: 100
+            value: 1000
+
+    encodegraphite:
+        module: wishbone.builtin.metrics.graphite
+
+    tcp:
+        module: wishbone.output.tcp
+        arguments:
+            host: graphite-001
+            port: 2013
+
+routingtable:
+
+    - hammer.outbox             -&amp;gt; encodegraphite.inbox
+    - encodegraphite.outbox     -&amp;gt; tcp.inbox
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;The hammer module (line 4) is the module which generates metrics in a generic
+format. The module is initialized to produce 1 batch (line 7) of metrics
+consisting out of 100 unique sets (line 8) each containing 100 metrics
+(line9). This means 10000 unique metrics are generated. Batch (line 7)
+determines how many times we want to regenerate this collection of metrics.  A
+value of 0 would mean indefinitely.  The sleep parameter (not used, default 1)
+determines the time in seconds between each batch. The value parameter (line
+10) determines the maximum value the random generated metric value can be.&lt;/p&gt;
+&lt;p&gt;The routing table (line 21) tells us events are traveling through the modules
+in following order:&lt;/p&gt;
+&lt;blockquote&gt;
+hammer -&amp;gt; encodegraphite -&amp;gt; tcp&lt;/blockquote&gt;
+&lt;p&gt;The tcp module (line 15) submits the metrics over TCP to the destination
+defined with the host (line 18) and port (line 19)&lt;/p&gt;
+&lt;p&gt;Start the server in the foreground using following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config hammer.yaml
+&lt;/pre&gt;
+&lt;p&gt;You can stop by pressing ctrl+c.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/testing-graphite-with-metricfactory-revisited-001.png"&gt;&lt;img alt="graphite1" src="pics/testing-graphite-with-metricfactory-revisited-001.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When reviewing the metricsReceived values of both the carbon.relay as
+carbon.cache we see we have received the expected amount of metrics.&lt;/p&gt;
+&lt;p&gt;Keep in mind since each generated metric is unique, &lt;strong&gt;10000 wsp files&lt;/strong&gt; are
+created. It's likely that after running this test,  you will only find a
+subset of the generated data stored in Graphite.  This is because Graphite
+does rate limiting and is not creating all wsp files in order not to hammer
+the disks.  You might want to tweak Graphite to meet your expectations and
+rerun the above setup to test your setup.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-2-submit-a-fixed-number-of-metrics-to-2-carbon-relays"&gt;
+&lt;h2&gt;Scenario 2: Submit a fixed number of metrics to 2 carbon-relays&lt;/h2&gt;
+&lt;p&gt;Let's say we have a setup with 2 carbon relays with multiple carbon-caches
+behind that.  In this case you might want to verify whether you can really
+afford to loose a relay node.  We can use the same approach as we did in
+scenario 1 and produce and submit a known number of metrics.&lt;/p&gt;
+&lt;p&gt;The below bootstrap file is setup in such a way that produced metrics are
+spread over 2 tcp destinations.  You might want to execute a couple of runs
+while killing parts of your Graphite setup to verify it behaves as expected
+and whether there is no metric loss.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;---
+modules:
+
+    hammer:
+        module: metricfactory.test.hammer
+        arguments:
+            batch: 10
+            batch_size: 100
+            set_size: 100
+            value: 1000
+            sleep: 1
+
+    encodegraphite:
+        module: wishbone.builtin.metrics.graphite
+
+    funnel:
+        module: wishbone.builtin.flow.funnel
+
+    balance:
+        module: wishbone.builtin.flow.roundrobin
+
+    tcp1:
+        module: wishbone.output.tcp
+        arguments:
+            host: graphite-001
+            port: 2013
+
+    tcp2:
+        module: wishbone.output.tcp
+        arguments:
+            host: graphite-002
+            port: 2013
+
+routingtable:
+
+    - hammer.outbox             -&amp;gt; encodegraphite.inbox
+    - encodegraphite.outbox     -&amp;gt; funnel.two
+
+    - funnel.outbox             -&amp;gt; balance.inbox
+    - balance.one               -&amp;gt; tcp1.inbox
+    - balance.two               -&amp;gt; tcp2.inbox
+
+    - tcp1.failed               -&amp;gt; funnel.one
+    - tcp2.failed               -&amp;gt; funnel.three
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Start the server in the foreground using following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config hammer.yaml
+&lt;/pre&gt;
+&lt;p&gt;You can stop by pressing ctrl+c.&lt;/p&gt;
+&lt;p&gt;The above example will send 10 batches (line 7) of 100 sets (line 8) of 100
+metrics (line 9) resulting into 100000 unique metrics.  Between each batch
+10000 metrics we wait 1 second (line 11).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-3-determine-the-maximum-throughput-of-metrics"&gt;
+&lt;h2&gt;Scenario 3: Determine the maximum throughput of metrics&lt;/h2&gt;
+&lt;p&gt;Let's say we want to have a ballpark number of how many metrics per second our
+Graphite instance is able to receive.&lt;/p&gt;
+&lt;p&gt;For this we use the below bootstrap file:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;.. code-block:: identifier
+:linenos: table
+
+  ---
+  modules:
+
+      hammer:
+          module: metricfactory.test.hammer
+          arguments:
+              batch: 0
+              batch_size: 100
+              set_size: 100
+              value: 1000
+
+      encodegraphite:
+          module: wishbone.builtin.metrics.graphite
+
+      tcp:
+          module: wishbone.output.tcp
+          arguments:
+              host: graphite-001
+              port: 2013
+
+  routingtable:
+
+      - hammer.outbox             -&amp;gt; encodegraphite.inbox
+      - encodegraphite.outbox     -&amp;gt; tcp.inbox
+  ...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;By setting the batch argument (line 10) to 0, we indefinitely send the defined
+batch.  If we overflow Metricfactory because we can't write metrics out fast
+enough , throttling will be enabled automatically.&lt;/p&gt;
+&lt;p&gt;You could even start X amount of similar parallel processes by using the
+--instances parameter when bootstrapping:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config hammer_scenario_3.yaml --instances 4
+&lt;/pre&gt;
+&lt;p&gt;&lt;img alt="graphite3" src="pics/scenario_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;As you can see we're maxing out the cpu usage of the relay server while
+processing on average 1117000 metrics/s.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Generating a predictable number of metrics can be practical to verify whether
+your Graphite setup behaves as expected under different scenarios. &amp;nbsp;It becomes
+more&amp;nbsp;meaningful&amp;nbsp;if you have a more complex environment with a number of
+relays, sharding and duplication policies. &amp;nbsp;By generating large batches of
+continuously data with different sizing it's possible to get an idea about the
+throughput of your Graphite setup.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="python"></category></entry><entry><title>Installing PyPy with Gevent and virtualenv on Fedora</title><link href="http://smetj.net/installing-pypy-with-gevent-and-virtualenv-on-fedora.html" rel="alternate"></link><updated>2013-06-05T01:26:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-06-05:installing-pypy-with-gevent-and-virtualenv-on-fedora.html</id><summary type="html">&lt;p&gt;PyPy has been on my radar for a while but I have never really brought
 myself to the point of actually trying it. &amp;nbsp;Recently, a notification
 caught to my attention stating PyPy 2.0.2 was released and had support
 to run Gevent. &amp;nbsp;Good news! I was looking at speed improvements for
@@ -438,7 +756,7 @@ ModGearman and submit that to Graphite. &amp;nbsp;We covered in detail how data
 changes when traveling through the different modules to get a better
 understanding of the whole process.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;This article is superseded by&lt;/strong&gt; &lt;a class="reference external" href="|filename|testing-graphite-with-metricfactory-revisited.rst"&gt;Testing Graphite with MetricFactory revisited&lt;/a&gt;&lt;/p&gt;
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;This article is superseded by&lt;/strong&gt; &lt;a class="reference external" href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html"&gt;Testing Graphite with MetricFactory revisited&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Graphite is great. &amp;nbsp;Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of
 metrics goodness. &amp;nbsp;Although it's pretty straightforward to get Graphite
