@@ -18,6 +18,8 @@ to be installed from Github.&lt;/p&gt;
 (python-2.7.5)[smetj&amp;#64;indigo ~]$ wishbone list
 &lt;/pre&gt;
 &lt;p&gt;You should at least see the two tcp modules.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The bootstrap files used throughout this article can be downloaded from
+Github_.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="introduction"&gt;
 &lt;h2&gt;Introduction&lt;/h2&gt;
@@ -364,112 +366,15 @@ desirable situation.&lt;/p&gt;
 &lt;p&gt;To mitigate this, we can initialize the output modules with a argument which
 alters the way it deals with messages which failed to go out.  That behavior
 is described in the output module patterns &lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/patterns.html#handle-failed-and-successful-events"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;  ---
-  metrics:
-    graphite:
-      module: wishbone.builtin.metrics.graphite
-
-  modules:
-
-    graphite_server:
-      module: wishbone.output.tcp
-      arguments:
-        host: graphite-001
-        port: 2013
-
-    input:
-      module: wishbone.input.tcp
-      arguments:
-        port: 10000
-
-    funnel:
-      module: wishbone.builtin.flow.funnel
-
-    roundrobin:
-      module: wishbone.builtin.flow.roundrobin
-
-    output_1:
-      module: wishbone.output.tcp
-      arguments:
-        port: 20000
-        failed: true
-
-    output_2:
-      module: wishbone.output.tcp
-      arguments:
-        port: 20001
-        failed: true
-
-  routingtable:
-    #metric stream
-    - graphite.outbox         -&amp;gt; graphite_server.inbox
-    #organize event stream
-    - input.outbox            -&amp;gt; funnel.one
-    - funnel.outbox           -&amp;gt; roundrobin.inbox
-    - roundrobin.one          -&amp;gt; output_1.inbox
-    - roundrobin.two          -&amp;gt; output_2.inbox
-    #reroute failed events
-    - output_1.failed         -&amp;gt; funnel.two
-    - output_2.failed         -&amp;gt; funnel.three
-  ...
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Basically, it boils down to this: In this bootstrap file we initiate the
+&lt;p&gt;&lt;img alt="scenario_3" class="align-top" src="pics/loadbalance-and-ha-patterns-using-wishbone/scenario_3_combo.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Basically, it boils down to this: In this bootstrap file we initiate the
 output_2 module by setting the failed argument to true (line 35).  That
 creates a &lt;em&gt;failed&lt;/em&gt; queue in which all failed events arrive.  This failed queue
-is in its turn connected to the funnel module (line 19), which gives the
-opportunity to the failed events to be submitted to a working output.  When
-that happens, there are no new events coming into the output anyway since it
-has been locked for incoming data.&lt;/p&gt;
-&lt;p&gt;A graphical representation of this bootstrap file looks like this:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="scenario_3" class="align-top" src="pics/loadbalance-and-ha-patterns-using-wishbone/scenario_3.png" /&gt;&lt;/p&gt;
-&lt;p&gt;When we rerun our last scenario using this bootstrap file, we have according
+is in its turn connected (line 46-47) to the funnel module (line 19), which
+allows the failed events to flow to a working output.  Since the failing
+output's inbox queue is locked for incoming events, it will be drained from
+all events.&lt;/p&gt;
+&lt;p&gt;When repeating our last scenario using this bootstrap file, we have according
 to Graphite no queues anymore containing stuck messages.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
