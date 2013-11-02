@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Jelle Smet'
-SITENAME = u'smetj.net'
+SITENAME = u'Project site of Jelle Smet'
 SITEURL = 'http://smetj.net'
 TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
