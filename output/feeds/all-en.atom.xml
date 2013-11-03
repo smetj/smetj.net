@@ -1145,7 +1145,7 @@ understanding of the whole process.&lt;/p&gt;
 </summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;hr class="docutils" /&gt;
 &lt;div class="section" id="this-article-is-superseded"&gt;
 &lt;h2&gt;&lt;strong&gt;This article is superseded&lt;/strong&gt;&lt;/h2&gt;
-&lt;p&gt;Read &lt;a class="reference external" href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html"&gt;Consume and process Nagios metrics from Mod_Gearman using Wishbone `Testing Graphite with MetricFactory revisited&lt;/a&gt; instead.&lt;/p&gt;
+&lt;p&gt;Read &lt;a class="reference external" href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html"&gt;Testing Graphite with MetricFactory revisited&lt;/a&gt; instead.&lt;/p&gt;
 &lt;hr class="docutils" /&gt;
 &lt;p&gt;Graphite is great. &amp;nbsp;Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of

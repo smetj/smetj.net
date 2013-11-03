@@ -11,7 +11,7 @@ Testing Graphite with MetricFactory
 
 **This article is superseded**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Read `Consume and process Nagios metrics from Mod_Gearman using Wishbone `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_ instead.
+Read `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_ instead.
 
 ----
 
