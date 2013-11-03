@@ -1,6 +1,6 @@
 Load balance and high availability patterns using Wishbone
 ##########################################################
-:date: 2013-10-20 20:42
+:date: 2013-11-02 22:48
 :author: smetj
 :category: engineering
 :tags: messaging, events, wishbone, python
