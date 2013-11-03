@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-10-20T20:42:00+02:00</updated><entry><title>Load balance and high availability patterns using Wishbone</title><link href="http://smetj.net/loadbalance-and-ha-patterns-using-wishbone.html" rel="alternate"></link><updated>2013-10-20T20:42:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-10-20:loadbalance-and-ha-patterns-using-wishbone.html</id><summary type="html">&lt;p&gt;In this article I would like to explore the possibilities of creating a TCP
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-02T22:48:00+01:00</updated><entry><title>Load balance and high availability patterns using Wishbone</title><link href="http://smetj.net/loadbalance-and-ha-patterns-using-wishbone.html" rel="alternate"></link><updated>2013-11-02T22:48:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-02:loadbalance-and-ha-patterns-using-wishbone.html</id><summary type="html">&lt;p&gt;In this article I would like to explore the possibilities of creating a TCP
 based event proxy which balances events to one or more TCP backends.  For this
 we will run through a couple of scenarios in which we highlight different
 approaches.&lt;/p&gt;
@@ -1142,7 +1142,11 @@ ModGearman and submit that to Graphite. &amp;nbsp;We covered in detail how data
 changes when traveling through the different modules to get a better
 understanding of the whole process.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;This article is superseded by&lt;/strong&gt; &lt;a class="reference external" href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html"&gt;Testing Graphite with MetricFactory revisited&lt;/a&gt;&lt;/p&gt;
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;hr class="docutils" /&gt;
+&lt;div class="section" id="this-article-is-superseded"&gt;
+&lt;h2&gt;&lt;strong&gt;This article is superseded&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Read &lt;a class="reference external" href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html"&gt;Consume and process Nagios metrics from Mod_Gearman using Wishbone `Testing Graphite with MetricFactory revisited&lt;/a&gt; instead.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
 &lt;p&gt;Graphite is great. &amp;nbsp;Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of
 metrics goodness. &amp;nbsp;Although it's pretty straightforward to get Graphite
@@ -1158,6 +1162,7 @@ quickly assemble servers which process metrics in one way or the other.
 &amp;nbsp;So why not use it to generate random metrics and write them to Graphite
 in a controlled way? &amp;nbsp;With this article I would like to take you through
 a couple of use cases.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="installation"&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;
 &lt;p&gt;Installing metricfactory is a matter of checking out the project from
