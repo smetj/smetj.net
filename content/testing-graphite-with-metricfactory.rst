@@ -7,7 +7,14 @@ Testing Graphite with MetricFactory
 :slug: testing-graphite-with-metricfactory
 
 
-**This article is superseded by** `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_
+----
+
+**This article is superseded**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Read `Consume and process Nagios metrics from Mod_Gearman using Wishbone `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_ instead.
+
+----
+
 
 Graphite is great.  Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of
