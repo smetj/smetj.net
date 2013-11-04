@@ -8,6 +8,8 @@ New Year Python Meme 2012
 Following `Tarek Ziadé's idea for a 2012 New Year Python Meme`_ here's
 mine
 
+xxend_summaryxx
+
 What is the coolest Python application, framework or library you have discovered in 2012?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

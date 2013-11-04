@@ -22,6 +22,11 @@ GITHUB_URL = 'http://github.com/smetj/'
 #           ('Python.org', 'http://python.org/'),
 #           ('Jinja2', 'http://jinja.pocoo.org/'),
 #           ('You can modify those links in your config file', '#'),)
+
+PLUGIN_PATH = '/home/smetj/projects/github/pelican-plugins'
+PLUGINS = ['summary']
+SUMMARY_BEGIN_MARKER = "xxstart_summaryxx"
+SUMMARY_END_MARKER = "xxend_summaryxx"
 LINKS = None
 PDF_GENERATOR = True
 STATIC_PATHS = [

@@ -6,15 +6,11 @@ Testing Graphite with MetricFactory
 :tags: monitoringlove, graphite, metricfactory, python
 :slug: testing-graphite-with-metricfactory
 
-
-----
-
 **This article is superseded**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Read `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_ instead.
 
-----
-
+xxend_summaryxx
 
 Graphite is great.  Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of

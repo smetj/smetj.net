@@ -6,12 +6,12 @@ Load balance and high availability patterns using Wishbone
 :tags: messaging, events, wishbone, python
 :slug: loadbalance-and-ha-patterns-using-wishbone
 
-
 In this article I would like to explore the possibilities of creating a TCP
 based event proxy which balances events to one or more TCP backends.  For this
 we will run through a couple of scenarios in which we highlight different
 approaches.
 
+xxend_summaryxx
 
 Installation
 ~~~~~~~~~~~~
