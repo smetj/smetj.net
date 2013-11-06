@@ -825,8 +825,7 @@ into a virtualenv it's really easy to use, experiment and rebuild.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="python"></category><category term="gevent"></category><category term="pypy"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html" rel="alternate"></link><updated>2013-05-10T15:59:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-05-10:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html</id><summary type="html">&lt;div class="section" id="this-article-is-superseded"&gt;
 &lt;h2&gt;&lt;strong&gt;This article is superseded&lt;/strong&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html"&gt;Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Read &lt;a class="reference external" href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html"&gt;Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited&lt;/a&gt; instead.&lt;/p&gt;
 &lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
 for many. &amp;nbsp;I would have abandoned it if there weren't projects like
 &lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,&amp;nbsp;&lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;Mod_Gearman&lt;/a&gt;&amp;nbsp;and&amp;nbsp;&lt;a class="reference external" href="http://www.thruk.org/"&gt;Thruk&lt;/a&gt;&amp;nbsp;which to my opinion should

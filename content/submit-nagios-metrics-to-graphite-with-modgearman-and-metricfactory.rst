@@ -9,11 +9,7 @@ Submit Nagios metrics to Graphite with ModGearman and MetricFactory
 **This article is superseded**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited <|filename|submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.rst>`_
-
-
-xxend_summaryxx
-
+Read `Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited <|filename|submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.rst>`_ instead.
 
 When it comes down to monitoring Nagios is still the weapon of choice
 for many.  I would have abandoned it if there weren't projects like
