@@ -1,325 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-06T22:00:00+01:00</updated><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html" rel="alternate"></link><updated>2013-11-06T22:00:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-06:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
-for many. &amp;nbsp;I would have abandoned it if there weren't projects like
-&lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,&amp;nbsp;&lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;Mod_Gearman&lt;/a&gt;&amp;nbsp;and&amp;nbsp;&lt;a class="reference external" href="http://www.thruk.org/"&gt;Thruk&lt;/a&gt;&amp;nbsp;which to my opinion should
-never be missing from any Nagios setup. &amp;nbsp;Mod_Gearman, the framework
-which makes Nagios scalable, has a feature which stores the performance
-data produced by the Nagios plugins into a &lt;a class="reference external" href="http://gearman.org/"&gt;Gearman&lt;/a&gt;&amp;nbsp;queue. &amp;nbsp;Graphing
-that performance data with &lt;a class="reference external" href="http://graphite.wikidot.com/"&gt;Graphite&lt;/a&gt; is a straightforward job with
-&lt;a class="reference external" href="https://github.com/smetj/metricfactory"&gt;Metricfactory&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="section" id="performance-data"&gt;
-&lt;h2&gt;Performance data&lt;/h2&gt;
-&lt;p&gt;Mod_Gearman is a Nagios addon which spreads the Nagios plugin execution
-over a farm of worker nodes. &amp;nbsp;This allows you to build a scalable Nagios
-setup quite effectively. &amp;nbsp;The workers execute the Nagios plugins and
-submit the produced results back into the Gearman master server. &amp;nbsp;A
-Nagios broker module then consumes the submitted check results from the
-Gearman master and submits the check results into Nagios for further
-processing. &amp;nbsp;The broker module can optionally submit the &lt;a class="reference external" href="http://nagios.sourceforge.net/docs/3_0/perfdata.html"&gt;performance
-data&lt;/a&gt;&amp;nbsp;back into a dedicated Gearman queue ready to be consumed by an
-external process which in our case is going to be Metricfactory.
-&amp;nbsp;Metricfactory will convert the performance data into the proper format
-and submit that into Graphite.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="mod-gearman"&gt;
-&lt;h2&gt;Mod_Gearman&lt;/h2&gt;
-&lt;p&gt;The Mod_Gearman project has quite extensive &lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;documentation
-available&lt;/a&gt;&amp;nbsp;but these are the relevant parameters:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-perfdata=yes
-&lt;/pre&gt;
-&lt;p&gt;Setting the value to&amp;nbsp;&lt;em&gt;yes&lt;/em&gt; makes the broker module write the
-performance data to the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-perfdata_mode=1
-&lt;/pre&gt;
-&lt;p&gt;Setting the value to&amp;nbsp;&lt;em&gt;1&lt;/em&gt; makes sure that performance data doesn't pile
-up endlessly in the queue when Metricfactory isn't consuming. &amp;nbsp;It's
-basically a precaution which prevents the queue to fill up to a point
-all available system memory is consumed. &amp;nbsp;Setting the value to&amp;nbsp;&lt;em&gt;2&lt;/em&gt;
-will append all performance data to the queue without overwriting old
-data. &amp;nbsp;When enabled you can execute the&amp;nbsp;&lt;em&gt;gearman_top&lt;/em&gt; command and you
-should see the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue appear:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="pics/gearman_top.png"&gt;&lt;img alt="gearman_top" src="pics/gearman_top.png" /&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The Jobs Waiting column indicates how many performance data is currently
-stored in the queue. &amp;nbsp;Ideally this should be 0 or as low as possible and
-never grow otherwise that might indicate the performance data is not
-consumed fast enough. Keep in mind that not all Nagios plugins produce
-performance data. &amp;nbsp;If you want to be sure whether a plugin produces
-performance data, have a look in Thruk (or other Nagios interface) and
-verify in the service or host details whether &lt;em&gt;Performance Data&lt;/em&gt;
-actually contains valid perfdata.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="pics/perfdata.png"&gt;&lt;img alt="perfdata" src="pics/perfdata.png" /&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="metricfactory"&gt;
-&lt;h2&gt;Metricfactory&lt;/h2&gt;
-&lt;p&gt;You can download Metricfactory from &lt;a class="reference external" href="https://github.com/smetj/metricfactory"&gt;Github&lt;/a&gt; and get it up an running
-quite easily by following the installation instructions. &amp;nbsp;In our case,
-you will require some additional modules which you can install from Pypi
-using the&amp;nbsp;&lt;em&gt;easy_install&lt;/em&gt;command:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-$ easy_install wb_gearmand
-$ easy_install wb_tcpclient
-$ easy_install wb_tippingbucket
-$ easy_install wb_stdout
-&lt;/pre&gt;
-&lt;p&gt;When all went well you should be able to execute (&lt;a class="reference external" href="http://ascii.io/a/3101"&gt;ascii.io
-screencast&lt;/a&gt;):&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-$ metricfactory list
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div class="section" id="configuration"&gt;
-&lt;h2&gt;Configuration&lt;/h2&gt;
-&lt;p&gt;Metricfactory uses bootstrap files which define the modules to load and
-how events will flow through the chain. &amp;nbsp;You can download a base example
-&lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/modgearman2graphite/modgearman2graphite.json"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-{
-  &amp;quot;metrics&amp;quot;: {
-    &amp;quot;enable&amp;quot;: true,
-    &amp;quot;group&amp;quot;: &amp;quot;wishbone.metrics&amp;quot;,
-    &amp;quot;interval&amp;quot;: 10,
-    &amp;quot;module&amp;quot;: &amp;quot;Log&amp;quot;,
-    &amp;quot;variables&amp;quot;: {
-    }
-  },
-  &amp;quot;bootstrap&amp;quot;: {
-    &amp;quot;modgearman&amp;quot;: {
-      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
-      &amp;quot;module&amp;quot;: &amp;quot;Gearmand&amp;quot;,
-      &amp;quot;variables&amp;quot;: {
-        &amp;quot;hostnames&amp;quot;: [ &amp;quot;your.gearmand.server.hostname&amp;quot; ],
-        &amp;quot;secret&amp;quot;: &amp;quot;changemechangeme&amp;quot;,
-        &amp;quot;workers&amp;quot;: 1
-      }
-    },
-    &amp;quot;decodemodgearman&amp;quot;: {
-      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.decoder&amp;quot;,
-      &amp;quot;module&amp;quot;: &amp;quot;ModGearman&amp;quot;,
-      &amp;quot;variables&amp;quot;: {
-      }
-    },
-    &amp;quot;encodegraphite&amp;quot;: {
-      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.encoder&amp;quot;,
-      &amp;quot;module&amp;quot;: &amp;quot;Graphite&amp;quot;,
-      &amp;quot;variables&amp;quot;: {
-        &amp;quot;prefix&amp;quot;:&amp;quot;nagios&amp;quot;
-      }
-    },
-    &amp;quot;buffer&amp;quot;: {
-      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
-      &amp;quot;module&amp;quot;: &amp;quot;TippingBucket&amp;quot;,
-      &amp;quot;variables&amp;quot;: {
-        &amp;quot;events&amp;quot;: 1000,
-        &amp;quot;age&amp;quot;: 60
-      }
-    },
-    &amp;quot;tcpout&amp;quot;: {
-      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
-      &amp;quot;module&amp;quot;: &amp;quot;TCPClient&amp;quot;,
-      &amp;quot;variables&amp;quot;: {
-        &amp;quot;pool&amp;quot;: [&amp;quot;your.graphite.relay1:2013&amp;quot;,&amp;quot;your.graphite.relay2:2013&amp;quot;]
-      }
-    },
-    &amp;quot;stdout&amp;quot;: {
-      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
-      &amp;quot;module&amp;quot;: &amp;quot;STDOUT&amp;quot;,
-      &amp;quot;variables&amp;quot;: {
-        &amp;quot;purge&amp;quot;:true
-      }
-    }
-  },
-  &amp;quot;routingtable&amp;quot;: {
-    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;decodemodgearman.inbox&amp;quot; ],
-    &amp;quot;decodemodgearman.outbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
-    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;tcpout.inbox&amp;quot; ]
-  }
-}
-&lt;/pre&gt;
-&lt;p&gt;Depending on your environment you will have to adapt some of the
-variables in the boostrap file. The &lt;em&gt;hostnames&lt;/em&gt; variable (line 15) is a
-list of the Gearmand servers from which the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt;&amp;nbsp; has to be
-consumed. &amp;nbsp;Usually this is a list containing just 1 server. &amp;nbsp;In some
-special cases you might add more servers here but that's in our case not
-likely.&lt;/p&gt;
-&lt;p&gt;The secret variable (line 16) should contain the pre-shared encryption
-key allowing you to decrypt the information consumed from Gearmand.
-&amp;nbsp;Worth to mention there is no authentication, but without the decryption
-key you wont be able to read the data coming from the Gearmand server.&lt;/p&gt;
-&lt;p&gt;The number of workers variable (line 17) determines how many workers
-should consume perfdata from the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue. &amp;nbsp;If you notice
-perdata isn't consumed fast enough, you could bump this number to a
-higher value. &amp;nbsp;In this case keep an eye on the the CPU usage of
-Metricfactory due to the decrypting. &amp;nbsp;If you notice Metricfactory can't
-keep up because of high cpu usage then another strategy might be to
-leave this numer on 1 and start Metricfactory with the &lt;em&gt;--instances x&lt;/em&gt;
-parameter, where x is the number of parallel processes.&lt;/p&gt;
-&lt;p&gt;In this configuration, the &lt;em&gt;buffer&lt;/em&gt; instance of the TippingBucket module
-will flush when 1000 metrics (line 27) are in the buffer or when the
-last metric added to the buffer is 60 seconds (line 38) old. &amp;nbsp;This
-allows you to control the size of the data per outgoing connection to
-Graphite. &amp;nbsp;It's more efficient to group and submit metrics instead of
-making a connection to Graphite per metric.&lt;/p&gt;
-&lt;p&gt;The &lt;em&gt;tcpout&lt;/em&gt; instance is initiated in this example with the addresses of
-2 Graphite relay servers (line 45). &amp;nbsp;When defining more than 1 address
-in the &lt;em&gt;pool&lt;/em&gt; list then the client will randomly select one of the
-addresses until a successful connect is done. To test, you can start
-Metricfactory in debug mode to keep it from forking in the background
-and by enabling the &lt;em&gt;--loglevel debug&lt;/em&gt;&amp;nbsp;parameter:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
-&lt;/pre&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://ascii.io/a/3102"&gt;ascii.io screencast&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="converting-nagios-format-to-graphite-format"&gt;
-&lt;h2&gt;Converting Nagios format to graphite format&lt;/h2&gt;
-&lt;p&gt;Graphite stores the metrics in a tree-like hierarchical manner using a
-dotted naming scheme. Somehow we will have to convert the Nagios metrics
-into this format. &amp;nbsp;Metricfactory converts the metrics coming from an
-external source into a common Metricfactory format. &amp;nbsp;From this format
-it's straightforward to convert them into another format. Unfortunately,
-many years of Nagios plugin development has lead to all kinds of metric
-name formats. &amp;nbsp;This&amp;nbsp;inconsistency is something we will have to deal
-with. Consider following examples:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-rta=1.274ms;3000.000;5000.000;0; pl=0%;80;100;;
-&lt;/pre&gt;
-&lt;pre class="literal-block"&gt;
-/=1351MB;3426;3627;0;4031 /dev=0MB;3046;3225;0;3584 /dev/shm=0MB;3054;3233;0;3593 /boot=26MB;205;217;0;242 /tmp=16MB;427;452;0;503 /var=1430MB;6853;7256;0;8063 /var/tmp=16MB;427;452;0;503
-&lt;/pre&gt;
-&lt;pre class="literal-block"&gt;
-MemUsedPercent=7%;98;102;0;100 SwapUsedPercent=0%;80;90;0;100 MemUsed=486MB;;;0;7187 SwapUsed=0MB;;;0;204
-&lt;/pre&gt;
-&lt;p&gt;The names of metrics in the first example are rta and pl respectively.
-&amp;nbsp;In the second example the metric names are the paths of mount points
-containing slashes. &amp;nbsp;The 3rd example has metric names with mixed
-uppercase and lowercase. &amp;nbsp;Although the decode.gearman module does some
-basic metric name sanitation, it's perfectly possible to write a
-Wishbone module and plug it into your MetricFactory chain to convert the
-metric names into whatever your like but covering that topic is out of
-scope of this article. To get an idea how our data looks like after each
-module we're going to alter the &lt;em&gt;routing table&lt;/em&gt; in the bootstrap file
-accordingly. &amp;nbsp;If you take look at our bootstrap file, you notice we have
-an additional module initiated called &lt;em&gt;stdout&lt;/em&gt; (line&amp;nbsp;48) which is not
-included in our &lt;em&gt;routing table&lt;/em&gt;. &amp;nbsp;The&amp;nbsp;&lt;em&gt;stdout&lt;/em&gt; module prints, as you
-might guess, incoming events to STDOUT. &amp;nbsp;Let's go over each step to see
-how our data looks like:&lt;/p&gt;
-&lt;div class="section" id="data-coming-from-wishbone-iomodule-gearmand"&gt;
-&lt;h3&gt;Data coming from wishbone.iomodule.Gearmand&lt;/h3&gt;
-&lt;p&gt;To print the data coming from Mod_Gearman to STDOUT we change our
-routing table to the following:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;quot;routingtable&amp;quot;: {
-    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;stdout.inbox&amp;quot; ]
-  }
-&lt;/pre&gt;
-&lt;p&gt;Start Metricfactory in the foreground (&lt;a class="reference external" href="http://ascii.io/a/3120"&gt;ascii.io
-screencast&lt;/a&gt;):&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
-&lt;/pre&gt;
-&lt;p&gt;Example host performance data:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-DATATYPE::HOSTPERFDATA TIMET::1368178733   HOSTNAME::host_339  HOSTPERFDATA::rta=0.091ms;3000.000;5000.000;0; pl=0%;80;100;;   HOSTCHECKCOMMAND::check:host.alive!(null)   HOSTSTATE::0    HOSTSTATETYPE::1
-&lt;/pre&gt;
-&lt;p&gt;Example service performance data:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-DATATYPE::SERVICEPERFDATA  TIMET::1368178797   HOSTNAME::localhost SERVICEDESC::Gearman Queues SERVICEPERFDATA::'check_results_waiting'=0;10;100;0 'check_results_running'=0 'check_results_worker'=1;25;50;0 'host_waiting'=0;10;100;0 'host_running'=0 'host_worker'=10;25;50;0 'hostgroup_localhost_waiting'=0;10;100;0 'hostgroup_localhost_running'=1 'hostgroup_localhost_worker'=10;25;50;0 'perfdata_waiting'=0;10;100;0 'perfdata_running'=0 'perfdata_worker'=1;25;50;0 'service_waiting'=0;10;100;0 'service_running'=0 'service_worker'=10;25;50;0 'worker_nagios-001_waiting'=0;10;100;0 'worker_nagios-001_running'=0 'worker_nagios-001_worker'=1;25;50;0   SERVICECHECKCOMMAND::check:app.gearman.master   SERVICESTATE::0 SERVICESTATETYPE::1
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div class="section" id="data-coming-from-metricfactory-decoder-modgearman"&gt;
-&lt;h3&gt;Data coming from metricfactory.decoder.ModGearman&lt;/h3&gt;
-&lt;p&gt;So the data coming from Mod_Gearman needs to be converted into the
-common Metricfactory internal format. &amp;nbsp;For this we use a module from the
-metricfactory.decoder group, in this case ModGearman.&lt;/p&gt;
-&lt;p&gt;Change the routing table to following configuration:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;quot;routingtable&amp;quot;: {
-    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;decodemodgearman.inbox&amp;quot; ],
-    &amp;quot;decodemodgearman.outbox&amp;quot;: [ &amp;quot;stdout.inbox&amp;quot; ]
-}
-&lt;/pre&gt;
-&lt;p&gt;Start Metricfactory in the foreground (&lt;a class="reference external" href="http://ascii.io/a/3121"&gt;ascii.io
-screencast&lt;/a&gt;):&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
-&lt;/pre&gt;
-&lt;p&gt;Example host perfdata:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-{'name': 'rta', 'tags': ['check:host_alive!(null)', 'hostcheck'], 'value': '0.155', 'source': 'host_409', 'time': '1368179085', 'units': 'ms', 'type': 'nagios'}
-&lt;/pre&gt;
-&lt;p&gt;Example service perfdata:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-{'name': 'perfdata_waiting', 'tags': ['check:app_gearman_master', 'gearman_queues'], 'value': '0', 'source': 'localhost', 'time': '1368179129', 'units': '', 'type': 'nagios'}
-&lt;/pre&gt;
-&lt;p&gt;The ModGearman decoder module filters out some characters from different
-parts&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="data-coming-from-metricfactory-encoder-graphite"&gt;
-&lt;h3&gt;Data coming from metricfactory.encoder.Graphite&lt;/h3&gt;
-&lt;p&gt;Now we have to convert the metrics from the internal Metricfactory
-format into a the Graphite format. &amp;nbsp;The&amp;nbsp;&lt;em&gt;encodegraphite&lt;/em&gt; module has a
-parameter&amp;nbsp;&lt;em&gt;prefix&lt;/em&gt; (line 30) which allows you to define a prefix for
-the name of each metric to store in Graphite. &amp;nbsp;With this configuration,
-each metric will start with &amp;quot;&lt;em&gt;nagios.&lt;/em&gt;&amp;quot;.&lt;/p&gt;
-&lt;p&gt;Change the routing table to following configuration:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;quot;routingtable&amp;quot;: {
-    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;decodemodgearman.inbox&amp;quot; ],
-    &amp;quot;decodemodgearman.outbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
-    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;stdout.inbox&amp;quot; ]
-  }
-&lt;/pre&gt;
-&lt;p&gt;Start Metricfactory in the foreground (&lt;a class="reference external" href="http://ascii.io/a/3122"&gt;ascii.io
-screencast&lt;/a&gt;):&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
-&lt;/pre&gt;
-&lt;p&gt;Example:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-nagios.host_260.hostcheck.pl 0 1368179289
-nagios.host_26.hostcheck.rta 0.133 1368179289
-nagios.host_26.hostcheck.pl 0 1368179289
-nagios.host_256.hostcheck.rta 0.123 1368179289
-nagios.localhost.gearman_queues.service_running 0 1368179329
-nagios.localhost.gearman_queues.service_worker 9 1368179329
-nagios.localhost.gearman_queues.worker_nagios-001_waiting 0 1368179329
-nagios.localhost.gearman_queues.worker_nagios-001_running 0 1368179329
-nagios.localhost.gearman_queues.worker_nagios-001_worker 1 136817932
-&lt;/pre&gt;
-&lt;p&gt;As you can see the Graphite encoder module had to make some assumptions.
-&amp;nbsp;In case the metric type is Nagios (the internal format contains this
-information) then the hostchecks always have the word&amp;nbsp;&lt;em&gt;hostcheck&lt;/em&gt; in
-the metric name as you can see in the above example. &amp;nbsp;When the data is a
-Nagios servicecheck, then the service description is included in the
-metric name.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="graphite"&gt;
-&lt;h2&gt;Graphite&lt;/h2&gt;
-&lt;p&gt;Typically Nagios schedules checks every 5 minutes. &amp;nbsp;This doesn't really
-result in high resolution metrics and is often used as a point of
-critique. &amp;nbsp;Keep this in mind when you define a Graphite retention
-policy. &amp;nbsp;In the example configuration we use&amp;nbsp;&lt;em&gt;nagios&lt;/em&gt; as a prefix
-(line 30), so you could use a Whisper retention policy similar to:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-[nagios]
-priority = 100
-pattern = ^nagios\.
-retentions = 300:2016
-&lt;/pre&gt;
-&lt;p&gt;Make sure the Nagios execution interval corresponds properly to
-the&amp;nbsp;&lt;em&gt;retentions&lt;/em&gt;&amp;nbsp;parameter to prevent gaps.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="conclusion"&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;We have covered how to setup Metricfactory to consume metric data from
-ModGearman and submit that to Graphite. &amp;nbsp;We covered in detail how data
-changes when traveling through the different modules to get a better
-understanding of the whole process.&lt;/p&gt;
-&lt;/div&gt;
-</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category><category term="nagios"></category><category term="mod_gearman"></category></entry><entry><title>Load balance and high availability patterns using Wishbone</title><link href="http://smetj.net/loadbalance-and-ha-patterns-using-wishbone.html" rel="alternate"></link><updated>2013-11-02T22:48:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-02:loadbalance-and-ha-patterns-using-wishbone.html</id><summary type="html">&lt;p&gt;In this article I would like to explore the possibilities of creating a TCP
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-02T22:48:00+01:00</updated><entry><title>Load balance and high availability patterns using Wishbone</title><link href="http://smetj.net/loadbalance-and-ha-patterns-using-wishbone.html" rel="alternate"></link><updated>2013-11-02T22:48:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-02:loadbalance-and-ha-patterns-using-wishbone.html</id><summary type="html">&lt;p&gt;In this article I would like to explore the possibilities of creating a TCP
 based event proxy which balances events to one or more TCP backends.  For this
 we will run through a couple of scenarios in which we highlight different
 approaches.&lt;/p&gt;
@@ -1143,7 +823,332 @@ binaries included)''
 into a virtualenv it's really easy to use, experiment and rebuild.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Have a lot of fun running Gevent on PyPy!&lt;/em&gt;&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="gevent"></category><category term="pypy"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;div class="section" id="this-article-is-superseded"&gt;
+</summary><category term="python"></category><category term="gevent"></category><category term="pypy"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html" rel="alternate"></link><updated>2013-05-10T15:59:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-05-10:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory.html</id><summary type="html">&lt;div class="section" id="this-article-is-superseded"&gt;
+&lt;h2&gt;&lt;strong&gt;This article is superseded&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html"&gt;Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice
+for many. &amp;nbsp;I would have abandoned it if there weren't projects like
+&lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,&amp;nbsp;&lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;Mod_Gearman&lt;/a&gt;&amp;nbsp;and&amp;nbsp;&lt;a class="reference external" href="http://www.thruk.org/"&gt;Thruk&lt;/a&gt;&amp;nbsp;which to my opinion should
+never be missing from any Nagios setup. &amp;nbsp;Mod_Gearman, the framework
+which makes Nagios scalable, has a feature which stores the performance
+data produced by the Nagios plugins into a &lt;a class="reference external" href="http://gearman.org/"&gt;Gearman&lt;/a&gt;&amp;nbsp;queue. &amp;nbsp;Graphing
+that performance data with &lt;a class="reference external" href="http://graphite.wikidot.com/"&gt;Graphite&lt;/a&gt; is a straightforward job with
+&lt;a class="reference external" href="https://github.com/smetj/metricfactory"&gt;Metricfactory&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="performance-data"&gt;
+&lt;h2&gt;Performance data&lt;/h2&gt;
+&lt;p&gt;Mod_Gearman is a Nagios addon which spreads the Nagios plugin execution
+over a farm of worker nodes. &amp;nbsp;This allows you to build a scalable Nagios
+setup quite effectively. &amp;nbsp;The workers execute the Nagios plugins and
+submit the produced results back into the Gearman master server. &amp;nbsp;A
+Nagios broker module then consumes the submitted check results from the
+Gearman master and submits the check results into Nagios for further
+processing. &amp;nbsp;The broker module can optionally submit the &lt;a class="reference external" href="http://nagios.sourceforge.net/docs/3_0/perfdata.html"&gt;performance
+data&lt;/a&gt;&amp;nbsp;back into a dedicated Gearman queue ready to be consumed by an
+external process which in our case is going to be Metricfactory.
+&amp;nbsp;Metricfactory will convert the performance data into the proper format
+and submit that into Graphite.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mod-gearman"&gt;
+&lt;h2&gt;Mod_Gearman&lt;/h2&gt;
+&lt;p&gt;The Mod_Gearman project has quite extensive &lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;documentation
+available&lt;/a&gt;&amp;nbsp;but these are the relevant parameters:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+perfdata=yes
+&lt;/pre&gt;
+&lt;p&gt;Setting the value to&amp;nbsp;&lt;em&gt;yes&lt;/em&gt; makes the broker module write the
+performance data to the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+perfdata_mode=1
+&lt;/pre&gt;
+&lt;p&gt;Setting the value to&amp;nbsp;&lt;em&gt;1&lt;/em&gt; makes sure that performance data doesn't pile
+up endlessly in the queue when Metricfactory isn't consuming. &amp;nbsp;It's
+basically a precaution which prevents the queue to fill up to a point
+all available system memory is consumed. &amp;nbsp;Setting the value to&amp;nbsp;&lt;em&gt;2&lt;/em&gt;
+will append all performance data to the queue without overwriting old
+data. &amp;nbsp;When enabled you can execute the&amp;nbsp;&lt;em&gt;gearman_top&lt;/em&gt; command and you
+should see the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue appear:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/gearman_top.png"&gt;&lt;img alt="gearman_top" src="pics/gearman_top.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The Jobs Waiting column indicates how many performance data is currently
+stored in the queue. &amp;nbsp;Ideally this should be 0 or as low as possible and
+never grow otherwise that might indicate the performance data is not
+consumed fast enough. Keep in mind that not all Nagios plugins produce
+performance data. &amp;nbsp;If you want to be sure whether a plugin produces
+performance data, have a look in Thruk (or other Nagios interface) and
+verify in the service or host details whether &lt;em&gt;Performance Data&lt;/em&gt;
+actually contains valid perfdata.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/perfdata.png"&gt;&lt;img alt="perfdata" src="pics/perfdata.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="metricfactory"&gt;
+&lt;h2&gt;Metricfactory&lt;/h2&gt;
+&lt;p&gt;You can download Metricfactory from &lt;a class="reference external" href="https://github.com/smetj/metricfactory"&gt;Github&lt;/a&gt; and get it up an running
+quite easily by following the installation instructions. &amp;nbsp;In our case,
+you will require some additional modules which you can install from Pypi
+using the&amp;nbsp;&lt;em&gt;easy_install&lt;/em&gt;command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ easy_install wb_gearmand
+$ easy_install wb_tcpclient
+$ easy_install wb_tippingbucket
+$ easy_install wb_stdout
+&lt;/pre&gt;
+&lt;p&gt;When all went well you should be able to execute (&lt;a class="reference external" href="http://ascii.io/a/3101"&gt;ascii.io
+screencast&lt;/a&gt;):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory list
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuration"&gt;
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Metricfactory uses bootstrap files which define the modules to load and
+how events will flow through the chain. &amp;nbsp;You can download a base example
+&lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/modgearman2graphite/modgearman2graphite.json"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+  &amp;quot;metrics&amp;quot;: {
+    &amp;quot;enable&amp;quot;: true,
+    &amp;quot;group&amp;quot;: &amp;quot;wishbone.metrics&amp;quot;,
+    &amp;quot;interval&amp;quot;: 10,
+    &amp;quot;module&amp;quot;: &amp;quot;Log&amp;quot;,
+    &amp;quot;variables&amp;quot;: {
+    }
+  },
+  &amp;quot;bootstrap&amp;quot;: {
+    &amp;quot;modgearman&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Gearmand&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;hostnames&amp;quot;: [ &amp;quot;your.gearmand.server.hostname&amp;quot; ],
+        &amp;quot;secret&amp;quot;: &amp;quot;changemechangeme&amp;quot;,
+        &amp;quot;workers&amp;quot;: 1
+      }
+    },
+    &amp;quot;decodemodgearman&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.decoder&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;ModGearman&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+      }
+    },
+    &amp;quot;encodegraphite&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;metricfactory.encoder&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;Graphite&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;prefix&amp;quot;:&amp;quot;nagios&amp;quot;
+      }
+    },
+    &amp;quot;buffer&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TippingBucket&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;events&amp;quot;: 1000,
+        &amp;quot;age&amp;quot;: 60
+      }
+    },
+    &amp;quot;tcpout&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.iomodule&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;TCPClient&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;pool&amp;quot;: [&amp;quot;your.graphite.relay1:2013&amp;quot;,&amp;quot;your.graphite.relay2:2013&amp;quot;]
+      }
+    },
+    &amp;quot;stdout&amp;quot;: {
+      &amp;quot;group&amp;quot;: &amp;quot;wishbone.module&amp;quot;,
+      &amp;quot;module&amp;quot;: &amp;quot;STDOUT&amp;quot;,
+      &amp;quot;variables&amp;quot;: {
+        &amp;quot;purge&amp;quot;:true
+      }
+    }
+  },
+  &amp;quot;routingtable&amp;quot;: {
+    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;decodemodgearman.inbox&amp;quot; ],
+    &amp;quot;decodemodgearman.outbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
+    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;tcpout.inbox&amp;quot; ]
+  }
+}
+&lt;/pre&gt;
+&lt;p&gt;Depending on your environment you will have to adapt some of the
+variables in the boostrap file. The &lt;em&gt;hostnames&lt;/em&gt; variable (line 15) is a
+list of the Gearmand servers from which the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt;&amp;nbsp; has to be
+consumed. &amp;nbsp;Usually this is a list containing just 1 server. &amp;nbsp;In some
+special cases you might add more servers here but that's in our case not
+likely.&lt;/p&gt;
+&lt;p&gt;The secret variable (line 16) should contain the pre-shared encryption
+key allowing you to decrypt the information consumed from Gearmand.
+&amp;nbsp;Worth to mention there is no authentication, but without the decryption
+key you wont be able to read the data coming from the Gearmand server.&lt;/p&gt;
+&lt;p&gt;The number of workers variable (line 17) determines how many workers
+should consume perfdata from the&amp;nbsp;&lt;em&gt;perfdata&lt;/em&gt; queue. &amp;nbsp;If you notice
+perdata isn't consumed fast enough, you could bump this number to a
+higher value. &amp;nbsp;In this case keep an eye on the the CPU usage of
+Metricfactory due to the decrypting. &amp;nbsp;If you notice Metricfactory can't
+keep up because of high cpu usage then another strategy might be to
+leave this numer on 1 and start Metricfactory with the &lt;em&gt;--instances x&lt;/em&gt;
+parameter, where x is the number of parallel processes.&lt;/p&gt;
+&lt;p&gt;In this configuration, the &lt;em&gt;buffer&lt;/em&gt; instance of the TippingBucket module
+will flush when 1000 metrics (line 27) are in the buffer or when the
+last metric added to the buffer is 60 seconds (line 38) old. &amp;nbsp;This
+allows you to control the size of the data per outgoing connection to
+Graphite. &amp;nbsp;It's more efficient to group and submit metrics instead of
+making a connection to Graphite per metric.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;tcpout&lt;/em&gt; instance is initiated in this example with the addresses of
+2 Graphite relay servers (line 45). &amp;nbsp;When defining more than 1 address
+in the &lt;em&gt;pool&lt;/em&gt; list then the client will randomly select one of the
+addresses until a successful connect is done. To test, you can start
+Metricfactory in debug mode to keep it from forking in the background
+and by enabling the &lt;em&gt;--loglevel debug&lt;/em&gt;&amp;nbsp;parameter:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
+&lt;/pre&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://ascii.io/a/3102"&gt;ascii.io screencast&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="converting-nagios-format-to-graphite-format"&gt;
+&lt;h2&gt;Converting Nagios format to graphite format&lt;/h2&gt;
+&lt;p&gt;Graphite stores the metrics in a tree-like hierarchical manner using a
+dotted naming scheme. Somehow we will have to convert the Nagios metrics
+into this format. &amp;nbsp;Metricfactory converts the metrics coming from an
+external source into a common Metricfactory format. &amp;nbsp;From this format
+it's straightforward to convert them into another format. Unfortunately,
+many years of Nagios plugin development has lead to all kinds of metric
+name formats. &amp;nbsp;This&amp;nbsp;inconsistency is something we will have to deal
+with. Consider following examples:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+rta=1.274ms;3000.000;5000.000;0; pl=0%;80;100;;
+&lt;/pre&gt;
+&lt;pre class="literal-block"&gt;
+/=1351MB;3426;3627;0;4031 /dev=0MB;3046;3225;0;3584 /dev/shm=0MB;3054;3233;0;3593 /boot=26MB;205;217;0;242 /tmp=16MB;427;452;0;503 /var=1430MB;6853;7256;0;8063 /var/tmp=16MB;427;452;0;503
+&lt;/pre&gt;
+&lt;pre class="literal-block"&gt;
+MemUsedPercent=7%;98;102;0;100 SwapUsedPercent=0%;80;90;0;100 MemUsed=486MB;;;0;7187 SwapUsed=0MB;;;0;204
+&lt;/pre&gt;
+&lt;p&gt;The names of metrics in the first example are rta and pl respectively.
+&amp;nbsp;In the second example the metric names are the paths of mount points
+containing slashes. &amp;nbsp;The 3rd example has metric names with mixed
+uppercase and lowercase. &amp;nbsp;Although the decode.gearman module does some
+basic metric name sanitation, it's perfectly possible to write a
+Wishbone module and plug it into your MetricFactory chain to convert the
+metric names into whatever your like but covering that topic is out of
+scope of this article. To get an idea how our data looks like after each
+module we're going to alter the &lt;em&gt;routing table&lt;/em&gt; in the bootstrap file
+accordingly. &amp;nbsp;If you take look at our bootstrap file, you notice we have
+an additional module initiated called &lt;em&gt;stdout&lt;/em&gt; (line&amp;nbsp;48) which is not
+included in our &lt;em&gt;routing table&lt;/em&gt;. &amp;nbsp;The&amp;nbsp;&lt;em&gt;stdout&lt;/em&gt; module prints, as you
+might guess, incoming events to STDOUT. &amp;nbsp;Let's go over each step to see
+how our data looks like:&lt;/p&gt;
+&lt;div class="section" id="data-coming-from-wishbone-iomodule-gearmand"&gt;
+&lt;h3&gt;Data coming from wishbone.iomodule.Gearmand&lt;/h3&gt;
+&lt;p&gt;To print the data coming from Mod_Gearman to STDOUT we change our
+routing table to the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;quot;routingtable&amp;quot;: {
+    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;stdout.inbox&amp;quot; ]
+  }
+&lt;/pre&gt;
+&lt;p&gt;Start Metricfactory in the foreground (&lt;a class="reference external" href="http://ascii.io/a/3120"&gt;ascii.io
+screencast&lt;/a&gt;):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
+&lt;/pre&gt;
+&lt;p&gt;Example host performance data:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DATATYPE::HOSTPERFDATA TIMET::1368178733   HOSTNAME::host_339  HOSTPERFDATA::rta=0.091ms;3000.000;5000.000;0; pl=0%;80;100;;   HOSTCHECKCOMMAND::check:host.alive!(null)   HOSTSTATE::0    HOSTSTATETYPE::1
+&lt;/pre&gt;
+&lt;p&gt;Example service performance data:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+DATATYPE::SERVICEPERFDATA  TIMET::1368178797   HOSTNAME::localhost SERVICEDESC::Gearman Queues SERVICEPERFDATA::'check_results_waiting'=0;10;100;0 'check_results_running'=0 'check_results_worker'=1;25;50;0 'host_waiting'=0;10;100;0 'host_running'=0 'host_worker'=10;25;50;0 'hostgroup_localhost_waiting'=0;10;100;0 'hostgroup_localhost_running'=1 'hostgroup_localhost_worker'=10;25;50;0 'perfdata_waiting'=0;10;100;0 'perfdata_running'=0 'perfdata_worker'=1;25;50;0 'service_waiting'=0;10;100;0 'service_running'=0 'service_worker'=10;25;50;0 'worker_nagios-001_waiting'=0;10;100;0 'worker_nagios-001_running'=0 'worker_nagios-001_worker'=1;25;50;0   SERVICECHECKCOMMAND::check:app.gearman.master   SERVICESTATE::0 SERVICESTATETYPE::1
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="data-coming-from-metricfactory-decoder-modgearman"&gt;
+&lt;h3&gt;Data coming from metricfactory.decoder.ModGearman&lt;/h3&gt;
+&lt;p&gt;So the data coming from Mod_Gearman needs to be converted into the
+common Metricfactory internal format. &amp;nbsp;For this we use a module from the
+metricfactory.decoder group, in this case ModGearman.&lt;/p&gt;
+&lt;p&gt;Change the routing table to following configuration:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;quot;routingtable&amp;quot;: {
+    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;decodemodgearman.inbox&amp;quot; ],
+    &amp;quot;decodemodgearman.outbox&amp;quot;: [ &amp;quot;stdout.inbox&amp;quot; ]
+}
+&lt;/pre&gt;
+&lt;p&gt;Start Metricfactory in the foreground (&lt;a class="reference external" href="http://ascii.io/a/3121"&gt;ascii.io
+screencast&lt;/a&gt;):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
+&lt;/pre&gt;
+&lt;p&gt;Example host perfdata:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{'name': 'rta', 'tags': ['check:host_alive!(null)', 'hostcheck'], 'value': '0.155', 'source': 'host_409', 'time': '1368179085', 'units': 'ms', 'type': 'nagios'}
+&lt;/pre&gt;
+&lt;p&gt;Example service perfdata:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{'name': 'perfdata_waiting', 'tags': ['check:app_gearman_master', 'gearman_queues'], 'value': '0', 'source': 'localhost', 'time': '1368179129', 'units': '', 'type': 'nagios'}
+&lt;/pre&gt;
+&lt;p&gt;The ModGearman decoder module filters out some characters from different
+parts&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="data-coming-from-metricfactory-encoder-graphite"&gt;
+&lt;h3&gt;Data coming from metricfactory.encoder.Graphite&lt;/h3&gt;
+&lt;p&gt;Now we have to convert the metrics from the internal Metricfactory
+format into a the Graphite format. &amp;nbsp;The&amp;nbsp;&lt;em&gt;encodegraphite&lt;/em&gt; module has a
+parameter&amp;nbsp;&lt;em&gt;prefix&lt;/em&gt; (line 30) which allows you to define a prefix for
+the name of each metric to store in Graphite. &amp;nbsp;With this configuration,
+each metric will start with &amp;quot;&lt;em&gt;nagios.&lt;/em&gt;&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Change the routing table to following configuration:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;quot;routingtable&amp;quot;: {
+    &amp;quot;modgearman.inbox&amp;quot;: [ &amp;quot;decodemodgearman.inbox&amp;quot; ],
+    &amp;quot;decodemodgearman.outbox&amp;quot;: [ &amp;quot;encodegraphite.inbox&amp;quot; ],
+    &amp;quot;encodegraphite.outbox&amp;quot;: [ &amp;quot;stdout.inbox&amp;quot; ]
+  }
+&lt;/pre&gt;
+&lt;p&gt;Start Metricfactory in the foreground (&lt;a class="reference external" href="http://ascii.io/a/3122"&gt;ascii.io
+screencast&lt;/a&gt;):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ metricfactory debug --config modgearmand2graphite.json --loglevel debug
+&lt;/pre&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+nagios.host_260.hostcheck.pl 0 1368179289
+nagios.host_26.hostcheck.rta 0.133 1368179289
+nagios.host_26.hostcheck.pl 0 1368179289
+nagios.host_256.hostcheck.rta 0.123 1368179289
+nagios.localhost.gearman_queues.service_running 0 1368179329
+nagios.localhost.gearman_queues.service_worker 9 1368179329
+nagios.localhost.gearman_queues.worker_nagios-001_waiting 0 1368179329
+nagios.localhost.gearman_queues.worker_nagios-001_running 0 1368179329
+nagios.localhost.gearman_queues.worker_nagios-001_worker 1 136817932
+&lt;/pre&gt;
+&lt;p&gt;As you can see the Graphite encoder module had to make some assumptions.
+&amp;nbsp;In case the metric type is Nagios (the internal format contains this
+information) then the hostchecks always have the word&amp;nbsp;&lt;em&gt;hostcheck&lt;/em&gt; in
+the metric name as you can see in the above example. &amp;nbsp;When the data is a
+Nagios servicecheck, then the service description is included in the
+metric name.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="graphite"&gt;
+&lt;h2&gt;Graphite&lt;/h2&gt;
+&lt;p&gt;Typically Nagios schedules checks every 5 minutes. &amp;nbsp;This doesn't really
+result in high resolution metrics and is often used as a point of
+critique. &amp;nbsp;Keep this in mind when you define a Graphite retention
+policy. &amp;nbsp;In the example configuration we use&amp;nbsp;&lt;em&gt;nagios&lt;/em&gt; as a prefix
+(line 30), so you could use a Whisper retention policy similar to:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[nagios]
+priority = 100
+pattern = ^nagios\.
+retentions = 300:2016
+&lt;/pre&gt;
+&lt;p&gt;Make sure the Nagios execution interval corresponds properly to
+the&amp;nbsp;&lt;em&gt;retentions&lt;/em&gt;&amp;nbsp;parameter to prevent gaps.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;We have covered how to setup Metricfactory to consume metric data from
+ModGearman and submit that to Graphite. &amp;nbsp;We covered in detail how data
+changes when traveling through the different modules to get a better
+understanding of the whole process.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category></entry><entry><title>Testing Graphite with MetricFactory</title><link href="http://smetj.net/testing-graphite-with-metricfactory.html" rel="alternate"></link><updated>2013-04-28T22:14:00+02:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-04-28:testing-graphite-with-metricfactory.html</id><summary type="html">&lt;div class="section" id="this-article-is-superseded"&gt;
 &lt;h2&gt;&lt;strong&gt;This article is superseded&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;Read &lt;a class="reference external" href="http://smetj.net/testing-graphite-with-metricfactory-revisited.html"&gt;Testing Graphite with MetricFactory revisited&lt;/a&gt; instead.&lt;/p&gt;
 &lt;p&gt;&lt;/p&gt;
