@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Moncli - An introduction</title>
+    <title>Project site of Jelle Smet - mod_gearman</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Jelle Smet">
@@ -79,7 +79,7 @@
 						<i class="icon-folder-open icon-large"></i>misc
 					</a>
                   </li>
-                  <li class="active">
+                  <li >
                     <a href="http://smetj.net/category/monitoringlove.html">
 						<i class="icon-folder-open icon-large"></i>#monitoringlove
 					</a>
@@ -231,23 +231,12 @@
 
 </ul>        </div><!--/.well -->
         <div class="span9" id="content">
-<section id="content">
-        <article>
-                <header>
-                        <h1>
-                                <a href=""
-                                        rel="bookmark"
-                                        title="Permalink to Moncli - An introduction">
-                                        Moncli - An introduction
-                                </a>
-                        </h1>
-                </header>
-                <div class="entry-content">
-                <div class="well">
-<footer class="post-info">
+        <div class="article">
+                <h1><a href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html">Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited</a></h1>
+                <div class="well small"><footer class="post-info">
 <span class="label">Date</span>
-<abbr class="published" title="2012-02-09T00:20:00">
-        <i class="icon-calendar"></i>do 09 februari 2012
+<abbr class="published" title="2013-11-06T22:00:00">
+        <i class="icon-calendar"></i>wo 06 november 2013
 </abbr>
 <span class="label">By</span>
 <a href="http://smetj.net/author/smetj.html"><i class="icon-user"></i>smetj</a>
@@ -256,119 +245,23 @@
 
 
 <span class="label">Tags</span>
-	<a href="http://smetj.net/tag/moncli.html"><i class="icon-tag"></i>moncli</a>
 	<a href="http://smetj.net/tag/monitoringlove.html"><i class="icon-tag"></i>monitoringlove</a>
-	<a href="http://smetj.net/tag/rabbitmq.html"><i class="icon-tag"></i>rabbitmq</a>
-</footer><!-- /.post-info -->                </div>
-                <p><a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/moncli_architecture_1-2/"><img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Moncli_architecture_11-300x231.jpg" /></a></p>
-<p>One of the classic tasks one has to deal with when working with a
-monitoring framework is have the ability to retrieve metrics from an OS
-or server which aren't available just like that over the network. There
-are plenty of different techniques and a multitude of clients available
-which offer this functionality. &nbsp;Covering them falls out of the scope of
-this post.</p>
-<div class="section" id="so-why-another-monitoring-client">
-<h2>So why another Monitoring Client?</h2>
-<p>When running into scalability problems with my Nagios setup, I realized
-that the reason for this is the fact that Nagios always has to take the
-initiative to poll a client. &nbsp;This is in Nagios terminology called an
-active check. &nbsp;It's of course normal that a client receives instructions
-on what it needs to do like which plugin to execute or which thresholds
-to evaluate. &nbsp;However, if you think about it, why do we have to repeat
-the same question over and over again while in essence nothing has ever
-changed between the current and the previous request? Isn't it normal we
-ask a question once and say report back at this interval and carry on
-until further notice?</p>
-<p>So why not offloading all (or most of) the scheduling effort a central
-monitoring system has to perform to the monitoring clients running on
-your hosts?</p>
-<p>If you would take it further, you could turn each of my monitoring
-clients into an &quot;independent miniature monitoring engine&quot;. &nbsp;This way you
-could shift the load from a central system to the collective of clients
-in the network. &nbsp;This basically results in horizontal scalability and a
-decentralized setup.</p>
-</div>
-<div class="section" id="requirements">
-<h2>Requirements</h2>
-<div class="section" id="open-and-rich-data-format">
-<h3>Open and rich data format</h3>
-<p>All in- and outgoing communication should be done in an clear and open
-data format, which offers the flexibility to transform it into any
-other&nbsp;desirable format which allows you to integrate the client with an
-existing&nbsp;platform but which in its turn also allows you to move away
-from it. &nbsp;All <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Request">incoming</a>&nbsp;to and <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Reports">outgoing</a>&nbsp;data from Moncli is in JSON
-format. This makes sure that Moncli data is manipulated easily.</p>
-</div>
-<div class="section" id="scheduling">
-<h3>Scheduling</h3>
-<p>As said, the client needs to be able to schedule a request at an
-<a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#cycle">interval of choice</a>. When the client restarts, it should remember its
-scheduled requests and carry on from the moment it's alive again. Moncli
-has a build in scheduler which <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#cache">writes its schedule to disk</a>.</p>
-</div>
-<div class="section" id="flexible-messaging">
-<h3>Flexible messaging.</h3>
-<p>Since Moncli has its own scheduler, it has to submit the check results
-somehow in a trustworthy way without actually having to care much about
-who consumes the data when and where. Moncli submits check results into
-the <a class="reference external" href="http://www.rabbitmq.com/">RabbitMQ</a> message broker, which offers a great deal of
-flexibility.</p>
-<p>Moncli <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Communication">listens</a> on the message broker infrastructure for incoming
-requests. Each Moncli client registers a queue using its FQDN as a name
-on the message broker infrastructure from where it receives the requests
-it should execute.</p>
-</div>
-<div class="section" id="simple-manageable-but-safe-plugin-design">
-<h3>Simple, manageable but safe plugin design</h3>
-<p>Metrics have to come from somewhere. When Moncli executes a request, it
-actually executes a locally stored plugin. <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Plugins">All this plugin needs to do
-is create a list of key/value pairs</a>. This significantly lowers the
-difficulty and time required to create new plugins which also allows
-less experienced people to write plugins. Moncli will only execute
-<a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#local_repo">locally stored plugins</a> which have a hash which matches the one in the
-request. When a plugin with such a hash isn't found locally, it will try
-to download an update or new version from <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#remote_repo">a central location</a>.</p>
-</div>
-<div class="section" id="evaluation-of-metrics">
-<h3>Evaluation of metrics</h3>
-<p>Nagios plugins require you to build in the evaluation of thresholds in
-them by feeding the plugin the warning and critical values. &nbsp;Moncli also
-performs the evaluation of metrics on the client side but takes another
-approach. &nbsp;Instead of doing threshold evaluation in the plugin, Moncli
-does the evaluation itself, based upon the <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#thresholds">thresholds</a> one provides in
-combination with a an evaluator.</p>
-<p>There are currently 2 <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Evaluator_definitions">types of evaluators</a> (more planned):</p>
-<p>Formulas: calculations using the keys/values returned by the plugin.
-Regexes: Simple regex matching on the output of a plugin (not key
-value pairs)</p>
-<p>It's optional to define evaluators in a request. &nbsp;In this case, Moncli
-just becomes a metrics collector.</p>
-<p>A good starting point to figure out what the possibilities of Moncli are
-is done by looking through &nbsp;the in- and outgoing data format of Moncli
-called <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Request">requests</a> and <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Reports">reports</a>.</p>
-<p>A second post will be about consuming and processing of Moncli data from
-RabbitMQ.</p>
-</div>
-</div>
-
-                </div><!-- /.entry-content -->
-                <div class="comments">
-		</br>
-                <h2>Comments</h2>
-                        <div id="disqus_thread"></div>
-                        <script type="text/javascript">
-                           var disqus_identifier = "moncli-an-introduction.html";
-                           (function() {
-                                var dsq = document.createElement('script');
-                                dsq.type = 'text/javascript'; dsq.async = true;
-                                dsq.src = 'http://smetj.disqus.com/embed.js';
-                                (document.getElementsByTagName('head')[0] ||
-                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
-                          })();
-                        </script>
+	<a href="http://smetj.net/tag/graphite.html"><i class="icon-tag"></i>graphite</a>
+	<a href="http://smetj.net/tag/metricfactory.html"><i class="icon-tag"></i>metricfactory</a>
+	<a href="http://smetj.net/tag/metrics.html"><i class="icon-tag"></i>metrics</a>
+	<a href="http://smetj.net/tag/nagios.html"><i class="icon-tag"></i>nagios</a>
+	<a href="http://smetj.net/tag/mod_gearman.html"><i class="icon-tag"></i>mod_gearman</a>
+</footer><!-- /.post-info --></div>
+                <div class="summary"><p>When it comes down to monitoring Nagios is still the weapon of choice
+for many. &nbsp;I would have abandoned it if there weren't projects like
+<a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html">Livestatus</a>,&nbsp;<a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/">Mod_Gearman</a>&nbsp;and&nbsp;<a class="reference external" href="http://www.thruk.org/">Thruk</a>&nbsp;which to my opinion should
+never be missing from any Nagios setup. &nbsp;Mod_Gearman, the framework
+which makes Nagios scalable, has ...</p>
+                        <a class="btn primary xsmall" href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html">more ...</a>
                 </div>
-        </article>
-</section>
+        </div>
+        <hr />
+
         </div><!--/span-->
       </div><!--/row-->
 
