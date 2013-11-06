@@ -5,6 +5,7 @@ Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited
 :category: #monitoringlove
 :tags: monitoringlove, graphite, metricfactory, metrics, nagios, mod_gearman
 :slug: submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited
+:status: draft
 
 When it comes down to monitoring Nagios is still the weapon of choice
 for many.  I would have abandoned it if there weren't projects like
