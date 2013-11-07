@@ -9,7 +9,7 @@ Submit Nagios metrics to Graphite with ModGearman and MetricFactory
 **This article is superseded**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Read `Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited <|filename|submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.rst>`_ instead.
+Read `Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited`_ instead.
 
 xxend_summaryxx
 
@@ -393,6 +393,7 @@ ModGearman and submit that to Graphite.  We covered in detail how data
 changes when traveling through the different modules to get a better
 understanding of the whole process.
 
+.. _Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited: http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html
 .. _Livestatus: http://mathias-kettner.de/checkmk_livestatus.html
 .. _Mod_Gearman: http://labs.consol.de/lang/en/nagios/mod-gearman/
 .. _Thruk: http://www.thruk.org/

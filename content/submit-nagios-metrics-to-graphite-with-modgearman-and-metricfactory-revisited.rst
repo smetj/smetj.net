@@ -1,11 +1,10 @@
 Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited
 #############################################################################
-:date: 2013-11-06 22:00
+:date: 2013-11-07 23:00
 :author: smetj
 :category: #monitoringlove
 :tags: monitoringlove, graphite, metricfactory, metrics, nagios, mod_gearman
 :slug: submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited
-:status: draft
 
 When it comes down to monitoring Nagios is still the weapon of choice for
 many.  I would have abandoned it if there weren't projects like `Livestatus`_,
@@ -191,8 +190,8 @@ output.
   ...snip...
 
 
-Decode
-''''''
+Decode Nagios format into generic format
+''''''''''''''''''''''''''''''''''''''''
 
 The next step is to decode the perfdata into a common format.
 
@@ -241,187 +240,120 @@ the data flow (line 26, 27).
   ...snip...
 
 
+Encode generic format to Graphite format
+''''''''''''''''''''''''''''''''''''''''
+
+The next step is to convert the generic format into Graphite format.  That
+what the *wishbone.builtin.metrics.graphite* module does, which is in our
+example initiated with name encode.  The is a builtin module because Wishbone
+can export its internal metrics to Graphite.
+
+.. code-block:: identifier
+  :linenos: table
+
+  ---
+  modules:
+      gearmand:
+          module: wishbone.input.gearman
+          arguments:
+              hostlist:
+                  - server-001
+              secret: changemechangeme
+              queue: perfdata
+              workers: 5
+
+      decode:
+          module: metricfactory.decoder.modgearman
+
+      encode:
+          module: wishbone.builtin.metrics.graphite
+          arguments:
+              prefix: nagios.
+              script: false
+
+      stdout:
+          module: wishbone.builtin.output.stdout
+
+  routingtable:
+
+      - gearmand.outbox   -> decode.inbox
+      - decode.outbox     -> encode.inbox
+      - encode.outbox     -> stdout.inbox
+  ...
 
 
+We can activate this step by altering the routing table appropriately (line
+27, 28).
 
-
-
-
-Converting Nagios format to graphite format
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Graphite stores the metrics in a tree-like hierarchical manner using a
-dotted naming scheme. Somehow we will have to convert the Nagios metrics
-into this format.  Metricfactory converts the metrics coming from an
-external source into a common Metricfactory format.  From this format
-it's straightforward to convert them into another format. Unfortunately,
-many years of Nagios plugin development has lead to all kinds of metric
-name formats.  This inconsistency is something we will have to deal
-with. Consider following examples:
-
-::
-
-    rta=1.274ms;3000.000;5000.000;0; pl=0%;80;100;;
-
-::
-
-    /=1351MB;3426;3627;0;4031 /dev=0MB;3046;3225;0;3584 /dev/shm=0MB;3054;3233;0;3593 /boot=26MB;205;217;0;242 /tmp=16MB;427;452;0;503 /var=1430MB;6853;7256;0;8063 /var/tmp=16MB;427;452;0;503
-
-::
-
-    MemUsedPercent=7%;98;102;0;100 SwapUsedPercent=0%;80;90;0;100 MemUsed=486MB;;;0;7187 SwapUsed=0MB;;;0;204
-
-The names of metrics in the first example are rta and pl respectively.
- In the second example the metric names are the paths of mount points
-containing slashes.  The 3rd example has metric names with mixed
-uppercase and lowercase.  Although the decode.gearman module does some
-basic metric name sanitation, it's perfectly possible to write a
-Wishbone module and plug it into your MetricFactory chain to convert the
-metric names into whatever your like but covering that topic is out of
-scope of this article. To get an idea how our data looks like after each
-module we're going to alter the *routing table* in the bootstrap file
-accordingly.  If you take look at our bootstrap file, you notice we have
-an additional module initiated called *stdout* (line 48) which is not
-included in our *routing table*.  The *stdout* module prints, as you
-might guess, incoming events to STDOUT.  Let's go over each step to see
-how our data looks like:
-
-Data coming from wishbone.iomodule.Gearmand
-'''''''''''''''''''''''''''''''''''''''''''
-
-To print the data coming from Mod\_Gearman to STDOUT we change our
-routing table to the following:
+Running metricfactory with this bootstrap file gives us following results:
+(hostnames have been obfuscated)
 
 ::
 
-    "routingtable": {
-        "modgearman.inbox": [ "stdout.inbox" ]
-      }
+  $ metricfactory debug --config modgearmand2graphite.yaml
+  nagios.aaaaaaaaaaaaaaa.hostcheck.pl 100 1383859655
+  nagios.bbbbbbbbbbbbbbb.hostcheck.rta 0.000 1383859655
+  nagios.ccccccccccccccc.hostcheck.pl 100 1383859655
+  nagios.ddddddddddddddd.hostcheck.rta 128.370 1383859663
+  nagios.eeeeeeeeeeeeeee.hostcheck.pl 0 1383859663
+  nagios.fffffffffffffff.hostcheck.rta 213.073 1383859663
+  nagios.ggggggggggggggg.memory_and_swap_usage.memusedpercent 16 1383859695
+  nagios.hhhhhhhhhhhhhhh.memory_and_swap_usage.swapusedpercent 0 1383859695
+  nagios.iiiiiiiiiiiiiii.memory_and_swap_usage.memused 1178 1383859695
+  nagios.jjjjjjjjjjjjjjj.memory_and_swap_usage.swapused 0 1383859695
+  ...snip...
 
-Start Metricfactory in the foreground (`ascii.io
-screencast <http://ascii.io/a/3120>`__):
 
-::
+Write to Graphite
+~~~~~~~~~~~~~~~~~
 
-    $ metricfactory debug --config modgearmand2graphite.json --loglevel debug
+Writing metrics to STDOUT is nice to see how results look like but that's not
+what we want.  The next step is to write the Graphite metrics into Graphite.
+For this we require the *wishbone.output.tcp* module which we initiate with
+name *tcpout* in the following bootstrap file:
 
-Example host performance data:
+.. code-block:: identifier
+  :linenos: table
 
-::
+  ---
+  modules:
+      gearmand:
+          module: wishbone.input.gearman
+          arguments:
+              hostlist:
+                  - server-001
+              secret: changemechangeme
+              queue: perfdata
+              workers: 5
 
-    DATATYPE::HOSTPERFDATA TIMET::1368178733   HOSTNAME::host_339  HOSTPERFDATA::rta=0.091ms;3000.000;5000.000;0; pl=0%;80;100;;   HOSTCHECKCOMMAND::check:host.alive!(null)   HOSTSTATE::0    HOSTSTATETYPE::1
+      decode:
+          module: metricfactory.decoder.modgearman
 
-Example service performance data:
+      encode:
+          module: wishbone.builtin.metrics.graphite
+          arguments:
+              prefix: nagios.
+              script: false
 
-::
+      stdout:
+          module: wishbone.builtin.output.stdout
 
-    DATATYPE::SERVICEPERFDATA  TIMET::1368178797   HOSTNAME::localhost SERVICEDESC::Gearman Queues SERVICEPERFDATA::'check_results_waiting'=0;10;100;0 'check_results_running'=0 'check_results_worker'=1;25;50;0 'host_waiting'=0;10;100;0 'host_running'=0 'host_worker'=10;25;50;0 'hostgroup_localhost_waiting'=0;10;100;0 'hostgroup_localhost_running'=1 'hostgroup_localhost_worker'=10;25;50;0 'perfdata_waiting'=0;10;100;0 'perfdata_running'=0 'perfdata_worker'=1;25;50;0 'service_waiting'=0;10;100;0 'service_running'=0 'service_worker'=10;25;50;0 'worker_nagios-001_waiting'=0;10;100;0 'worker_nagios-001_running'=0 'worker_nagios-001_worker'=1;25;50;0   SERVICECHECKCOMMAND::check:app.gearman.master   SERVICESTATE::0 SERVICESTATETYPE::1
+      tcpout:
+          module: wishbone.output.tcp
+          arguments:
+              host: graphite-001
+              port: 2013
 
- 
+  routingtable:
 
-Data coming from metricfactory.decoder.ModGearman
-'''''''''''''''''''''''''''''''''''''''''''''''''
+      - gearmand.outbox   -> decode.inbox
+      - decode.outbox     -> encode.inbox
+      - encode.outbox     -> tcpout.inbox
+  ...
 
-So the data coming from Mod\_Gearman needs to be converted into the
-common Metricfactory internal format.  For this we use a module from the
-metricfactory.decoder group, in this case ModGearman.
+You can leave the *stdout* module in here for convenience. As long it doesn't
+occur in the *routingtable* definition it doesn't serve a purpose.
 
-Change the routing table to following configuration:
-
-::
-
-    "routingtable": {
-        "modgearman.inbox": [ "decodemodgearman.inbox" ],
-        "decodemodgearman.outbox": [ "stdout.inbox" ]
-    }
-
-Start Metricfactory in the foreground (`ascii.io
-screencast <http://ascii.io/a/3121>`__):
-
-::
-
-    $ metricfactory debug --config modgearmand2graphite.json --loglevel debug
-
-Example host perfdata:
-
-::
-
-    {'name': 'rta', 'tags': ['check:host_alive!(null)', 'hostcheck'], 'value': '0.155', 'source': 'host_409', 'time': '1368179085', 'units': 'ms', 'type': 'nagios'}
-
-Example service perfdata:
-
-::
-
-    {'name': 'perfdata_waiting', 'tags': ['check:app_gearman_master', 'gearman_queues'], 'value': '0', 'source': 'localhost', 'time': '1368179129', 'units': '', 'type': 'nagios'}
-
-The ModGearman decoder module filters out some characters from different
-parts
-
-Data coming from metricfactory.encoder.Graphite
-'''''''''''''''''''''''''''''''''''''''''''''''
-
-Now we have to convert the metrics from the internal Metricfactory
-format into a the Graphite format.  The *encodegraphite* module has a
-parameter \ *prefix* (line 30) which allows you to define a prefix for
-the name of each metric to store in Graphite.  With this configuration,
-each metric will start with "*nagios.*\ ".
-
-Change the routing table to following configuration:
-
-::
-
-    "routingtable": {
-        "modgearman.inbox": [ "decodemodgearman.inbox" ],
-        "decodemodgearman.outbox": [ "encodegraphite.inbox" ],
-        "encodegraphite.outbox": [ "stdout.inbox" ]
-      }
-
-Start Metricfactory in the foreground (`ascii.io
-screencast <http://ascii.io/a/3122>`__):
-
-::
-
-    $ metricfactory debug --config modgearmand2graphite.json --loglevel debug
-
-Example:
-
-::
-
-    nagios.host_260.hostcheck.pl 0 1368179289
-    nagios.host_26.hostcheck.rta 0.133 1368179289
-    nagios.host_26.hostcheck.pl 0 1368179289
-    nagios.host_256.hostcheck.rta 0.123 1368179289
-    nagios.localhost.gearman_queues.service_running 0 1368179329
-    nagios.localhost.gearman_queues.service_worker 9 1368179329
-    nagios.localhost.gearman_queues.worker_nagios-001_waiting 0 1368179329
-    nagios.localhost.gearman_queues.worker_nagios-001_running 0 1368179329
-    nagios.localhost.gearman_queues.worker_nagios-001_worker 1 136817932
-
-As you can see the Graphite encoder module had to make some assumptions.
- In case the metric type is Nagios (the internal format contains this
-information) then the hostchecks always have the word \ *hostcheck* in
-the metric name as you can see in the above example.  When the data is a
-Nagios servicecheck, then the service description is included in the
-metric name.
-
-Graphite
-~~~~~~~~
-
-Typically Nagios schedules checks every 5 minutes.  This doesn't really
-result in high resolution metrics and is often used as a point of
-critique.  Keep this in mind when you define a Graphite retention
-policy.  In the example configuration we use \ *nagios* as a prefix
-(line 30), so you could use a Whisper retention policy similar to:
-
-::
-
-    [nagios]
-    priority = 100
-    pattern = ^nagios\.
-    retentions = 300:2016
-
-Make sure the Nagios execution interval corresponds properly to
-the \ *retentions* parameter to prevent gaps.
 
 Conclusion
 ~~~~~~~~~~
@@ -440,7 +372,6 @@ understanding of the whole process.
 .. _performance data: http://nagios.sourceforge.net/docs/3_0/perfdata.html
 .. _documentation available: http://labs.consol.de/lang/en/nagios/mod-gearman/
 .. _Github: https://github.com/smetj/metricfactory
-.. _ascii.io screencast: http://ascii.io/a/3101
 .. _here: https://github.com/smetj/experiments/tree/master/metricfactory/modgearman2graphite
 
 .. |gearman_top| image:: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
