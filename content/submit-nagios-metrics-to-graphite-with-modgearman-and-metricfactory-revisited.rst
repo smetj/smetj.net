@@ -7,201 +7,245 @@ Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited
 :slug: submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited
 :status: draft
 
-When it comes down to monitoring Nagios is still the weapon of choice
-for many.  I would have abandoned it if there weren't projects like
-`Livestatus`_, \ `Mod\_Gearman`_ and `Thruk`_ which to my opinion should
-never be missing from any Nagios setup.  Mod\_Gearman, the framework
-which makes Nagios scalable, has a feature which stores the performance
-data produced by the Nagios plugins into a `Gearman`_ queue.  Graphing
-that performance data with `Graphite`_ is a straightforward job with
-`Metricfactory`_.
+When it comes down to monitoring Nagios is still the weapon of choice for
+many.  I would have abandoned it if there weren't projects like `Livestatus`_,
+`Mod_Gearman`_ and `Thruk`_ which to my opinion should never be missing from
+any Nagios setup.  Mod_Gearman, the framework which makes Nagios scalable, has
+a feature which stores the performance data produced by the Nagios plugins
+into a `Gearman`_ queue.  Graphing that performance data with `Graphite`_ is a
+straightforward job with `Metricfactory`_.
 
 Performance data
 ~~~~~~~~~~~~~~~~
 
-Mod\_Gearman is a Nagios addon which spreads the Nagios plugin execution
-over a farm of worker nodes.  This allows you to build a scalable Nagios
-setup quite effectively.  The workers execute the Nagios plugins and
-submit the produced results back into the Gearman master server.  A
-Nagios broker module then consumes the submitted check results from the
-Gearman master and submits the check results into Nagios for further
-processing.  The broker module can optionally submit the `performance
-data`_ back into a dedicated Gearman queue ready to be consumed by an
-external process which in our case is going to be Metricfactory.
- Metricfactory will convert the performance data into the proper format
-and submit that into Graphite.
+Mod_Gearman is a Nagios addon which spreads the Nagios plugin execution over a
+farm of worker nodes.  This allows you to build a scalable Nagios setup quite
+effectively.  The workers execute the Nagios plugins and submit the produced
+results back into the Gearman master server.  A Nagios broker module then
+consumes the submitted check results from the Gearman master and submits the
+check results into Nagios for further processing.  The broker module can
+optionally submit the `performance data`_ back into a dedicated Gearman queue
+ready to be consumed by an external process which in our case is going to be
+Metricfactory.  Metricfactory will convert the performance data into the
+proper format and submit that into Graphite.
 
-Mod\_Gearman
+Mod_Gearman
 ~~~~~~~~~~~~
 
-The Mod\_Gearman project has quite extensive `documentation
+The Mod_Gearman project has quite extensive `documentation
 available`_ but these are the relevant parameters:
 
 ::
 
     perfdata=yes
 
-Setting the value to \ *yes* makes the broker module write the
-performance data to the \ *perfdata* queue.
+Setting the value to *yes* makes the broker module write the
+performance data to the *perfdata* queue.
 
 ::
 
     perfdata_mode=1
 
-Setting the value to \ *1* makes sure that performance data doesn't pile
-up endlessly in the queue when Metricfactory isn't consuming.  It's
-basically a precaution which prevents the queue to fill up to a point
-all available system memory is consumed.  Setting the value to \ *2*
-will append all performance data to the queue without overwriting old
-data.  When enabled you can execute the \ *gearman\_top* command and you
-should see the \ *perfdata* queue appear:
+Setting the value to *1* makes sure that performance data doesn't pile up
+endlessly in the queue when Metricfactory isn't consuming.  It's basically a
+precaution which prevents the queue to fill up to a point all available system
+memory is consumed.  Setting the value to \ *2* will append all performance
+data to the queue without overwriting old data.  When enabled you can execute
+the *gearman_top* command and you should see the *perfdata* queue appear:
 
 |gearman_top|
 
 The Jobs Waiting column indicates how many performance data is currently
-stored in the queue.  Ideally this should be 0 or as low as possible and
-never grow otherwise that might indicate the performance data is not
-consumed fast enough. Keep in mind that not all Nagios plugins produce
-performance data.  If you want to be sure whether a plugin produces
-performance data, have a look in Thruk (or other Nagios interface) and
-verify in the service or host details whether *Performance Data*
-actually contains valid perfdata.
+stored in the queue.  Ideally this should be 0 or as low as possible and never
+grow otherwise that might indicate the performance data is not consumed fast
+enough. Keep in mind that not all Nagios plugins produce performance data.  If
+you want to be sure whether a plugin produces performance data, have a look in
+Thruk (or other Nagios interface) and verify in the service or host details
+whether *Performance Data* actually contains valid perfdata.
 
 |perfdata|
 
 Metricfactory
 ~~~~~~~~~~~~~
 
-You can download Metricfactory from `Github`_ and get it up an running
-quite easily by following the installation instructions.  In our case,
-you will require some additional modules which you can install from Pypi
-using the \ *easy\_install*\ command:
+Installation
+''''''''''''
+
+You can install Metricfactory and its dependencies from Pypi using
+*easy_install*:
 
 ::
 
-    $ easy_install wb_gearmand
-    $ easy_install wb_tcpclient
-    $ easy_install wb_tippingbucket
-    $ easy_install wb_stdout
+    $ easy_install metricfactory
 
-When all went well you should be able to execute (`ascii.io
-screencast`_):
+You will require some extra Wishbone modules which can not be installed as
+separate Pypi packages yet. Checkout the repository from `Github`_ and install
+the module manually.
 
 ::
 
-    $ metricfactory list
+  $ git checkout https://github.com/smetj/wishboneModules.git
 
-Configuration
-~~~~~~~~~~~~~
-
-Metricfactory uses bootstrap files which define the modules to load and
-how events will flow through the chain.  You can download a base example
-`here`_.
+Install wb_input_gearmand
 
 ::
 
-    {
-      "metrics": {
-        "enable": true,
-        "group": "wishbone.metrics",
-        "interval": 10,
-        "module": "Log",
-        "variables": {
-        }
-      },
-      "bootstrap": {
-        "modgearman": {
-          "group": "wishbone.iomodule",
-          "module": "Gearmand",
-          "variables": {
-            "hostnames": [ "your.gearmand.server.hostname" ],
-            "secret": "changemechangeme",
-            "workers": 1
-          }
-        },
-        "decodemodgearman": {
-          "group": "metricfactory.decoder",
-          "module": "ModGearman",
-          "variables": {
-          }
-        },
-        "encodegraphite": {
-          "group": "metricfactory.encoder",
-          "module": "Graphite",
-          "variables": {
-            "prefix":"nagios"
-          }
-        },
-        "buffer": {
-          "group": "wishbone.module",
-          "module": "TippingBucket",
-          "variables": {
-            "events": 1000,
-            "age": 60
-          }
-        },
-        "tcpout": {
-          "group": "wishbone.iomodule",
-          "module": "TCPClient",
-          "variables": {
-            "pool": ["your.graphite.relay1:2013","your.graphite.relay2:2013"]
-          }
-        },
-        "stdout": {
-          "group": "wishbone.module",
-          "module": "STDOUT",
-          "variables": {
-            "purge":true
-          }
-        }
-      },
-      "routingtable": {
-        "modgearman.inbox": [ "decodemodgearman.inbox" ],
-        "decodemodgearman.outbox": [ "encodegraphite.inbox" ],
-        "encodegraphite.outbox": [ "tcpout.inbox" ]
-      }
-    }
+  $ cd wishboneModules/wb_input_gearmand
+  $ python setup.py install
 
-Depending on your environment you will have to adapt some of the
-variables in the boostrap file. The *hostnames* variable (line 15) is a
-list of the Gearmand servers from which the \ *perfdata*  has to be
-consumed.  Usually this is a list containing just 1 server.  In some
-special cases you might add more servers here but that's in our case not
-likely.
-
-The secret variable (line 16) should contain the pre-shared encryption
-key allowing you to decrypt the information consumed from Gearmand.
- Worth to mention there is no authentication, but without the decryption
-key you wont be able to read the data coming from the Gearmand server.
-
-The number of workers variable (line 17) determines how many workers
-should consume perfdata from the \ *perfdata* queue.  If you notice
-perdata isn't consumed fast enough, you could bump this number to a
-higher value.  In this case keep an eye on the the CPU usage of
-Metricfactory due to the decrypting.  If you notice Metricfactory can't
-keep up because of high cpu usage then another strategy might be to
-leave this numer on 1 and start Metricfactory with the *--instances x*
-parameter, where x is the number of parallel processes.
-
-In this configuration, the *buffer* instance of the TippingBucket module
-will flush when 1000 metrics (line 27) are in the buffer or when the
-last metric added to the buffer is 60 seconds (line 38) old.  This
-allows you to control the size of the data per outgoing connection to
-Graphite.  It's more efficient to group and submit metrics instead of
-making a connection to Graphite per metric.
-
-The *tcpout* instance is initiated in this example with the addresses of
-2 Graphite relay servers (line 45).  When defining more than 1 address
-in the *pool* list then the client will randomly select one of the
-addresses until a successful connect is done. To test, you can start
-Metricfactory in debug mode to keep it from forking in the background
-and by enabling the *--loglevel debug* parameter:
+Install wb_output_tcp
 
 ::
 
-    $ metricfactory debug --config modgearmand2graphite.json --loglevel debug
+  $ cd wishboneModules/wb_output_tcp
+  $ python setup.py install
 
-`ascii.io screencast <http://ascii.io/a/3102>`__
+
+Quick introduction
+''''''''''''''''''
+
+Metricfactory makes use of Wishbone to build an pipeline of modules through
+which events travel and change.  The setup of the Metricfactory server is
+described in a bootstrapfile.  A bootstrap file contains which modules to
+initialize and which path data has to follow througout these modules.
+
+The idea behind a MetricFactory server is that it accepts metrics, converts
+them into a common format, which on its turn can be processed and/or converted
+again into another format.
+
+We will gradually build up our solution by going through each step.
+
+
+Consume perfdata
+''''''''''''''''
+
+First let's have a look how the perfdata looks
+like when consuming it without modifications:
+
+.. code-block:: identifier
+  :linenos: table
+
+  ---
+  modules:
+      gearmand:
+          module: wishbone.input.gearman
+          arguments:
+              hostlist:
+                  - server-001
+              secret: changemechangeme
+              queue: perfdata
+              workers: 5
+
+      decode:
+          module: metricfactory.decoder.modgearman
+
+      encode:
+          module: wishbone.builtin.metrics.graphite
+          arguments:
+              prefix: nagios.
+              script: false
+
+      stdout:
+          module: wishbone.builtin.output.stdout
+
+  routingtable:
+
+      - gearmand.outbox   -> stdout.inbox
+      # - decode.outbox     -> encode.inbox
+      # - encode.outbox     -> stdout.inbox
+  ...
+
+Depending on your environment you will have to adapt some of the variables in
+the boostrap file. The *hostlist* variable (line 6) is a list of the
+Gearmand servers from which the *perfdata*  has to be consumed.  Usually this
+is a list containing just 1 server.  In some special cases you might add more
+servers here but that's in our case not likely.
+
+The secret variable (line 8) should contain the pre-shared encryption key
+allowing you to decrypt the information consumed from Gearmand.  Worth to
+mention there is no authentication, but without the decryption key you wont be
+able to read the data coming from the Gearmand server.
+
+The number of workers variable (line 10) determines how many workers should
+consume the *perfdata* queue.  If you notice perdata isn't consumed fast
+enough, you could bump this number to a higher value.  In this case keep an
+eye on the the CPU usage of Metricfactory due to the decrypting. If you notice
+Metricfactory can't keep up because of high cpu usage then another strategy
+might be to leave this numer on 1 and start Metricfactory with the
+*--instances x* parameter, where x is the number of parallel processes.
+
+In this example we have connected the *gearmand.output* queue to the
+*stdout.inbox* (line 26).  As a result, the perfdata will flow from the
+gearmand module directly to the stdout module.
+
+Start metricfactory in the foreground and verify whether the get the expected
+output.
+
+::
+
+  $ metricfactory debug --config modgearmand2graphite.yaml
+  DATATYPE::HOSTPERFDATA  TIMET::1383777750 HOSTNAME::aaaaaaaaaaaaa HOSTPERFDATA::rta=15.589ms;3000.000;5000.000;0; pl=0%;80;100;;  HOSTCHECKCOMMAND::check:host.alive!(null) HOSTSTATE::0  HOSTSTATETYPE::1
+  DATATYPE::HOSTPERFDATA  TIMET::1383777750 HOSTNAME::bbbbbbbbbbbbb HOSTPERFDATA::rta=16.776ms;3000.000;5000.000;0; pl=0%;80;100;;  HOSTCHECKCOMMAND::check:host.alive!(null) HOSTSTATE::0  HOSTSTATETYPE::1
+  DATATYPE::HOSTPERFDATA  TIMET::1383777750 HOSTNAME::ccccccccccccc HOSTPERFDATA::rta=16.559ms;3000.000;5000.000;0; pl=0%;80;100;;  HOSTCHECKCOMMAND::check:host.alive!(null) HOSTSTATE::0  HOSTSTATETYPE::1
+  DATATYPE::HOSTPERFDATA  TIMET::1383777750 HOSTNAME::ddddddddddddd HOSTPERFDATA::rta=16.381ms;3000.000;5000.000;0; pl=0%;80;100;;  HOSTCHECKCOMMAND::check:host.alive!(null) HOSTSTATE::0  HOSTSTATETYPE::1
+  ...snip...
+
+
+Decode
+''''''
+
+The next step is to decode the perfdata into a common format.
+
+.. code-block:: identifier
+  :linenos: table
+
+  ---
+  modules:
+      gearmand:
+          module: wishbone.input.gearman
+          arguments:
+              hostlist:
+                  - server-001
+              secret: changemechangeme
+              queue: perfdata
+              workers: 5
+
+      decode:
+          module: metricfactory.decoder.modgearman
+
+      encode:
+          module: wishbone.builtin.metrics.graphite
+          arguments:
+              prefix: nagios.
+              script: false
+
+      stdout:
+          module: wishbone.builtin.output.stdout
+
+  routingtable:
+
+      - gearmand.outbox   -> decode.inbox
+      - decode.outbox     -> stdout.inbox
+      # - encode.outbox     -> stdout.inbox
+  ...
+
+
+We have already defined the correct modules, so it's only a matter of changing
+the data flow (line 26, 27).
+
+::
+
+  $ metricfactory debug --config modgearmand2graphite.yaml
+  ('1383778474', 'nagios', 'aaaaaaaaaaaaa', 'hostcheck.rta', '0.000', 'ms', ('check:host.alive', 'hostcheck'))
+  ('1383778474', 'nagios', 'bbbbbbbbbbbbb', 'hostcheck.pl', '100', '%', ('check:host.alive', 'hostcheck'))
+  ...snip...
+
+
+
+
+
+
+
 
 Converting Nagios format to graphite format
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -397,9 +441,10 @@ understanding of the whole process.
 .. _documentation available: http://labs.consol.de/lang/en/nagios/mod-gearman/
 .. _Github: https://github.com/smetj/metricfactory
 .. _ascii.io screencast: http://ascii.io/a/3101
-.. _here: https://github.com/smetj/experiments/blob/master/metricfactory/modgearman2graphite/modgearman2graphite.json
-.. |gearman_top| image:: pics/gearman_top.png
-   :target: pics/gearman_top.png
+.. _here: https://github.com/smetj/experiments/tree/master/metricfactory/modgearman2graphite
 
-.. |perfdata| image:: pics/perfdata.png
-   :target: pics/perfdata.png
+.. |gearman_top| image:: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
+   :target: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
+
+.. |perfdata| image:: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata.png
+   :target: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata.png
