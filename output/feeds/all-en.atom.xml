@@ -134,8 +134,8 @@ routing key associated with the named pipe.&lt;/li&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="section" id="breakdown"&gt;
 &lt;h3&gt;Breakdown&lt;/h3&gt;
-&lt;p&gt;Let's break down the different by looking first at the &lt;em&gt;modules&lt;/em&gt; section of
-this bootstrap file:&lt;/p&gt;
+&lt;p&gt;Let's break down the different parts of this bootstrap file and start with the
+modules section:&lt;/p&gt;
 &lt;p&gt;The named pipes are created by initializing 3 instances of the
 &lt;em&gt;wishbone.input.namedpipe&lt;/em&gt; module (line 4, 9, 14).  Each instance is assigned
 a name: input_red, input_green and input_blue respectively (line 3, 8, 13).
