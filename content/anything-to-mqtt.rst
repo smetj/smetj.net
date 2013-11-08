@@ -11,6 +11,8 @@ Anything to MQTT
 In this blog post I would like to demonstrate the how easy it is setup a
 Wishbone server which allows you to send data from bash to a MQTT broker.
 
+xxend_summaryxx
+
 To install Wishbone you can follow the instructions found in the project
 `documentation`_.
 
