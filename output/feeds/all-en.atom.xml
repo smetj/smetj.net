@@ -195,10 +195,11 @@ $  echo &amp;quot;ho ho ho, santa is here&amp;quot; &amp;gt; /tmp/wishbone_red
 &lt;/div&gt;
 &lt;div class="section" id="final-thoughts"&gt;
 &lt;h2&gt;Final thoughts&lt;/h2&gt;
-&lt;p&gt;While this Wishbone setup as such does not have much practical use, I hope to
-have demonstrated its flexibility and what kind of solutions can be built with
-it.  More input (and other) modules are available on &lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Github&lt;/a&gt; offering more
-combinations and possibilities which might suit your specific needs.&lt;/p&gt;
+&lt;p&gt;While this setup as such does not have much practical use, I hope to have
+demonstrated flexibility of the Wishbone framework and what kind of solutions
+can be built with it.  More input (and other) modules are available on
+&lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Github&lt;/a&gt; offering more combinations and possibilities which might suit your
+specific needs.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="wishbone"></category><category term="mqtt"></category><category term="python"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html" rel="alternate"></link><updated>2013-11-07T23:00:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-07:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice for
 many. &amp;nbsp;I would have abandoned it if there weren't projects like &lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,

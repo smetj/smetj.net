@@ -168,10 +168,11 @@ named pipes:
 Final thoughts
 --------------
 
-While this Wishbone setup as such does not have much practical use, I hope to
-have demonstrated its flexibility and what kind of solutions can be built with
-it.  More input (and other) modules are available on `Github`_ offering more
-combinations and possibilities which might suit your specific needs.
+While this setup as such does not have much practical use, I hope to have
+demonstrated flexibility of the Wishbone framework and what kind of solutions
+can be built with it.  More input (and other) modules are available on
+`Github`_ offering more combinations and possibilities which might suit your
+specific needs.
 
 .. _documentation: http://wishbone.readthedocs.org/en/latest/installation.html
 .. _Github: https://github.com/smetj/wishboneModules
