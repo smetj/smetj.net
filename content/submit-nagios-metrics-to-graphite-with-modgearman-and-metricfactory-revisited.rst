@@ -177,8 +177,8 @@ In this example we have connected the *gearmand.output* queue to the
 *stdout.inbox* (line 26).  As a result, the perfdata will flow from the
 gearmand module directly to the stdout module.
 
-Start metricfactory in the foreground and verify whether the get the expected
-output.
+Start metricfactory in the foreground and verify whether you get the expected
+output:
 
 ::
 
