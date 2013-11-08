@@ -190,7 +190,7 @@ $ wishbone debug --config anything_to_mqtt.yaml
 &lt;p&gt;From CLI we can now submit data into the MQTT server by writing to one of the
 named pipes:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-$  echo &amp;quot;santa came home this year&amp;quot; &amp;gt; /tmp/wishbone_red
+$  echo &amp;quot;ho ho ho, santa is here&amp;quot; &amp;gt; /tmp/wishbone_red
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="final-thoughts"&gt;

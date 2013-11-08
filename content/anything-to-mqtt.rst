@@ -162,7 +162,7 @@ named pipes:
 
 ::
 
-    $  echo "santa came home this year" > /tmp/wishbone_red
+    $  echo "ho ho ho, santa is here" > /tmp/wishbone_red
 
 
 Final thoughts
