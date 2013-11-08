@@ -94,8 +94,8 @@ The following bootstrap file starts a server with those properties:
 Breakdown
 ~~~~~~~~~
 
-Let's break down the different by looking first at the *modules* section of
-this bootstrap file:
+Let's break down the different parts of this bootstrap file and start with the
+modules section:
 
 The named pipes are created by initializing 3 instances of the
 *wishbone.input.namedpipe* module (line 4, 9, 14).  Each instance is assigned
