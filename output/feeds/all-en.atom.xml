@@ -1,5 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-07T23:00:00+01:00</updated><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html" rel="alternate"></link><updated>2013-11-07T23:00:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-07:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice for
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-08T23:00:00+01:00</updated><entry><title>Anything to MQTT</title><link href="http://smetj.net/anything-to-mqtt.html" rel="alternate"></link><updated>2013-11-08T23:00:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-08:anything-to-mqtt.html</id><summary type="html">&lt;p&gt;In this blog post I would like to demonstrate the how easy it is setup a
+Wishbone server which allows you to send data from bash to a MQTT broker.&lt;/p&gt;
+&lt;p&gt;To install Wishbone you can follow the instructions found in the project
+&lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/installation.html"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="our-setup"&gt;
+&lt;h2&gt;Our setup&lt;/h2&gt;
+&lt;p&gt;Have a server up and running with following properties:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Listens on 3 different named pipes.&lt;/li&gt;
+&lt;li&gt;Each named pipe has a certain routing key associated with it.&lt;/li&gt;
+&lt;li&gt;Data submitted into the named pipe is routed to a MQTT broker using the
+routing key associated with the named pipe.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following bootstrap file starts a server with those properties:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;  ---
+  modules:
+      input_red:
+          module: wishbone.input.namedpipe
+          arguments:
+              path: /tmp/wishbone_red
+
+      input_green:
+          module: wishbone.input.namedpipe
+          arguments:
+              path: /tmp/wishbone_green
+
+      input_blue:
+          module: wishbone.input.namedpipe
+          arguments:
+              path: /tmp/wishbone_blue
+
+      header_red:
+          module: wishbone.builtin.function.header
+          arguments:
+              key: mqtt
+              header:
+                  topic: color/red
+
+      header_green:
+          module: wishbone.builtin.function.header
+          arguments:
+              key: mqtt
+              header:
+                  topic: color/green
+
+      header_blue:
+          module: wishbone.builtin.function.header
+          arguments:
+              key: mqtt
+              header:
+                  topic: color/blue
+
+      funnel:
+          module: wishbone.builtin.flow.funnel
+
+      mqtt:
+          module: wishbone.output.mqtt
+          arguments:
+              host: rabbitmq
+
+  routingtable:
+
+      - input_red.outbox        -&amp;gt; header_red.inbox
+      - header_red.outbox       -&amp;gt; funnel.one
+
+      - input_green.outbox      -&amp;gt; header_green.inbox
+      - header_green.outbox     -&amp;gt; funnel.two
+
+      - input_blue.outbox       -&amp;gt; header_blue.inbox
+      - header_blue.outbox      -&amp;gt; funnel.three
+
+      - funnel.outbox           -&amp;gt; mqtt.inbox
+  ...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="section" id="breakdown"&gt;
+&lt;h3&gt;Breakdown&lt;/h3&gt;
+&lt;p&gt;Let's break down the different by looking first at the &lt;em&gt;modules&lt;/em&gt; section of
+this bootstrap file:&lt;/p&gt;
+&lt;p&gt;The named pipes are created by initializing 3 instances of the
+&lt;em&gt;wishbone.input.namedpipe&lt;/em&gt; module (line 4, 9, 14).  Each instance is assigned
+a name: input_red, input_green and input_blue respectively (line 3, 8, 13).
+The only argument defined for these instances is the path of the named pipe
+(line 6, 11, 16)&lt;/p&gt;
+&lt;p&gt;For each event submitted to the named pipe, we have to add the routing key to
+the header of the event.  This is required at a later stage when the event
+enters the &lt;em&gt;mqtt&lt;/em&gt; module. 3 instances of the header module are initiated named
+header_red, header_green, header_blue respectively (line 18, 25, 32).
+Depending on through which header module instance an event travels the
+information is stored under a key called &lt;em&gt;mqtt&lt;/em&gt; (line 21, 28, 35).  Each of
+these values contain a one element dictionary with the topic name (line 23,
+30, 37) using the format the &lt;em&gt;mqtt&lt;/em&gt; module expects.&lt;/p&gt;
+&lt;p&gt;In Wishbone you cannot connect multiple queues to 1 queue.  This is by design.
+Queues always have a &amp;quot;one to one&amp;quot; relationship.  Since all data submitted to
+the 3 named pipes has to go to 1 MQTT, we could in theory have 3 dedicated
+mqtt module instances but that would be a waste.  Therefor we initialize the
+&lt;em&gt;funnel&lt;/em&gt; module.  The &lt;em&gt;funnel&lt;/em&gt; module allows multiple input queues and merges
+those input queues into its output queue, which allows us to only having to
+define 1 output module.&lt;/p&gt;
+&lt;p&gt;Finally we have the MQTT output module which is initialized using the name
+&lt;em&gt;mqtt&lt;/em&gt; (line 42).  The &lt;em&gt;mqtt&lt;/em&gt; submits incoming events towards an MQTT server.
+The only argument we require to initialize the module is the hostname or
+address of the server (line 45).  The mqtt output module expects for each
+incoming event some data in the header of the event, so it knows which routing
+key to use when submitting the event.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-routing-table"&gt;
+&lt;h3&gt;The routing table&lt;/h3&gt;
+&lt;p&gt;The routing table (line 47) defines which queues are connected towards each
+other which basically defines the flow of events throughout the different
+modules.  If we would graphically represent the defines routing table it would
+look like this:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="pics/anything-to-mqtt/diagram.png"&gt;&lt;img alt="diagram" src="pics/anything-to-mqtt/diagram.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Each &lt;em&gt;named pipe&lt;/em&gt; module instance is connected to its dedicated &lt;em&gt;header&lt;/em&gt;
+module instance.  Each &lt;em&gt;header&lt;/em&gt; module instance is connected to the &lt;em&gt;funnel&lt;/em&gt;
+module instance.  The names of the incoming queues of the funnel can be chosen
+freely (line 50, 53, 56).  The moment a connection is made, the queue is
+automatically created.&lt;/p&gt;
+&lt;p&gt;The output of the &lt;em&gt;funnel&lt;/em&gt; module instance is then connected to the &lt;em&gt;mqtt&lt;/em&gt;
+module instance, which submits the incoming events to the outside world (line
+58).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="running-the-setup"&gt;
+&lt;h2&gt;Running the setup&lt;/h2&gt;
+&lt;p&gt;Save the above bootstrap to a file.  The start the Wishbone setup in the
+foreground using the bootstrap file by executing:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ wishbone debug --config anything_to_mqtt.yaml
+&lt;/pre&gt;
+&lt;p&gt;From CLI we can now submit data into the MQTT server by writing to one of the
+named pipes:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$  echo &amp;quot;santa came home this year&amp;quot; &amp;gt; /tmp/wishbone_red
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="final-thoughts"&gt;
+&lt;h2&gt;Final thoughts&lt;/h2&gt;
+&lt;p&gt;While this Wishbone setup as such does not have much practical use, I hope to
+have demonstrated its flexibility and what kind of solutions can be built with
+it.  More input (and other) modules are available on &lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;Github&lt;/a&gt; offering more
+combinations and possibilities which might suit your specific needs.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="wishbone"></category><category term="mqtt"></category><category term="python"></category></entry><entry><title>Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited</title><link href="http://smetj.net/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html" rel="alternate"></link><updated>2013-11-07T23:00:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-07:submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.html</id><summary type="html">&lt;p&gt;When it comes down to monitoring Nagios is still the weapon of choice for
 many. &amp;nbsp;I would have abandoned it if there weren't projects like &lt;a class="reference external" href="http://mathias-kettner.de/checkmk_livestatus.html"&gt;Livestatus&lt;/a&gt;,
 &lt;a class="reference external" href="http://labs.consol.de/lang/en/nagios/mod-gearman/"&gt;Mod_Gearman&lt;/a&gt;&amp;nbsp;and&amp;nbsp;&lt;a class="reference external" href="http://www.thruk.org/"&gt;Thruk&lt;/a&gt;&amp;nbsp;which to my opinion should never be missing from
 any Nagios setup.  Mod_Gearman, the framework which makes Nagios scalable, has
@@ -165,8 +365,8 @@ might be to leave this numer on 1 and start Metricfactory with the
 &lt;p&gt;In this example we have connected the &lt;em&gt;gearmand.output&lt;/em&gt; queue to the
 &lt;em&gt;stdout.inbox&lt;/em&gt; (line 26).  As a result, the perfdata will flow from the
 gearmand module directly to the stdout module.&lt;/p&gt;
-&lt;p&gt;Start metricfactory in the foreground and verify whether the get the expected
-output.&lt;/p&gt;
+&lt;p&gt;Start metricfactory in the foreground and verify whether you get the expected
+output:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 $ metricfactory debug --config modgearmand2graphite.yaml
 DATATYPE::HOSTPERFDATA  TIMET::1383777750 HOSTNAME::aaaaaaaaaaaaa HOSTPERFDATA::rta=15.589ms;3000.000;5000.000;0; pl=0%;80;100;;  HOSTCHECKCOMMAND::check:host.alive!(null) HOSTSTATE::0  HOSTSTATETYPE::1
