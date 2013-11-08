@@ -8,7 +8,7 @@ Anything to MQTT
 :draft: true
 
 
-In this blog post I would like to demonstrate the how easy it is setup a
+In this blog post I would like to demonstrate the how easy it is to setup a
 Wishbone server which allows you to send data from bash to a MQTT broker.
 
 xxend_summaryxx
