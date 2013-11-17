@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Project site of Jelle Smet</title>
+    <title>Submit Elasticsearch metrics to Graphite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Jelle Smet">
@@ -79,7 +79,7 @@
 						<i class="icon-folder-open icon-large"></i>misc
 					</a>
                   </li>
-                  <li >
+                  <li class="active">
                     <a href="http://smetj.net/category/monitoringlove.html">
 						<i class="icon-folder-open icon-large"></i>#monitoringlove
 					</a>
@@ -242,12 +242,219 @@
 
 </ul>        </div><!--/.well -->
         <div class="span9" id="content">
-<ul>
-	<li><a href="category/development.html">development</a></li>
-	<li><a href="category/engineering.html">engineering</a></li>
-	<li><a href="category/misc.html">misc</a></li>
-	<li><a href="category/monitoringlove.html">#monitoringlove</a></li>
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Submit Elasticsearch metrics to Graphite">
+                                        Submit Elasticsearch metrics to Graphite
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2013-11-17T20:36:00">
+        <i class="icon-calendar"></i>zo 17 november 2013
+</abbr>
+<span class="label">By</span>
+<a href="http://smetj.net/author/smetj.html"><i class="icon-user"></i>smetj</a>
+<span class="label">Category</span>
+<a href="http://smetj.net/category/monitoringlove.html"><i class="icon-folder-open"></i>#monitoringlove</a>.
+
+
+<span class="label">Tags</span>
+	<a href="http://smetj.net/tag/monitoringlove.html"><i class="icon-tag"></i>monitoringlove</a>
+	<a href="http://smetj.net/tag/graphite.html"><i class="icon-tag"></i>graphite</a>
+	<a href="http://smetj.net/tag/metricfactory.html"><i class="icon-tag"></i>metricfactory</a>
+	<a href="http://smetj.net/tag/metrics.html"><i class="icon-tag"></i>metrics</a>
+	<a href="http://smetj.net/tag/elasticsearch.html"><i class="icon-tag"></i>elasticsearch</a>
+</footer><!-- /.post-info -->                </div>
+                <p>If you're running an <a class="reference external" href="http://www.elasticsearch.org">Elasticsearch</a> cluster you might want to keep track of
+the metrics it produces.  In this article I will explain how you can aggregate
+the metrics of an Elasticsearch cluster and submit them to Graphite for later
+analysis.</p>
+<p></p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites</h2>
+<p>You need to have following software installed:</p>
+<p>Main software (installable from Pypi)</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/smetj/metricfactory">Metricfactory</a></li>
 </ul>
+<p>Additional modules (Install from source)</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest">wb_input_httprequest</a></li>
+<li><a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp">wb_output_tcp</a></li>
+</ul>
+<p>This <a class="reference external" href="https://wishbone.readthedocs.org/en/latest/installation.html">document</a> describes how to install the different aspects of Wishbone
+and its modules.</p>
+<p>Once installed you should have the <em>metricfactory</em> executable available.</p>
+<pre class="literal-block">
+$ metricfactory list
+</pre>
+</div>
+<div class="section" id="elasticsearch">
+<h2>Elasticsearch</h2>
+<p>Elasticsearch has a HTTP based CRUD API which allows us to poll metrics.
+The available metrics resources are:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://localhost:9200/_cluster/state">http://localhost:9200/_cluster/state</a></li>
+<li><a class="reference external" href="http://localhost:9200/_stats">http://localhost:9200/_stats</a></li>
+</ul>
+<p>Polling these resources returns a JSON formatted document containing metrics
+of different Elasticsearch parts.</p>
+<p>The <a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest">wb_input_httprequest</a> module will help us to fetch those metrics into
+our metricfactory setup.</p>
+</div>
+<div class="section" id="decode-elasticsearch-metrics">
+<h2>Decode Elasticsearch metrics</h2>
+<p>That JSON document with metrics has to be converted into the Metricfactory
+<a class="reference external" href="http://wishbone.readthedocs.org/en/latest/router.html#format">standard metric format</a>.  Once converted it can be processed by other
+metricfactory modules.  In this article we will convert the metrics into a
+Graphite format using the <a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html#graphite">Graphite builtin</a> module of Wishbone.</p>
+</div>
+<div class="section" id="bootstrapfile">
+<h2>Bootstrapfile</h2>
+<p>Metricfactory needs to be invoked with a bootstrap file which defines the
+functionality and eventflow of the server:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre>---
+modules:
+  httprequest_one:
+    module: wishbone.input.httprequest
+    arguments:
+      url: &quot;http://elasticsearch-001:9200/_cluster/nodes/stats&quot;
+      interval: 1
+
+  httprequest_two:
+    module: wishbone.input.httprequest
+    arguments:
+      url: &quot;http://elasticsearch-001:9200/_stats&quot;
+      interval: 1
+
+  funnel:
+    module: wishbone.builtin.flow.funnel
+
+  decode:
+    module: metricfactory.decoder.elasticsearch
+    arguments:
+      source: lhi
+
+  encode:
+    module: wishbone.builtin.metrics.graphite
+    arguments:
+      prefix: application.elasticsearch.
+      script: false
+
+  output_screen:
+    module: wishbone.builtin.output.stdout
+
+  output_tcp:
+    module: wishbone.output.tcp
+    arguments:
+      host: graphite-001
+      port: 2013
+
+routingtable:
+  - httprequest_one.outbox  -&gt; funnel.one
+  - httprequest_two.outbox  -&gt; funnel.two
+  - funnel.outbox           -&gt; decode.inbox
+  - decode.outbox           -&gt; encode.inbox
+  - encode.outbox           -&gt; output_tcp.inbox
+  #- encode.outbox           -&gt; output_screen.inbox
+...
+</pre></div>
+</td></tr></table><p>Lets run over the different sections of this bootstrap file.</p>
+<p>The routingtable (line 38) determines how modules are connected to each other
+and therefor determine the flow of events.</p>
+<p>The <em>httprequest_one</em> and <em>httprequest_two</em> instances poll the urls (line 6,
+12) which return the required metrics.  The pages are requested with an
+interval of 1 second (line 7, 13).</p>
+<p>The results from both these input modules go over the <em>funnel</em> module (line
+15) to the <em>decode</em> module instance (line 18), where the ES format is
+converted to the generic metric format.  The <em>decode</em> instance is initialized
+using the source argument (line 21) which fills the source value of the
+generic metric data format.  This requirement wouldn't be necessary if this
+<a class="reference external" href="https://github.com/elasticsearch/elasticsearch/issues/4179">enhancement request</a> is done.</p>
+<p>The decoded events are then converted into the required Graphite format by the
+<em>encode</em>  module instance (line 23).  This module is initiated with a prefix
+argument which puts a prefix (line 26) in front of the metric name.</p>
+<p>Events then go to the output_tcp module which submits the metrics into
+Graphite itself.</p>
+<p>If you want to play around with the metric name formatting, you can write the
+metrics to STDOUT first by altering the metric stream to the <em>output_screen</em>
+modules instance by uncommenting line 44 and commenting line 43.</p>
+<p>To start the server, save the above bootstrap configuration to a file and
+execute following command:</p>
+<blockquote>
+$ metricfactory debug --config bootstrap.yaml</blockquote>
+</div>
+
+                </div><!-- /.entry-content -->
+                <div class="comments">
+		</br>
+                <h2>Comments</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "submit-elasticsearch-metrics-to-graphite.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://smetj.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
+                </div>
+        </article>
+</section>
         </div><!--/span-->
       </div><!--/row-->
 

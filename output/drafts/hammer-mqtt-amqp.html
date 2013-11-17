@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Moncli - An introduction</title>
+    <title>Hammer MQTT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Jelle Smet">
@@ -69,7 +69,7 @@
 						<i class="icon-folder-open icon-large"></i>development
 					</a>
                   </li>
-                  <li >
+                  <li class="active">
                     <a href="http://smetj.net/category/engineering.html">
 						<i class="icon-folder-open icon-large"></i>engineering
 					</a>
@@ -79,7 +79,7 @@
 						<i class="icon-folder-open icon-large"></i>misc
 					</a>
                   </li>
-                  <li class="active">
+                  <li >
                     <a href="http://smetj.net/category/monitoringlove.html">
 						<i class="icon-folder-open icon-large"></i>#monitoringlove
 					</a>
@@ -248,8 +248,8 @@
                         <h1>
                                 <a href=""
                                         rel="bookmark"
-                                        title="Permalink to Moncli - An introduction">
-                                        Moncli - An introduction
+                                        title="Permalink to Hammer MQTT">
+                                        Hammer MQTT
                                 </a>
                         </h1>
                 </header>
@@ -257,109 +257,250 @@
                 <div class="well">
 <footer class="post-info">
 <span class="label">Date</span>
-<abbr class="published" title="2012-02-09T00:20:00">
-        <i class="icon-calendar"></i>do 09 februari 2012
+<abbr class="published" title="2013-11-09T18:00:00">
+        <i class="icon-calendar"></i>za 09 november 2013
 </abbr>
 <span class="label">By</span>
 <a href="http://smetj.net/author/smetj.html"><i class="icon-user"></i>smetj</a>
 <span class="label">Category</span>
-<a href="http://smetj.net/category/monitoringlove.html"><i class="icon-folder-open"></i>#monitoringlove</a>.
+<a href="http://smetj.net/category/engineering.html"><i class="icon-folder-open"></i>engineering</a>.
 
 
 <span class="label">Tags</span>
-	<a href="http://smetj.net/tag/moncli.html"><i class="icon-tag"></i>moncli</a>
-	<a href="http://smetj.net/tag/monitoringlove.html"><i class="icon-tag"></i>monitoringlove</a>
+	<a href="http://smetj.net/tag/wishbone.html"><i class="icon-tag"></i>wishbone</a>
+	<a href="http://smetj.net/tag/mqtt.html"><i class="icon-tag"></i>mqtt</a>
+	<a href="http://smetj.net/tag/amqp.html"><i class="icon-tag"></i>amqp</a>
 	<a href="http://smetj.net/tag/rabbitmq.html"><i class="icon-tag"></i>rabbitmq</a>
+	<a href="http://smetj.net/tag/mosquitto.html"><i class="icon-tag"></i>mosquitto</a>
+	<a href="http://smetj.net/tag/python.html"><i class="icon-tag"></i>python</a>
 </footer><!-- /.post-info -->                </div>
-                <p><a class="reference external" href="http://smetj.net/2012/02/09/moncli-an-introduction/moncli_architecture_1-2/"><img alt="image0" src="http://smetj.net/wp-content/uploads/2012/02/Moncli_architecture_11-300x231.jpg" /></a></p>
-<p>One of the classic tasks one has to deal with when working with a
-monitoring framework is have the ability to retrieve metrics from an OS
-or server which aren't available just like that over the network. There
-are plenty of different techniques and a multitude of clients available
-which offer this functionality. &nbsp;Covering them falls out of the scope of
-this post.</p>
-<div class="section" id="so-why-another-monitoring-client">
-<h2>So why another Monitoring Client?</h2>
-<p>When running into scalability problems with my Nagios setup, I realized
-that the reason for this is the fact that Nagios always has to take the
-initiative to poll a client. &nbsp;This is in Nagios terminology called an
-active check. &nbsp;It's of course normal that a client receives instructions
-on what it needs to do like which plugin to execute or which thresholds
-to evaluate. &nbsp;However, if you think about it, why do we have to repeat
-the same question over and over again while in essence nothing has ever
-changed between the current and the previous request? Isn't it normal we
-ask a question once and say report back at this interval and carry on
-until further notice?</p>
-<p>So why not offloading all (or most of) the scheduling effort a central
-monitoring system has to perform to the monitoring clients running on
-your hosts?</p>
-<p>If you would take it further, you could turn each of my monitoring
-clients into an &quot;independent miniature monitoring engine&quot;. &nbsp;This way you
-could shift the load from a central system to the collective of clients
-in the network. &nbsp;This basically results in horizontal scalability and a
-decentralized setup.</p>
+                <p>In this article we will look into the message throughput of MQTT and AMQP.  We
+can use Wishbone to generate messages and submit them into a message broker
+such as RabbitMQ or Mosquitto and write the Wishbone performance metrics into
+Graphite.</p>
+<p></p>
+<p>To install Wishbone and modules you can follow the instructions found in the
+project <a class="reference external" href="http://wishbone.readthedocs.org/en/latest/installation.html">documentation</a>.</p>
+<p>3 more modules are required:</p>
+<ul class="simple">
+<li>wb_output_tcp (if you want the Graphite metrics)</li>
+<li>wb_output_amqp</li>
+<li>wb_output_mqtt</li>
+</ul>
+<div class="section" id="setup">
+<h2>Setup</h2>
+<ul class="simple">
+<li>Server 1
+- Virtualbox guest, Centos 6.3
+- 2048 MB Ram
+- 2 CPU's
+- RabbitMQ 3.2.0
+- Erlang R114B04</li>
+<li>Server 2
+- Virtualbox guest, Centos 6.3
+- 2048 MB Ram
+- 2 CPU's
+- Mosquitto</li>
+</ul>
 </div>
-<div class="section" id="requirements">
-<h2>Requirements</h2>
-<div class="section" id="open-and-rich-data-format">
-<h3>Open and rich data format</h3>
-<p>All in- and outgoing communication should be done in an clear and open
-data format, which offers the flexibility to transform it into any
-other&nbsp;desirable format which allows you to integrate the client with an
-existing&nbsp;platform but which in its turn also allows you to move away
-from it. &nbsp;All <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Request">incoming</a>&nbsp;to and <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Reports">outgoing</a>&nbsp;data from Moncli is in JSON
-format. This makes sure that Moncli data is manipulated easily.</p>
+<div class="section" id="testing-throughput">
+<h2>Testing throughput</h2>
+<p>I have RabbitMQ with the MQ</p>
+<p>We will setup a server which generates messages to both</p>
+<p>Have a server up and running with following properties:</p>
+<ul class="simple">
+<li>Listens on 3 different named pipes.</li>
+<li>Each named pipe has a certain routing key associated with it.</li>
+<li>Data submitted into the named pipe is routed to a MQTT broker using the
+routing key associated with the named pipe.</li>
+</ul>
+<p>The following bootstrap file starts a server with those properties:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre></div></td><td class="code"><div class="highlight"><pre>  ---
+  modules:
+      input_red:
+          module: wishbone.input.namedpipe
+          arguments:
+              path: /tmp/wishbone_red
+
+      input_green:
+          module: wishbone.input.namedpipe
+          arguments:
+              path: /tmp/wishbone_green
+
+      input_blue:
+          module: wishbone.input.namedpipe
+          arguments:
+              path: /tmp/wishbone_blue
+
+      header_red:
+          module: wishbone.builtin.function.header
+          arguments:
+              key: mqtt
+              header:
+                  topic: color/red
+
+      header_green:
+          module: wishbone.builtin.function.header
+          arguments:
+              key: mqtt
+              header:
+                  topic: color/green
+
+      header_blue:
+          module: wishbone.builtin.function.header
+          arguments:
+              key: mqtt
+              header:
+                  topic: color/blue
+
+      funnel:
+          module: wishbone.builtin.flow.funnel
+
+      mqtt:
+          module: wishbone.output.mqtt
+          arguments:
+              host: rabbitmq
+
+  routingtable:
+
+      - input_red.outbox        -&gt; header_red.inbox
+      - header_red.outbox       -&gt; funnel.one
+
+      - input_green.outbox      -&gt; header_green.inbox
+      - header_green.outbox     -&gt; funnel.two
+
+      - input_blue.outbox       -&gt; header_blue.inbox
+      - header_blue.outbox      -&gt; funnel.three
+
+      - funnel.outbox           -&gt; mqtt.inbox
+  ...
+</pre></div>
+</td></tr></table><div class="section" id="breakdown">
+<h3>Breakdown</h3>
+<p>Let's break down the different parts of this bootstrap file and start with the
+modules section:</p>
+<p>The named pipes are created by initializing 3 instances of the
+<em>wishbone.input.namedpipe</em> module (line 4, 9, 14).  Each instance is assigned
+a name: input_red, input_green and input_blue respectively (line 3, 8, 13).
+The only argument defined for these instances is the path of the named pipe
+(line 6, 11, 16)</p>
+<p>For each event submitted to the named pipe, we have to add the routing key to
+the header of the event.  This is required at a later stage when the event
+enters the <em>mqtt</em> module. 3 instances of the header module are initiated named
+header_red, header_green, header_blue respectively (line 18, 25, 32).
+Depending on through which header module instance an event travels the
+information is stored under a key called <em>mqtt</em> (line 21, 28, 35).  Each of
+these values contain a one element dictionary with the topic name (line 23,
+30, 37) using the format the <em>mqtt</em> module expects.</p>
+<p>In Wishbone you cannot connect multiple queues to 1 queue.  This is by design.
+Queues always have a &quot;one to one&quot; relationship.  Since all data submitted to
+the 3 named pipes has to go to 1 MQTT, we could in theory have 3 dedicated
+mqtt module instances but that would be a waste.  Therefor we initialize the
+<em>funnel</em> module.  The <em>funnel</em> module allows multiple input queues and merges
+those input queues into its output queue, which allows us to only having to
+define 1 output module.</p>
+<p>Finally we have the MQTT output module which is initialized using the name
+<em>mqtt</em> (line 42).  The <em>mqtt</em> submits incoming events towards an MQTT server.
+The only argument we require to initialize the module is the hostname or
+address of the server (line 45).  The mqtt output module expects for each
+incoming event some data in the header of the event, so it knows which routing
+key to use when submitting the event.</p>
 </div>
-<div class="section" id="scheduling">
-<h3>Scheduling</h3>
-<p>As said, the client needs to be able to schedule a request at an
-<a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#cycle">interval of choice</a>. When the client restarts, it should remember its
-scheduled requests and carry on from the moment it's alive again. Moncli
-has a build in scheduler which <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#cache">writes its schedule to disk</a>.</p>
+<div class="section" id="the-routing-table">
+<h3>The routing table</h3>
+<p>The routing table (line 47) defines which queues are connected towards each
+other which basically defines the flow of events throughout the different
+modules.  If we would graphically represent the defines routing table it would
+look like this:</p>
+<p><a class="reference external" href="pics/anything-to-mqtt/diagram.png"><img alt="diagram" src="pics/anything-to-mqtt/diagram.png" /></a></p>
+<p>Each <em>named pipe</em> module instance is connected to its dedicated <em>header</em>
+module instance.  Each <em>header</em> module instance is connected to the <em>funnel</em>
+module instance.  The names of the incoming queues of the funnel can be chosen
+freely (line 50, 53, 56).  The moment a connection is made, the queue is
+automatically created.</p>
+<p>The output of the <em>funnel</em> module instance is then connected to the <em>mqtt</em>
+module instance, which submits the incoming events to the outside world (line
+58).</p>
 </div>
-<div class="section" id="flexible-messaging">
-<h3>Flexible messaging.</h3>
-<p>Since Moncli has its own scheduler, it has to submit the check results
-somehow in a trustworthy way without actually having to care much about
-who consumes the data when and where. Moncli submits check results into
-the <a class="reference external" href="http://www.rabbitmq.com/">RabbitMQ</a> message broker, which offers a great deal of
-flexibility.</p>
-<p>Moncli <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Communication">listens</a> on the message broker infrastructure for incoming
-requests. Each Moncli client registers a queue using its FQDN as a name
-on the message broker infrastructure from where it receives the requests
-it should execute.</p>
 </div>
-<div class="section" id="simple-manageable-but-safe-plugin-design">
-<h3>Simple, manageable but safe plugin design</h3>
-<p>Metrics have to come from somewhere. When Moncli executes a request, it
-actually executes a locally stored plugin. <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Plugins">All this plugin needs to do
-is create a list of key/value pairs</a>. This significantly lowers the
-difficulty and time required to create new plugins which also allows
-less experienced people to write plugins. Moncli will only execute
-<a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#local_repo">locally stored plugins</a> which have a hash which matches the one in the
-request. When a plugin with such a hash isn't found locally, it will try
-to download an update or new version from <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#remote_repo">a central location</a>.</p>
+<div class="section" id="running-the-setup">
+<h2>Running the setup</h2>
+<p>Save the above bootstrap to a file.  The start the Wishbone setup in the
+foreground using the bootstrap file by executing:</p>
+<pre class="literal-block">
+$ wishbone debug --config anything_to_mqtt.yaml
+</pre>
+<p>From CLI we can now submit data into the MQTT server by writing to one of the
+named pipes:</p>
+<pre class="literal-block">
+$  echo &quot;ho ho ho, santa is here&quot; &gt; /tmp/wishbone_red
+</pre>
 </div>
-<div class="section" id="evaluation-of-metrics">
-<h3>Evaluation of metrics</h3>
-<p>Nagios plugins require you to build in the evaluation of thresholds in
-them by feeding the plugin the warning and critical values. &nbsp;Moncli also
-performs the evaluation of metrics on the client side but takes another
-approach. &nbsp;Instead of doing threshold evaluation in the plugin, Moncli
-does the evaluation itself, based upon the <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#thresholds">thresholds</a> one provides in
-combination with a an evaluator.</p>
-<p>There are currently 2 <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Evaluator_definitions">types of evaluators</a> (more planned):</p>
-<p>Formulas: calculations using the keys/values returned by the plugin.
-Regexes: Simple regex matching on the output of a plugin (not key
-value pairs)</p>
-<p>It's optional to define evaluators in a request. &nbsp;In this case, Moncli
-just becomes a metrics collector.</p>
-<p>A good starting point to figure out what the possibilities of Moncli are
-is done by looking through &nbsp;the in- and outgoing data format of Moncli
-called <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Request">requests</a> and <a class="reference external" href="http://wiki.smetj.net/wiki/Moncli_documentation#Reports">reports</a>.</p>
-<p>A second post will be about consuming and processing of Moncli data from
-RabbitMQ.</p>
-</div>
+<div class="section" id="final-thoughts">
+<h2>Final thoughts</h2>
+<p>While this setup as such does not have much practical use, I hope to have
+demonstrated flexibility of the Wishbone framework and what kind of solutions
+can be built with it.  More input (and other) modules are available on
+<a class="reference external" href="https://github.com/smetj/wishboneModules">Github</a> offering more combinations and possibilities which might suit your
+specific needs.</p>
 </div>
 
                 </div><!-- /.entry-content -->
@@ -368,7 +509,7 @@ RabbitMQ.</p>
                 <h2>Comments</h2>
                         <div id="disqus_thread"></div>
                         <script type="text/javascript">
-                           var disqus_identifier = "moncli-an-introduction.html";
+                           var disqus_identifier = "hammer-mqtt-amqp.html";
                            (function() {
                                 var dsq = document.createElement('script');
                                 dsq.type = 'text/javascript'; dsq.async = true;

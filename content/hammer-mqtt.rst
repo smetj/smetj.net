@@ -1,21 +1,54 @@
-Anything to MQTT
-################
-:date: 2013-11-08 23:00
+Hammer MQTT
+###########
+:date: 2013-11-09 18:00
 :author: smetj
 :category: engineering
-:tags: wishbone, mqtt, python
-:slug: anything-to-mqtt
+:tags: wishbone, mqtt, amqp, rabbitmq, mosquitto, python
+:slug: hammer-mqtt-amqp
+:status: draft
 
-In this blog post I would like to demonstrate the how easy it is to setup a
-Wishbone server which allows you to send data from bash to a MQTT broker.
+In this article we will look into the message throughput of MQTT and AMQP.  We
+can use Wishbone to generate messages and submit them into a message broker
+such as RabbitMQ or Mosquitto and write the Wishbone performance metrics into
+Graphite.
 
 xxend_summaryxx
 
-To install Wishbone you can follow the instructions found in the project
-`documentation`_.
+To install Wishbone and modules you can follow the instructions found in the
+project `documentation`_.
 
-Our setup
----------
+3 more modules are required:
+
+- wb_output_tcp (if you want the Graphite metrics)
+- wb_output_amqp
+- wb_output_mqtt
+
+Setup
+------
+
+- Server 1
+  - Virtualbox guest, Centos 6.3
+  - 2048 MB Ram
+  - 2 CPU's
+  - RabbitMQ 3.2.0
+  - Erlang R114B04
+
+- Server 2
+  - Virtualbox guest, Centos 6.3
+  - 2048 MB Ram
+  - 2 CPU's
+  - Mosquitto
+
+Testing throughput
+------------------
+
+
+
+
+
+I have RabbitMQ with the MQ
+
+We will setup a server which generates messages to both
 
 Have a server up and running with following properties:
 
