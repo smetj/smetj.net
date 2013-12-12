@@ -204,11 +204,11 @@ relatively easy.  If you require support you can submit a message to the
 .. _MetricFactory: https://github.com/smetj/metricfactory
 .. _bootstrap files: https://github.com/smetj/experiments/tree/master/metricfactory
 .. _UDP input: https://github.com/smetj/wishboneModules
-.. _Ganglia decoder: https://github.com/smetj/metricfactory/blob/master/metricfactory/decoders/decodeganglia.py
-.. _Graphite encoder: https://github.com/smetj/metricfactory/blob/master/metricfactory/encoders/encodegraphite.py
+.. _Ganglia decoder: https://github.com/smetj/metricfactory/blob/master/metricfactory/decoder/ganglia.py
+.. _Graphite encoder: http://wishbone.readthedocs.org/en/latest/modules.html?highlight=graphite#wishbone.module.Graphite
 .. _A TCP client: https://github.com/smetj/wishboneModules
-.. _this: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite2stdout.json
-.. _a bootstrap file: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite.json
+.. _this: https://github.com/smetj/experiments/blob/master/metricfactory/hadoop2graphite/hadoop2graphite.yaml
+.. _a bootstrap file: https://github.com/smetj/experiments/blob/master/metricfactory/hadoop2graphite/hadoop2graphite.yaml
 .. _A decoder with multiple instances: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/uds-ganglia-graphite.json
 .. _A receiver: https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/loadbalance-ganglia.json
 .. _The UDSclient module: http://smetj.github.com/wishbone/docs/build/html/iomodules.html#wishbone.iomodules.udsclient.UDSClient
