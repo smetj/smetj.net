@@ -2569,15 +2569,15 @@ other.&lt;/p&gt;
 &lt;p&gt;For this scenario we need to have at least:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;UDP input&lt;/a&gt; (The Ganglia metrics come in over UDP).&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/decoders/decodeganglia.py"&gt;Ganglia decoder&lt;/a&gt;&amp;nbsp;(Deserialize the XDR format into a generic
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/decoder/ganglia.py"&gt;Ganglia decoder&lt;/a&gt;&amp;nbsp;(Deserialize the XDR format into a generic
 format.)&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/encoders/encodegraphite.py"&gt;Graphite encoder&lt;/a&gt; (Convert the generic format into a Graphite
+&lt;li&gt;&lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html?highlight=graphite#wishbone.module.Graphite"&gt;Graphite encoder&lt;/a&gt; (Convert the generic format into a Graphite
 format.)&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://github.com/smetj/wishboneModules"&gt;A TCP client&lt;/a&gt; (Write the metrics into Graphite)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="section" id="a-small-test"&gt;
 &lt;h3&gt;A small test&lt;/h3&gt;
-&lt;p&gt;First let's make a small test using &lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite2stdout.json"&gt;this&lt;/a&gt; bootstrapfile. &amp;nbsp;Instead of
+&lt;p&gt;First let's make a small test using &lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hadoop2graphite/hadoop2graphite.yaml"&gt;this&lt;/a&gt; bootstrapfile. &amp;nbsp;Instead of
 writing the converted data to Graphite, we're going to print it to
 STDOUT. &amp;nbsp;Not very useful, although this way we can verify clearly
 whether we have data coming in and whether the output format is as we
@@ -2617,7 +2617,7 @@ into the background. &amp;nbsp;CTRL-C stops the process again:&lt;/p&gt;
 &lt;div class="section" id="a-standalone-instance"&gt;
 &lt;h3&gt;A standalone instance&lt;/h3&gt;
 &lt;p&gt;We can now start to write the metrics into Graphite. &amp;nbsp;For this we
-require&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite.json"&gt;a bootstrap file&lt;/a&gt; which &amp;nbsp;actually writes the data into
+require&amp;nbsp;&lt;a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hadoop2graphite/hadoop2graphite.yaml"&gt;a bootstrap file&lt;/a&gt; which &amp;nbsp;actually writes the data into
 Graphite:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 [vagrant&amp;#64;metricfactory-001 ~]$ metricfactory debug --config /home/vagrant/experiments/metricfactory/ganglia2graphite/ganglia2graphite.json
