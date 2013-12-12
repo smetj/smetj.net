@@ -98,149 +98,6 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="span3 well sidebar-nav" id="sidebar">
-<ul class="nav nav-list">
-<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
-<li><a href="http://smetj.net/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
-    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
-    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
-
-<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
-<li>
-<a href="http://smetj.net/category/development.html">
-    <i class="icon-folder-open icon-large"></i>development
-</a>
-</li>
-<li>
-<a href="http://smetj.net/category/engineering.html">
-    <i class="icon-folder-open icon-large"></i>engineering
-</a>
-</li>
-<li>
-<a href="http://smetj.net/category/misc.html">
-    <i class="icon-folder-open icon-large"></i>misc
-</a>
-</li>
-<li>
-<a href="http://smetj.net/category/monitoringlove.html">
-    <i class="icon-folder-open icon-large"></i>#monitoringlove
-</a>
-</li>
-
-<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
-<li class="tag-2">
-    <a href="http://smetj.net/tag/rabbitmq.html">
-        <i class="icon-tag icon-large"></i>rabbitmq
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/elasticsearch.html">
-        <i class="icon-tag icon-large"></i>elasticsearch
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/amqp.html">
-        <i class="icon-tag icon-large"></i>amqp
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/krolyk.html">
-        <i class="icon-tag icon-large"></i>krolyk
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/messaging.html">
-        <i class="icon-tag icon-large"></i>messaging
-    </a>
-</li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/moncli.html">
-        <i class="icon-tag icon-large"></i>moncli
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/nagios.html">
-        <i class="icon-tag icon-large"></i>nagios
-    </a>
-</li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/monitoringlove.html">
-        <i class="icon-tag icon-large"></i>monitoringlove
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/company.html">
-        <i class="icon-tag icon-large"></i>company
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/molog.html">
-        <i class="icon-tag icon-large"></i>molog
-    </a>
-</li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/graphite.html">
-        <i class="icon-tag icon-large"></i>graphite
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/mod_gearman.html">
-        <i class="icon-tag icon-large"></i>mod_gearman
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/mqtt.html">
-        <i class="icon-tag icon-large"></i>mqtt
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/gevent.html">
-        <i class="icon-tag icon-large"></i>gevent
-    </a>
-</li>
-<li class="tag-3">
-    <a href="http://smetj.net/tag/monitoring.html">
-        <i class="icon-tag icon-large"></i>monitoring
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/pypy.html">
-        <i class="icon-tag icon-large"></i>pypy
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/tools.html">
-        <i class="icon-tag icon-large"></i>tools
-    </a>
-</li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/metricfactory.html">
-        <i class="icon-tag icon-large"></i>metricfactory
-    </a>
-</li>
-<li class="tag-2">
-    <a href="http://smetj.net/tag/metrics.html">
-        <i class="icon-tag icon-large"></i>metrics
-    </a>
-</li>
-<li class="tag-1">
-    <a href="http://smetj.net/tag/python.html">
-        <i class="icon-tag icon-large"></i>python
-    </a>
-</li>
-<li class="tag-4">
-    <a href="http://smetj.net/tag/events.html">
-        <i class="icon-tag icon-large"></i>events
-    </a>
-</li>
-<li class="tag-2">
-    <a href="http://smetj.net/tag/wishbone.html">
-        <i class="icon-tag icon-large"></i>wishbone
-    </a>
-</li>
-
-
-</ul>        </div><!--/.well -->
         <div class="span9" id="content">
 <section id="content">
         <article>
@@ -327,15 +184,15 @@ other.</p>
 <p>For this scenario we need to have at least:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/smetj/wishboneModules">UDP input</a> (The Ganglia metrics come in over UDP).</li>
-<li><a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/decoder/ganglia.py">Ganglia decoder</a>&nbsp;(Deserialize the XDR format into a generic
+<li><a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/decoders/decodeganglia.py">Ganglia decoder</a>&nbsp;(Deserialize the XDR format into a generic
 format.)</li>
-<li><a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html?highlight=graphite#wishbone.module.Graphite">Graphite encoder</a> (Convert the generic format into a Graphite
+<li><a class="reference external" href="https://github.com/smetj/metricfactory/blob/master/metricfactory/encoders/encodegraphite.py">Graphite encoder</a> (Convert the generic format into a Graphite
 format.)</li>
 <li><a class="reference external" href="https://github.com/smetj/wishboneModules">A TCP client</a> (Write the metrics into Graphite)</li>
 </ul>
 <div class="section" id="a-small-test">
 <h3>A small test</h3>
-<p>First let's make a small test using <a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hadoop2graphite/hadoop2graphite.yaml">this</a> bootstrapfile. &nbsp;Instead of
+<p>First let's make a small test using <a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite2stdout.json">this</a> bootstrapfile. &nbsp;Instead of
 writing the converted data to Graphite, we're going to print it to
 STDOUT. &nbsp;Not very useful, although this way we can verify clearly
 whether we have data coming in and whether the output format is as we
@@ -375,7 +232,7 @@ into the background. &nbsp;CTRL-C stops the process again:</p>
 <div class="section" id="a-standalone-instance">
 <h3>A standalone instance</h3>
 <p>We can now start to write the metrics into Graphite. &nbsp;For this we
-require&nbsp;<a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/hadoop2graphite/hadoop2graphite.yaml">a bootstrap file</a> which &nbsp;actually writes the data into
+require&nbsp;<a class="reference external" href="https://github.com/smetj/experiments/blob/master/metricfactory/ganglia2graphite/ganglia2graphite.json">a bootstrap file</a> which &nbsp;actually writes the data into
 Graphite:</p>
 <pre class="literal-block">
 [vagrant&#64;metricfactory-001 ~]$ metricfactory debug --config /home/vagrant/experiments/metricfactory/ganglia2graphite/ganglia2graphite.json
@@ -435,8 +292,7 @@ relatively easy. &nbsp;If you require support you can submit a message to the
 
                 </div><!-- /.entry-content -->
                 <div class="comments">
-		</br>
-                <h2>Comments</h2>
+                <h2>Comments !</h2>
                         <div id="disqus_thread"></div>
                         <script type="text/javascript">
                            var disqus_identifier = "using-metricfactory-to-get-hadoop-metrics-into-graphite.html";
@@ -452,6 +308,151 @@ relatively easy. &nbsp;If you require support you can submit a message to the
         </article>
 </section>
         </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="http://smetj.net/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="http://twitter.com/smetj"><i class="icon-twitter-sign icon-large"></i>twitter</a></li>
+    <li><a href="http://github.com/smetj"><i class="icon-github-sign icon-large"></i>github</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="http://smetj.net/category/development.html">
+    <i class="icon-folder-open icon-large"></i>development
+</a>
+</li>
+<li>
+<a href="http://smetj.net/category/engineering.html">
+    <i class="icon-folder-open icon-large"></i>engineering
+</a>
+</li>
+<li>
+<a href="http://smetj.net/category/misc.html">
+    <i class="icon-folder-open icon-large"></i>misc
+</a>
+</li>
+<li>
+<a href="http://smetj.net/category/monitoringlove.html">
+    <i class="icon-folder-open icon-large"></i>#monitoringlove
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/mqtt.html">
+        <i class="icon-tag icon-large"></i>mqtt
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/metrics.html">
+        <i class="icon-tag icon-large"></i>metrics
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/metricfactory.html">
+        <i class="icon-tag icon-large"></i>metricfactory
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/company.html">
+        <i class="icon-tag icon-large"></i>company
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/monitoringlove.html">
+        <i class="icon-tag icon-large"></i>monitoringlove
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/nagios.html">
+        <i class="icon-tag icon-large"></i>nagios
+    </a>
+</li>
+<li class="tag-3">
+    <a href="http://smetj.net/tag/monitoring.html">
+        <i class="icon-tag icon-large"></i>monitoring
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/amqp.html">
+        <i class="icon-tag icon-large"></i>amqp
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/gevent.html">
+        <i class="icon-tag icon-large"></i>gevent
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/krolyk.html">
+        <i class="icon-tag icon-large"></i>krolyk
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/moncli.html">
+        <i class="icon-tag icon-large"></i>moncli
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/wishbone.html">
+        <i class="icon-tag icon-large"></i>wishbone
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/events.html">
+        <i class="icon-tag icon-large"></i>events
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/tools.html">
+        <i class="icon-tag icon-large"></i>tools
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/graphite.html">
+        <i class="icon-tag icon-large"></i>graphite
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/molog.html">
+        <i class="icon-tag icon-large"></i>molog
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/elasticsearch.html">
+        <i class="icon-tag icon-large"></i>elasticsearch
+    </a>
+</li>
+<li class="tag-2">
+    <a href="http://smetj.net/tag/rabbitmq.html">
+        <i class="icon-tag icon-large"></i>rabbitmq
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/messaging.html">
+        <i class="icon-tag icon-large"></i>messaging
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/pypy.html">
+        <i class="icon-tag icon-large"></i>pypy
+    </a>
+</li>
+<li class="tag-4">
+    <a href="http://smetj.net/tag/mod_gearman.html">
+        <i class="icon-tag icon-large"></i>mod_gearman
+    </a>
+</li>
+<li class="tag-1">
+    <a href="http://smetj.net/tag/python.html">
+        <i class="icon-tag icon-large"></i>python
+    </a>
+</li>
+
+
+</ul>        </div><!--/.well -->
+
       </div><!--/row-->
 
       <hr>
