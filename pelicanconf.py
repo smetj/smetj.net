@@ -10,8 +10,11 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
 
 
-THEME = '/home/smetj/projects/github/pelican-themes/bootstrap2'
+#THEME = '/home/smetj/projects/github/pelican-themes/bootstrap2'
+THEME = '/home/smetj/projects/github/pelican-themes/pelican-bootstrap3'
+BOOTSTRAP_THEME = 'flatly'
 GITHUB_URL = 'http://github.com/smetj/'
+GITHUB_USER = 'smetj'
 
 # Feed generation is usually not desired when developing
 # FEED_ALL_ATOM = None
