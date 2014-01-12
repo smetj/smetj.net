@@ -28,9 +28,25 @@ GITHUB_USER = 'smetj'
 #           ('You can modify those links in your config file', '#'),)
 
 PLUGIN_PATH = '/home/smetj/projects/github/pelican-plugins'
-PLUGINS = ['summary']
+PLUGINS = ['summary','sitemap']
+
 SUMMARY_BEGIN_MARKER = "xxstart_summaryxx"
 SUMMARY_END_MARKER = "xxend_summaryxx"
+
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 0.5,
+        'indexes': 0.5,
+        'pages': 0.5
+    },
+    'changefreqs': {
+        'articles': 'weekly',
+        'indexes': 'daily',
+        'pages': 'weekly'
+    }
+}
+
 LINKS = None
 PDF_GENERATOR = True
 STATIC_PATHS = [
