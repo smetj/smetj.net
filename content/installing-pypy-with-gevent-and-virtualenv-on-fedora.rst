@@ -110,24 +110,19 @@ module:
     (pypy-2.0.2)$ CFLAGS=-O2 pip install -e .
 
 If setup.py complains it can not locate *ev.h* it's possible the library
-search path isn't complete.  In that case locate the location of the
-file and add that directory to pypycore.py (starts at line 207) using
-the *include\_dirs* variable:
+search path isn't complete.  In that case add the directory containing *ev.h*
+to the *include_dirs* variable in pypycore.py (line 215).  The result would
+look similar to example:
 
 ::
 
-    libev = C = ffi.verify("""   // passed to the real C compiler
-    #include
-
-    void gevent_noop(struct ev_loop *_loop, void *watcher, int revents) { }
-    """, libraries=["ev"], include_dirs=["/usr/include/libev"])
+    """, include_dirs=[include_dir,"/usr/include/libev"], libraries=["ev"])
 
 Test
 ~~~~
 
-Before starting \ *PyPy* we have to make sure gevent used the right
-gevent.core:\ *
-*
+Before starting *PyPy* we have to make sure gevent uses the right
+gevent.core:
 
 ::
 
