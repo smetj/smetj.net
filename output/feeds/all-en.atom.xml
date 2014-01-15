@@ -1565,9 +1565,9 @@ $ cd pypycore
 $ . ~/pypy-2.0.2/bin/activate
 (pypy-2.0.2)$ CFLAGS=-O2 pip install -e .
 &lt;/pre&gt;
-&lt;p&gt;If setup.py complains it can not locate &lt;em&gt;ev.h&lt;/em&gt; it's possible the library
-search path isn't complete. &amp;nbsp;In that case add the directory containing &lt;em&gt;ev.h&lt;/em&gt;
-to the &lt;em&gt;include_dirs&lt;/em&gt; variable in pypycore.py (line 215).  The result would
+&lt;p&gt;If setup.py complains it can not locate &lt;strong&gt;ev.h&lt;/strong&gt; it's possible the library
+search path isn't complete. &amp;nbsp;In that case add the directory containing &lt;strong&gt;ev.h&lt;/strong&gt;
+to the &lt;strong&gt;include_dirs&lt;/strong&gt; variable in pypycore.py (line 215).  The result would
 look similar to example:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 &amp;quot;&amp;quot;&amp;quot;, include_dirs=[include_dir,&amp;quot;/usr/include/libev&amp;quot;], libraries=[&amp;quot;ev&amp;quot;])

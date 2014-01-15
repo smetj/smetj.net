@@ -109,9 +109,9 @@ module:
     $ . ~/pypy-2.0.2/bin/activate
     (pypy-2.0.2)$ CFLAGS=-O2 pip install -e .
 
-If setup.py complains it can not locate *ev.h* it's possible the library
-search path isn't complete.  In that case add the directory containing *ev.h*
-to the *include_dirs* variable in pypycore.py (line 215).  The result would
+If setup.py complains it can not locate **ev.h** it's possible the library
+search path isn't complete.  In that case add the directory containing **ev.h**
+to the **include_dirs** variable in pypycore.py (line 215).  The result would
 look similar to example:
 
 ::
