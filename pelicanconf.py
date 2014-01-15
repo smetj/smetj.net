@@ -51,9 +51,8 @@ LINKS = None
 PDF_GENERATOR = True
 STATIC_PATHS = [
     'pics',
+    'robots.txt'
     ]
-
-FILES_TO_COPY = (('extra/robots.txt', 'robots.txt'),)
 
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/smetj'),

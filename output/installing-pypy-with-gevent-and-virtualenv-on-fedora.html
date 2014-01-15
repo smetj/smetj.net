@@ -190,22 +190,17 @@ $ . ~/pypy-2.0.2/bin/activate
 (pypy-2.0.2)$ CFLAGS=-O2 pip install -e .
 </pre>
 <p>If setup.py complains it can not locate <em>ev.h</em> it's possible the library
-search path isn't complete. &nbsp;In that case locate the location of the
-file and add that directory to pypycore.py (starts at line 207) using
-the <em>include_dirs</em> variable:</p>
+search path isn't complete. &nbsp;In that case add the directory containing <em>ev.h</em>
+to the <em>include_dirs</em> variable in pypycore.py (line 215).  The result would
+look similar to example:</p>
 <pre class="literal-block">
-libev = C = ffi.verify(&quot;&quot;&quot;   // passed to the real C compiler
-#include
-
-void gevent_noop(struct ev_loop *_loop, void *watcher, int revents) { }
-&quot;&quot;&quot;, libraries=[&quot;ev&quot;], include_dirs=[&quot;/usr/include/libev&quot;])
+&quot;&quot;&quot;, include_dirs=[include_dir,&quot;/usr/include/libev&quot;], libraries=[&quot;ev&quot;])
 </pre>
 </div>
 <div class="section" id="test">
 <h2>Test</h2>
-<p>Before starting&nbsp;<em>PyPy</em> we have to make sure gevent used the right
-gevent.core:*
-*</p>
+<p>Before starting <em>PyPy</em> we have to make sure gevent uses the right
+gevent.core:</p>
 <pre class="literal-block">
 $ export GEVENT_LOOP=pypycore.loop
 </pre>
@@ -277,11 +272,6 @@ into a virtualenv it's really easy to use, experiment and rebuild.</p>
 
                 <li class="list-group-item"><a href="http://smetj.net/tags.html"><h4><i class="icon-tags icon-large"></i>Tags</h4></a></li>
                         <li class="list-group-item tag-1">
-                            <a href="http://smetj.net/tag/moncli.html">
-                                moncli
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://smetj.net/tag/graphite.html">
                                 graphite
                             </a>
@@ -294,6 +284,11 @@ into a virtualenv it's really easy to use, experiment and rebuild.</p>
                         <li class="list-group-item tag-1">
                             <a href="http://smetj.net/tag/python.html">
                                 python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://smetj.net/tag/moncli.html">
+                                moncli
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
@@ -322,53 +317,8 @@ into a virtualenv it's really easy to use, experiment and rebuild.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/krolyk.html">
-                                krolyk
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/elasticsearch.html">
-                                elasticsearch
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/nagios.html">
-                                nagios
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/pypy.html">
-                                pypy
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/company.html">
-                                company
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/messaging.html">
-                                messaging
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/tools.html">
-                                tools
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/gevent.html">
-                                gevent
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/amqp.html">
-                                amqp
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/events.html">
-                                events
+                            <a href="http://smetj.net/tag/mod_gearman.html">
+                                mod_gearman
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -377,13 +327,58 @@ into a virtualenv it's really easy to use, experiment and rebuild.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/mod_gearman.html">
-                                mod_gearman
+                            <a href="http://smetj.net/tag/events.html">
+                                events
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/nagios.html">
+                                nagios
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/amqp.html">
+                                amqp
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/messaging.html">
+                                messaging
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/krolyk.html">
+                                krolyk
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/gevent.html">
+                                gevent
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://smetj.net/tag/mqtt.html">
                                 mqtt
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/tools.html">
+                                tools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/elasticsearch.html">
+                                elasticsearch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/company.html">
+                                company
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/pypy.html">
+                                pypy
                             </a>
                         </li>
         </ul>

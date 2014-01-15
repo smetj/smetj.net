@@ -1566,22 +1566,17 @@ $ . ~/pypy-2.0.2/bin/activate
 (pypy-2.0.2)$ CFLAGS=-O2 pip install -e .
 &lt;/pre&gt;
 &lt;p&gt;If setup.py complains it can not locate &lt;em&gt;ev.h&lt;/em&gt; it's possible the library
-search path isn't complete. &amp;nbsp;In that case locate the location of the
-file and add that directory to pypycore.py (starts at line 207) using
-the &lt;em&gt;include_dirs&lt;/em&gt; variable:&lt;/p&gt;
+search path isn't complete. &amp;nbsp;In that case add the directory containing &lt;em&gt;ev.h&lt;/em&gt;
+to the &lt;em&gt;include_dirs&lt;/em&gt; variable in pypycore.py (line 215).  The result would
+look similar to example:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-libev = C = ffi.verify(&amp;quot;&amp;quot;&amp;quot;   // passed to the real C compiler
-#include
-
-void gevent_noop(struct ev_loop *_loop, void *watcher, int revents) { }
-&amp;quot;&amp;quot;&amp;quot;, libraries=[&amp;quot;ev&amp;quot;], include_dirs=[&amp;quot;/usr/include/libev&amp;quot;])
+&amp;quot;&amp;quot;&amp;quot;, include_dirs=[include_dir,&amp;quot;/usr/include/libev&amp;quot;], libraries=[&amp;quot;ev&amp;quot;])
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="test"&gt;
 &lt;h2&gt;Test&lt;/h2&gt;
-&lt;p&gt;Before starting&amp;nbsp;&lt;em&gt;PyPy&lt;/em&gt; we have to make sure gevent used the right
-gevent.core:*
-*&lt;/p&gt;
+&lt;p&gt;Before starting &lt;em&gt;PyPy&lt;/em&gt; we have to make sure gevent uses the right
+gevent.core:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 $ export GEVENT_LOOP=pypycore.loop
 &lt;/pre&gt;
