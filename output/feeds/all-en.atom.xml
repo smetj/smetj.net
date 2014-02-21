@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-17T20:36:00+01:00</updated><entry><title>Submit Elasticsearch metrics to Graphite</title><link href="http://smetj.net/submit-elasticsearch-metrics-to-graphite.html" rel="alternate"></link><updated>2013-11-17T20:36:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-17:submit-elasticsearch-metrics-to-graphite.html</id><summary type="html">&lt;p&gt;If you're running an &lt;a class="reference external" href="http://www.elasticsearch.org"&gt;Elasticsearch&lt;/a&gt; cluster you might want to keep track of
-the metrics it produces.  In this article I will explain how you can aggregate
-the metrics of an Elasticsearch cluster and submit them to Graphite for later
-analysis.&lt;/p&gt;
+the metrics it produces.  In this article I explain how you can aggregate the
+metrics of an Elasticsearch cluster and submit them to Graphite.&lt;/p&gt;
 &lt;p&gt;&lt;/p&gt;
 &lt;div class="section" id="prerequisites"&gt;
 &lt;h2&gt;Prerequisites&lt;/h2&gt;
@@ -25,11 +24,12 @@ $ metricfactory list
 &lt;/div&gt;
 &lt;div class="section" id="elasticsearch"&gt;
 &lt;h2&gt;Elasticsearch&lt;/h2&gt;
-&lt;p&gt;Elasticsearch has a HTTP based CRUD API which allows us to poll metrics.
+&lt;p&gt;Elasticsearch has a HTTP based API which allows us to poll metrics.
 The available metrics resources are:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://localhost:9200/_cluster/state"&gt;http://localhost:9200/_cluster/state&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://localhost:9200/_stats"&gt;http://localhost:9200/_stats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html"&gt;Cluster stats&lt;/a&gt;  : &lt;a class="reference external" href="http://localhost:9200/_cluster/stats"&gt;http://localhost:9200/_cluster/stats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html"&gt;Nodes stats&lt;/a&gt;    : &lt;a class="reference external" href="http://localhost:9200/_nodes/stats"&gt;http://localhost:9200/_nodes/stats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html"&gt;Indices stats&lt;/a&gt;  : &lt;a class="reference external" href="http://localhost:9200/_stats"&gt;http://localhost:9200/_stats&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Polling these resources returns a JSON formatted document containing metrics
 of different Elasticsearch parts.&lt;/p&gt;
@@ -45,8 +45,8 @@ Graphite format using the &lt;a class="reference external" href="http://wishbone
 &lt;/div&gt;
 &lt;div class="section" id="bootstrapfile"&gt;
 &lt;h2&gt;Bootstrapfile&lt;/h2&gt;
-&lt;p&gt;Metricfactory needs to be invoked with a bootstrap file which defines the
-functionality and eventflow of the server:&lt;/p&gt;
+&lt;p&gt;Metricfactory requires a bootstrap file which defines the functionality and
+eventflow:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -91,18 +91,30 @@ functionality and eventflow of the server:&lt;/p&gt;
 42
 43
 44
-45&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;---
+45
+46
+47
+48
+49
+50
+51&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;---
 modules:
   httprequest_one:
     module: wishbone.input.httprequest
     arguments:
-      url: &amp;quot;http://elasticsearch-001:9200/_cluster/nodes/stats&amp;quot;
+      url: &amp;quot;http://elasticsearch-node-001:9200/_cluster/stats&amp;quot;
       interval: 1
 
   httprequest_two:
     module: wishbone.input.httprequest
     arguments:
-      url: &amp;quot;http://elasticsearch-001:9200/_stats&amp;quot;
+      url: &amp;quot;http://elasticsearch-node-001:9200/_nodes/stats&amp;quot;
+      interval: 1
+
+  httprequest_three:
+    module: wishbone.input.httprequest
+    arguments:
+      url: &amp;quot;http://elasticsearch-node-001:9200/_stats&amp;quot;
       interval: 1
 
   funnel:
@@ -125,16 +137,16 @@ modules:
   output_tcp:
     module: wishbone.output.tcp
     arguments:
-      host: graphite-001
+      host: localhost
       port: 2013
 
 routingtable:
-  - httprequest_one.outbox  -&amp;gt; funnel.one
-  - httprequest_two.outbox  -&amp;gt; funnel.two
-  - funnel.outbox           -&amp;gt; decode.inbox
-  - decode.outbox           -&amp;gt; encode.inbox
-  - encode.outbox           -&amp;gt; output_tcp.inbox
-  #- encode.outbox           -&amp;gt; output_screen.inbox
+  - httprequest_one.outbox   -&amp;gt; funnel.one
+  - httprequest_two.outbox   -&amp;gt; funnel.two
+  - httprequest_three.outbox -&amp;gt; funnel.three
+  - funnel.outbox            -&amp;gt; decode.inbox
+  - decode.outbox            -&amp;gt; encode.inbox
+  - encode.outbox            -&amp;gt; output_tcp.inbox
 ...
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Lets run over the different sections of this bootstrap file.&lt;/p&gt;
@@ -330,7 +342,7 @@ key to use when submitting the event.&lt;/p&gt;
 &lt;h3&gt;The routing table&lt;/h3&gt;
 &lt;p&gt;The routing table (line 47) defines which queues are connected towards each
 other which basically defines the flow of events throughout the different
-modules.  If we would graphically represent the defines routing table it would
+modules.  If we would graphically represent the defined routing table it would
 look like this:&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="pics/anything-to-mqtt/diagram.png"&gt;&lt;img alt="diagram" src="pics/anything-to-mqtt/diagram.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Each &lt;em&gt;named pipe&lt;/em&gt; module instance is connected to its dedicated &lt;em&gt;header&lt;/em&gt;
