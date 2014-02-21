@@ -8,9 +8,8 @@ Submit Elasticsearch metrics to Graphite
 
 
 If you're running an `Elasticsearch`_ cluster you might want to keep track of
-the metrics it produces.  In this article I will explain how you can aggregate
-the metrics of an Elasticsearch cluster and submit them to Graphite for later
-analysis.
+the metrics it produces.  In this article I explain how you can aggregate the
+metrics of an Elasticsearch cluster and submit them to Graphite. [1]_
 
 xxend_summaryxx
 
@@ -33,41 +32,43 @@ This `document`_ describes how to install the different aspects of Wishbone
 and its modules.
 
 Once installed you should have the *metricfactory* executable available.
+You can test this by issuing following command:
 
 ::
 
-  $ metricfactory list
+  $ metricfactory list --group metricfactory.decoder
 
 
 Elasticsearch
 ~~~~~~~~~~~~~
 
-Elasticsearch has a HTTP based CRUD API which allows us to poll metrics.
+Elasticsearch has a HTTP based API which allows us to poll metrics.
 The available metrics resources are:
 
-- http://localhost:9200/_cluster/state
-- http://localhost:9200/_stats
+- `Cluster stats`_
+- `Nodes stats`_
+- `Indices stats`_
 
 Polling these resources returns a JSON formatted document containing metrics
 of different Elasticsearch parts.
 
-The `wb_input_httprequest`_ module will help us to fetch those metrics into
-our metricfactory setup.
+The `wb_input_httprequest`_ module allows us to poll and collect these
+resources.
 
 Decode Elasticsearch metrics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-That JSON document with metrics has to be converted into the Metricfactory
-`standard metric format`_.  Once converted it can be processed by other
-metricfactory modules.  In this article we will convert the metrics into a
-Graphite format using the `Graphite builtin`_ module of Wishbone.
+The returned JSON document containing metrics has to be converted into the
+Metricfactory `standard metric format`_.  Once converted they can be processed
+by other Metricfactory modules.  We will convert the metrics into the Graphite
+format using the `Graphite builtin`_ module of Wishbone.
 
 
 Bootstrapfile
 ~~~~~~~~~~~~~
 
-Metricfactory needs to be invoked with a bootstrap file which defines the
-functionality and eventflow of the server:
+Metricfactory requires a bootstrap file which defines the functionality and
+eventflow:
 
 .. code-block:: identifier
   :linenos: table
@@ -77,13 +78,19 @@ functionality and eventflow of the server:
     httprequest_one:
       module: wishbone.input.httprequest
       arguments:
-        url: "http://elasticsearch-001:9200/_cluster/nodes/stats"
+        url: "http://elasticsearch-node-001:9200/_cluster/stats"
         interval: 1
 
     httprequest_two:
       module: wishbone.input.httprequest
       arguments:
-        url: "http://elasticsearch-001:9200/_stats"
+        url: "http://elasticsearch-node-001:9200/_nodes/stats"
+        interval: 1
+
+    httprequest_three:
+      module: wishbone.input.httprequest
+      arguments:
+        url: "http://elasticsearch-node-001:9200/_stats"
         interval: 1
 
     funnel:
@@ -106,44 +113,45 @@ functionality and eventflow of the server:
     output_tcp:
       module: wishbone.output.tcp
       arguments:
-        host: graphite-001
+        host: localhost
         port: 2013
 
   routingtable:
-    - httprequest_one.outbox  -> funnel.one
-    - httprequest_two.outbox  -> funnel.two
-    - funnel.outbox           -> decode.inbox
-    - decode.outbox           -> encode.inbox
-    - encode.outbox           -> output_tcp.inbox
-    #- encode.outbox           -> output_screen.inbox
+    - httprequest_one.outbox   -> funnel.one
+    - httprequest_two.outbox   -> funnel.two
+    - httprequest_three.outbox -> funnel.three
+    - funnel.outbox            -> decode.inbox
+    - decode.outbox            -> encode.inbox
+    - encode.outbox            -> output_tcp.inbox
   ...
 
 Lets run over the different sections of this bootstrap file.
 
-The routingtable (line 38) determines how modules are connected to each other
+The routingtable (line 44) determines how modules are connected to each other
 and therefor determine the flow of events.
 
-The *httprequest_one* and *httprequest_two* instances poll the urls (line 6,
-12) which return the required metrics.  The pages are requested with an
-interval of 1 second (line 7, 13).
+The *httprequest_one*, *httprequest_two* and *httprequest_three* instances
+poll the urls (line 6, 12 and 18) which return the available metrics in JSON
+format.  The resources are requested with an interval of 1 second (line 7, 13,
+19).
 
-The results from both these input modules go over the *funnel* module (line
-15) to the *decode* module instance (line 18), where the ES format is
-converted to the generic metric format.  The *decode* instance is initialized
-using the source argument (line 21) which fills the source value of the
-generic metric data format.  This requirement wouldn't be necessary if this
-`enhancement request`_ is done.
+The results coming out these 3 input modules then flow via the *funnel* module
+(line 21) into the *decode* module (line 24) in which the JSON formatted data
+is converted to the generic metric format.  The *decode* instance is
+initialized using the source argument (line 27) which allows you to add the
+cluster name to the metric names in case you're collecting metrics from
+multiple cluster instances.
 
 The decoded events are then converted into the required Graphite format by the
-*encode*  module instance (line 23).  This module is initiated with a prefix
-argument which puts a prefix (line 26) in front of the metric name.
+*encode*  module instance (line 29).  The prefix argument (line 32) allows you
+to define the top scope of the metric names.
 
 Events then go to the output_tcp module which submits the metrics into
 Graphite itself.
 
-If you want to play around with the metric name formatting, you can write the
-metrics to STDOUT first by altering the metric stream to the *output_screen*
-modules instance by uncommenting line 44 and commenting line 43.
+If you first want to experiment with the metric name formatting, you can write
+the metrics to STDOUT by connecting *encode.outbox* to *output_screen.inbox*
+(line 50).
 
 To start the server, save the above bootstrap configuration to a file and
 execute following command:
@@ -160,3 +168,6 @@ execute following command:
 .. _standard metric format: http://wishbone.readthedocs.org/en/latest/router.html#format
 .. _Graphite builtin: http://wishbone.readthedocs.org/en/latest/modules.html#graphite
 .. _enhancement request: https://github.com/elasticsearch/elasticsearch/issues/4179
+.. _Indices stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
+.. _Cluster stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html
+.. _Nodes stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
