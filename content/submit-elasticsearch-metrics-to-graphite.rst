@@ -158,6 +158,7 @@ execute following command:
 
   $ metricfactory debug --config bootstrap.yaml
 
+.. [1] `This article has been altered for correctness`_
 
 .. _Elasticsearch: http://www.elasticsearch.org
 .. _Wishbone: https://wishbone.readthedocs.org/en/latest/
@@ -171,3 +172,4 @@ execute following command:
 .. _Indices stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
 .. _Cluster stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html
 .. _Nodes stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
+.. _This article has been altered for correctness: https://github.com/smetj/smetj.net/commits/master/content/submit-elasticsearch-metrics-to-graphite.rst
