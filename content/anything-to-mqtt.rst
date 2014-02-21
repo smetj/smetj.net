@@ -130,7 +130,7 @@ The routing table
 
 The routing table (line 47) defines which queues are connected towards each
 other which basically defines the flow of events throughout the different
-modules.  If we would graphically represent the defines routing table it would
+modules.  If we would graphically represent the defined routing table it would
 look like this:
 
 |diagram|
