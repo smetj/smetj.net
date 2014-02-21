@@ -1,4 +1,1 @@
-smetj.net
-=========
-
-My website/blog
+http://smetj.net
