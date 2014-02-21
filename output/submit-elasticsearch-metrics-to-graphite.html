@@ -132,9 +132,10 @@ metrics of an Elasticsearch cluster and submit them to Graphite.</p>
 </ul>
 <p>This <a class="reference external" href="https://wishbone.readthedocs.org/en/latest/installation.html">document</a> describes how to install the different aspects of Wishbone
 and its modules.</p>
-<p>Once installed you should have the <em>metricfactory</em> executable available.</p>
+<p>Once installed you should have the <em>metricfactory</em> executable available.
+You can test this by issuing following command:</p>
 <pre class="literal-block">
-$ metricfactory list
+$ metricfactory list --group metricfactory.decoder
 </pre>
 </div>
 <div class="section" id="elasticsearch">
@@ -142,21 +143,21 @@ $ metricfactory list
 <p>Elasticsearch has a HTTP based API which allows us to poll metrics.
 The available metrics resources are:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html">Cluster stats</a>  : <a class="reference external" href="http://localhost:9200/_cluster/stats">http://localhost:9200/_cluster/stats</a></li>
-<li><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html">Nodes stats</a>    : <a class="reference external" href="http://localhost:9200/_nodes/stats">http://localhost:9200/_nodes/stats</a></li>
-<li><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html">Indices stats</a>  : <a class="reference external" href="http://localhost:9200/_stats">http://localhost:9200/_stats</a></li>
+<li><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html">Cluster stats</a></li>
+<li><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html">Nodes stats</a></li>
+<li><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html">Indices stats</a></li>
 </ul>
 <p>Polling these resources returns a JSON formatted document containing metrics
 of different Elasticsearch parts.</p>
-<p>The <a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest">wb_input_httprequest</a> module will help us to fetch those metrics into
-our metricfactory setup.</p>
+<p>The <a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest">wb_input_httprequest</a> module allows us to poll and collect these
+resources.</p>
 </div>
 <div class="section" id="decode-elasticsearch-metrics">
 <h2>Decode Elasticsearch metrics</h2>
-<p>That JSON document with metrics has to be converted into the Metricfactory
-<a class="reference external" href="http://wishbone.readthedocs.org/en/latest/router.html#format">standard metric format</a>.  Once converted it can be processed by other
-metricfactory modules.  In this article we will convert the metrics into a
-Graphite format using the <a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html#graphite">Graphite builtin</a> module of Wishbone.</p>
+<p>The returned JSON document containing metrics has to be converted into the
+Metricfactory <a class="reference external" href="http://wishbone.readthedocs.org/en/latest/router.html#format">standard metric format</a>.  Once converted they can be processed
+by other Metricfactory modules.  We will convert the metrics into the Graphite
+format using the <a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html#graphite">Graphite builtin</a> module of Wishbone.</p>
 </div>
 <div class="section" id="bootstrapfile">
 <h2>Bootstrapfile</h2>
@@ -265,25 +266,26 @@ routingtable:
 ...
 </pre></div>
 </td></tr></table><p>Lets run over the different sections of this bootstrap file.</p>
-<p>The routingtable (line 38) determines how modules are connected to each other
+<p>The routingtable (line 44) determines how modules are connected to each other
 and therefor determine the flow of events.</p>
-<p>The <em>httprequest_one</em> and <em>httprequest_two</em> instances poll the urls (line 6,
-12) which return the required metrics.  The pages are requested with an
-interval of 1 second (line 7, 13).</p>
-<p>The results from both these input modules go over the <em>funnel</em> module (line
-15) to the <em>decode</em> module instance (line 18), where the ES format is
-converted to the generic metric format.  The <em>decode</em> instance is initialized
-using the source argument (line 21) which fills the source value of the
-generic metric data format.  This requirement wouldn't be necessary if this
-<a class="reference external" href="https://github.com/elasticsearch/elasticsearch/issues/4179">enhancement request</a> is done.</p>
+<p>The <em>httprequest_one</em>, <em>httprequest_two</em> and <em>httprequest_three</em> instances
+poll the urls (line 6, 12 and 18) which return the available metrics in JSON
+format.  The resources are requested with an interval of 1 second (line 7, 13,
+19).</p>
+<p>The results coming out these 3 input modules then flow via the <em>funnel</em> module
+(line 21) into the <em>decode</em> module (line 24) in which the JSON formatted data
+is converted to the generic metric format.  The <em>decode</em> instance is
+initialized using the source argument (line 27) which allows you to add the
+cluster name to the metric names in case you're collecting metrics from
+multiple cluster instances.</p>
 <p>The decoded events are then converted into the required Graphite format by the
-<em>encode</em>  module instance (line 23).  This module is initiated with a prefix
-argument which puts a prefix (line 26) in front of the metric name.</p>
+<em>encode</em>  module instance (line 29).  The prefix argument (line 32) allows you
+to define the top scope of the metric names.</p>
 <p>Events then go to the output_tcp module which submits the metrics into
 Graphite itself.</p>
-<p>If you want to play around with the metric name formatting, you can write the
-metrics to STDOUT first by altering the metric stream to the <em>output_screen</em>
-modules instance by uncommenting line 44 and commenting line 43.</p>
+<p>If you first want to experiment with the metric name formatting, you can write
+the metrics to STDOUT by connecting <em>encode.outbox</em> to <em>output_screen.inbox</em>
+(line 50).</p>
 <p>To start the server, save the above bootstrap configuration to a file and
 execute following command:</p>
 <blockquote>
@@ -337,8 +339,8 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
 
                 <li class="list-group-item"><a href="http://smetj.net/tags.html"><h4><i class="icon-tags icon-large"></i>Tags</h4></a></li>
                         <li class="list-group-item tag-1">
-                            <a href="http://smetj.net/tag/moncli.html">
-                                moncli
+                            <a href="http://smetj.net/tag/monitoringlove.html">
+                                monitoringlove
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
@@ -347,8 +349,8 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="http://smetj.net/tag/monitoringlove.html">
-                                monitoringlove
+                            <a href="http://smetj.net/tag/moncli.html">
+                                moncli
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
@@ -362,13 +364,13 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://smetj.net/tag/metrics.html">
-                                metrics
+                            <a href="http://smetj.net/tag/rabbitmq.html">
+                                rabbitmq
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://smetj.net/tag/rabbitmq.html">
-                                rabbitmq
+                            <a href="http://smetj.net/tag/metrics.html">
+                                metrics
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -382,28 +384,8 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/messaging.html">
-                                messaging
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/mqtt.html">
-                                mqtt
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/company.html">
-                                company
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/elasticsearch.html">
-                                elasticsearch
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/events.html">
-                                events
+                            <a href="http://smetj.net/tag/krolyk.html">
+                                krolyk
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -412,18 +394,33 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/elasticsearch.html">
+                                elasticsearch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://smetj.net/tag/pypy.html">
                                 pypy
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/gevent.html">
-                                gevent
+                            <a href="http://smetj.net/tag/mqtt.html">
+                                mqtt
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/krolyk.html">
-                                krolyk
+                            <a href="http://smetj.net/tag/molog.html">
+                                molog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/messaging.html">
+                                messaging
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/company.html">
+                                company
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -432,8 +429,8 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/tools.html">
-                                tools
+                            <a href="http://smetj.net/tag/events.html">
+                                events
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -442,8 +439,13 @@ $ metricfactory debug --config bootstrap.yaml</blockquote>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://smetj.net/tag/molog.html">
-                                molog
+                            <a href="http://smetj.net/tag/tools.html">
+                                tools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://smetj.net/tag/gevent.html">
+                                gevent
                             </a>
                         </li>
         </ul>

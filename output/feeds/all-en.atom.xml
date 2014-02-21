@@ -17,9 +17,10 @@ metrics of an Elasticsearch cluster and submit them to Graphite.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;This &lt;a class="reference external" href="https://wishbone.readthedocs.org/en/latest/installation.html"&gt;document&lt;/a&gt; describes how to install the different aspects of Wishbone
 and its modules.&lt;/p&gt;
-&lt;p&gt;Once installed you should have the &lt;em&gt;metricfactory&lt;/em&gt; executable available.&lt;/p&gt;
+&lt;p&gt;Once installed you should have the &lt;em&gt;metricfactory&lt;/em&gt; executable available.
+You can test this by issuing following command:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-$ metricfactory list
+$ metricfactory list --group metricfactory.decoder
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="elasticsearch"&gt;
@@ -27,21 +28,21 @@ $ metricfactory list
 &lt;p&gt;Elasticsearch has a HTTP based API which allows us to poll metrics.
 The available metrics resources are:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html"&gt;Cluster stats&lt;/a&gt;  : &lt;a class="reference external" href="http://localhost:9200/_cluster/stats"&gt;http://localhost:9200/_cluster/stats&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html"&gt;Nodes stats&lt;/a&gt;    : &lt;a class="reference external" href="http://localhost:9200/_nodes/stats"&gt;http://localhost:9200/_nodes/stats&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html"&gt;Indices stats&lt;/a&gt;  : &lt;a class="reference external" href="http://localhost:9200/_stats"&gt;http://localhost:9200/_stats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html"&gt;Cluster stats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html"&gt;Nodes stats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html"&gt;Indices stats&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Polling these resources returns a JSON formatted document containing metrics
 of different Elasticsearch parts.&lt;/p&gt;
-&lt;p&gt;The &lt;a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest"&gt;wb_input_httprequest&lt;/a&gt; module will help us to fetch those metrics into
-our metricfactory setup.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest"&gt;wb_input_httprequest&lt;/a&gt; module allows us to poll and collect these
+resources.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="decode-elasticsearch-metrics"&gt;
 &lt;h2&gt;Decode Elasticsearch metrics&lt;/h2&gt;
-&lt;p&gt;That JSON document with metrics has to be converted into the Metricfactory
-&lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/router.html#format"&gt;standard metric format&lt;/a&gt;.  Once converted it can be processed by other
-metricfactory modules.  In this article we will convert the metrics into a
-Graphite format using the &lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html#graphite"&gt;Graphite builtin&lt;/a&gt; module of Wishbone.&lt;/p&gt;
+&lt;p&gt;The returned JSON document containing metrics has to be converted into the
+Metricfactory &lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/router.html#format"&gt;standard metric format&lt;/a&gt;.  Once converted they can be processed
+by other Metricfactory modules.  We will convert the metrics into the Graphite
+format using the &lt;a class="reference external" href="http://wishbone.readthedocs.org/en/latest/modules.html#graphite"&gt;Graphite builtin&lt;/a&gt; module of Wishbone.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="bootstrapfile"&gt;
 &lt;h2&gt;Bootstrapfile&lt;/h2&gt;
@@ -150,25 +151,26 @@ routingtable:
 ...
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Lets run over the different sections of this bootstrap file.&lt;/p&gt;
-&lt;p&gt;The routingtable (line 38) determines how modules are connected to each other
+&lt;p&gt;The routingtable (line 44) determines how modules are connected to each other
 and therefor determine the flow of events.&lt;/p&gt;
-&lt;p&gt;The &lt;em&gt;httprequest_one&lt;/em&gt; and &lt;em&gt;httprequest_two&lt;/em&gt; instances poll the urls (line 6,
-12) which return the required metrics.  The pages are requested with an
-interval of 1 second (line 7, 13).&lt;/p&gt;
-&lt;p&gt;The results from both these input modules go over the &lt;em&gt;funnel&lt;/em&gt; module (line
-15) to the &lt;em&gt;decode&lt;/em&gt; module instance (line 18), where the ES format is
-converted to the generic metric format.  The &lt;em&gt;decode&lt;/em&gt; instance is initialized
-using the source argument (line 21) which fills the source value of the
-generic metric data format.  This requirement wouldn't be necessary if this
-&lt;a class="reference external" href="https://github.com/elasticsearch/elasticsearch/issues/4179"&gt;enhancement request&lt;/a&gt; is done.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;httprequest_one&lt;/em&gt;, &lt;em&gt;httprequest_two&lt;/em&gt; and &lt;em&gt;httprequest_three&lt;/em&gt; instances
+poll the urls (line 6, 12 and 18) which return the available metrics in JSON
+format.  The resources are requested with an interval of 1 second (line 7, 13,
+19).&lt;/p&gt;
+&lt;p&gt;The results coming out these 3 input modules then flow via the &lt;em&gt;funnel&lt;/em&gt; module
+(line 21) into the &lt;em&gt;decode&lt;/em&gt; module (line 24) in which the JSON formatted data
+is converted to the generic metric format.  The &lt;em&gt;decode&lt;/em&gt; instance is
+initialized using the source argument (line 27) which allows you to add the
+cluster name to the metric names in case you're collecting metrics from
+multiple cluster instances.&lt;/p&gt;
 &lt;p&gt;The decoded events are then converted into the required Graphite format by the
-&lt;em&gt;encode&lt;/em&gt;  module instance (line 23).  This module is initiated with a prefix
-argument which puts a prefix (line 26) in front of the metric name.&lt;/p&gt;
+&lt;em&gt;encode&lt;/em&gt;  module instance (line 29).  The prefix argument (line 32) allows you
+to define the top scope of the metric names.&lt;/p&gt;
 &lt;p&gt;Events then go to the output_tcp module which submits the metrics into
 Graphite itself.&lt;/p&gt;
-&lt;p&gt;If you want to play around with the metric name formatting, you can write the
-metrics to STDOUT first by altering the metric stream to the &lt;em&gt;output_screen&lt;/em&gt;
-modules instance by uncommenting line 44 and commenting line 43.&lt;/p&gt;
+&lt;p&gt;If you first want to experiment with the metric name formatting, you can write
+the metrics to STDOUT by connecting &lt;em&gt;encode.outbox&lt;/em&gt; to &lt;em&gt;output_screen.inbox&lt;/em&gt;
+(line 50).&lt;/p&gt;
 &lt;p&gt;To start the server, save the above bootstrap configuration to a file and
 execute following command:&lt;/p&gt;
 &lt;blockquote&gt;
