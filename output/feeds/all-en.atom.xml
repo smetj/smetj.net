@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Project site of Jelle Smet</title><link href="http://smetj.net/" rel="alternate"></link><link href="None/feeds/all-en.atom.xml" rel="self"></link><id>http://smetj.net/</id><updated>2013-11-17T20:36:00+01:00</updated><entry><title>Submit Elasticsearch metrics to Graphite</title><link href="http://smetj.net/submit-elasticsearch-metrics-to-graphite.html" rel="alternate"></link><updated>2013-11-17T20:36:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-17:submit-elasticsearch-metrics-to-graphite.html</id><summary type="html">&lt;p&gt;If you're running an &lt;a class="reference external" href="http://www.elasticsearch.org"&gt;Elasticsearch&lt;/a&gt; cluster you might want to keep track of
 the metrics it produces.  In this article I explain how you can aggregate the
-metrics of an Elasticsearch cluster and submit them to Graphite.&lt;/p&gt;
+metrics of an Elasticsearch cluster and submit them to Graphite. &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;/p&gt;
 &lt;div class="section" id="prerequisites"&gt;
 &lt;h2&gt;Prerequisites&lt;/h2&gt;
@@ -175,6 +175,12 @@ the metrics to STDOUT by connecting &lt;em&gt;encode.outbox&lt;/em&gt; to &lt;em
 execute following command:&lt;/p&gt;
 &lt;blockquote&gt;
 $ metricfactory debug --config bootstrap.yaml&lt;/blockquote&gt;
+&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://github.com/smetj/smetj.net/commits/master/content/submit-elasticsearch-metrics-to-graphite.rst"&gt;This article has been altered for correctness&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;/div&gt;
 </summary><category term="monitoringlove"></category><category term="graphite"></category><category term="metricfactory"></category><category term="metrics"></category><category term="elasticsearch"></category></entry><entry><title>Anything to MQTT</title><link href="http://smetj.net/anything-to-mqtt.html" rel="alternate"></link><updated>2013-11-08T23:00:00+01:00</updated><author><name>smetj</name></author><id>tag:smetj.net,2013-11-08:anything-to-mqtt.html</id><summary type="html">&lt;p&gt;In this blog post I would like to demonstrate the how easy it is to setup a
 Wishbone server which allows you to send data from bash to a MQTT broker.&lt;/p&gt;
