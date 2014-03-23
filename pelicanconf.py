@@ -11,7 +11,7 @@ DEFAULT_LANG = u'en'
 
 
 #THEME = '/home/smetj/projects/github/pelican-themes/bootstrap2'
-THEME = '/home/smetj/projects/github/pelican-themes/pelican-bootstrap3'
+THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
 BOOTSTRAP_THEME = 'flatly'
 GITHUB_URL = 'http://github.com/smetj/'
 GITHUB_USER = 'smetj'
@@ -27,7 +27,7 @@ GITHUB_USER = 'smetj'
 #           ('Jinja2', 'http://jinja.pocoo.org/'),
 #           ('You can modify those links in your config file', '#'),)
 
-PLUGIN_PATH = '/home/smetj/projects/github/pelican-plugins'
+PLUGIN_PATH = '/home/smetj/data/projects/github/pelican-plugins'
 PLUGINS = ['summary','sitemap']
 
 SUMMARY_BEGIN_MARKER = "xxstart_summaryxx"
