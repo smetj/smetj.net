@@ -75,26 +75,15 @@ eventflow:
 
   ---
   modules:
-    httprequest_one:
+    httprequest:
       module: wishbone.input.httprequest
       arguments:
-        url: "http://elasticsearch-node-001:9200/_cluster/stats"
+        url:
+          - http://elasticsearch-node-001:9200/_cluster/stats
+          - http://elasticsearch-node-001:9200/_cluster/health
+          - http://elasticsearch-node-001:9200/_nodes/stats
+          - http://elasticsearch-node-001:9200/_stats
         interval: 1
-
-    httprequest_two:
-      module: wishbone.input.httprequest
-      arguments:
-        url: "http://elasticsearch-node-001:9200/_nodes/stats"
-        interval: 1
-
-    httprequest_three:
-      module: wishbone.input.httprequest
-      arguments:
-        url: "http://elasticsearch-node-001:9200/_stats"
-        interval: 1
-
-    funnel:
-      module: wishbone.builtin.flow.funnel
 
     decode:
       module: metricfactory.decoder.elasticsearch
@@ -117,33 +106,28 @@ eventflow:
         port: 2013
 
   routingtable:
-    - httprequest_one.outbox   -> funnel.one
-    - httprequest_two.outbox   -> funnel.two
-    - httprequest_three.outbox -> funnel.three
-    - funnel.outbox            -> decode.inbox
-    - decode.outbox            -> encode.inbox
-    - encode.outbox            -> output_tcp.inbox
+    - httprequest     -> decode.inbox
+    - decode.outbox   -> encode.inbox
+    - encode.outbox   -> output_tcp.inbox
   ...
 
 Lets run over the different sections of this bootstrap file.
 
-The routingtable (line 44) determines how modules are connected to each other
+The routingtable (line 33) determines how modules are connected to each other
 and therefor determine the flow of events.
 
-The *httprequest_one*, *httprequest_two* and *httprequest_three* instances
-poll the urls (line 6, 12 and 18) which return the available metrics in JSON
-format.  The resources are requested with an interval of 1 second (line 7, 13,
-19).
+The *httprequest* module instance poll the urls (line 7, 8, 9, 10) which
+return the available metrics in JSON format.  The resources are requested with
+an interval of 1 second (line 11).
 
-The results coming out these 3 input modules then flow via the *funnel* module
-(line 21) into the *decode* module (line 24) in which the JSON formatted data
-is converted to the generic metric format.  The *decode* instance is
-initialized using the source argument (line 27) which allows you to add the
-cluster name to the metric names in case you're collecting metrics from
-multiple cluster instances.
+The results coming out this input module then flows into into the *decode*
+module (line 13) in which the JSON formatted data is converted to the generic
+metric format.  The *decode* instance is initialized using the source argument
+(line 16) which allows you to add the cluster name to the metric names in case
+you're collecting metrics from multiple cluster instances.
 
 The decoded events are then converted into the required Graphite format by the
-*encode*  module instance (line 29).  The prefix argument (line 32) allows you
+*encode*  module instance (line 18).  The prefix argument (line 21) allows you
 to define the top scope of the metric names.
 
 Events then go to the output_tcp module which submits the metrics into
@@ -151,7 +135,7 @@ Graphite itself.
 
 If you first want to experiment with the metric name formatting, you can write
 the metrics to STDOUT by connecting *encode.outbox* to *output_screen.inbox*
-(line 50).
+(line 36).
 
 To start the server, save the above bootstrap configuration to a file and
 execute following command:
