@@ -66,7 +66,7 @@ whether we have received all events we have send.
 
 
 .. code-block:: identifier
-  :linenos: table
+  :linenos: inline
 
     ---
     metrics:
@@ -176,7 +176,7 @@ events over 2 destinations.  For this we need to add the `roundrobin`_ module
 and one more output module (line 27).
 
 .. code-block:: identifier
-  :linenos: table
+  :linenos: inline
 
     ---
     metrics:

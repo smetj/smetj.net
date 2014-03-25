@@ -67,4 +67,5 @@ TAG_FEED = None
 DISQUS_SITENAME = "smetj"
 GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
+PYGMENTS_STYLE = "friendly"

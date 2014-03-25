@@ -71,7 +71,7 @@ Metricfactory requires a bootstrap file which defines the functionality and
 eventflow:
 
 .. code-block:: identifier
-  :linenos: table
+  :linenos: inline
 
   ---
   modules:

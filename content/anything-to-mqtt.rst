@@ -27,7 +27,7 @@ Have a server up and running with following properties:
 The following bootstrap file starts a server with those properties:
 
 .. code-block:: identifier
-  :linenos: table
+  :linenos: inline
 
     ---
     modules:
