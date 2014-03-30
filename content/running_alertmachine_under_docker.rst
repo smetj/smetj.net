@@ -171,7 +171,7 @@ Final words
 -----------
 
 Docker offers an interesting approach to share and deploy Wishbone instances.
-Using different bootstrap files, multiple instances could easily share the
+Using different bootstrap files, multiple containers could easily share the
 same *rules* and *templates* directory, consume alert events from
 *mod_gearman* and run in parallel.
 
