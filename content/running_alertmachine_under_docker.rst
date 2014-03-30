@@ -175,6 +175,7 @@ Using different bootstrap files, multiple instances could easily share the
 same *rules* and *templates* directory, consume alert events from
 *mod_gearman* and run in parallel.
 
+If you take the Alertmachine container for a spin, send over your feedback.
 
 
 .. _previous article: http://smetj.net/an-aleternative-way-of-handling-nagios-and-naemon-alerts.html
