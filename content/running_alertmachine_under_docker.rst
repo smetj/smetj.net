@@ -119,7 +119,6 @@ We test our setup by running the container as defined in the previous step.
 ::
 
     ... snip for brevity ...
-
     2014-03-30T17:10:46 pid-1 informational validate: Initiated
     2014-03-30T17:10:46 pid-1 informational validate: Created module queue named inbox with max_size 0.
     2014-03-30T17:10:46 pid-1 informational validate: Created module queue named outbox with max_size 0.
@@ -143,11 +142,20 @@ We test our setup by running the container as defined in the previous step.
     2014-03-30T17:10:46 pid-1 informational match_engine: New set of rules loaded from disk
 
 
+Have a look at the running Docker processes:
+
+::
+
+    $ docker ps
+    CONTAINER ID        IMAGE                         COMMAND                CREATED             STATUS              PORTS                         NAMES
+    6ea1bd4bf097        smetj/wishbone:alertmachine   /usr/bin/wishbone de   2 seconds ago       Up 2 seconds        0.0.0.0:19283->19283/udp      distracted_wozniak
+
+
 Now send a `test event`_ into the container's UDP socket:
 
 ::
 
-    cat sample_json_alert_event/sample.json |nc -u localhost 19283
+    $ cat sample_json_alert_event/sample.json |nc -u localhost 19283
 
 
 When we return to our running Alertmachine docker terminal we should see something similar to this:
@@ -157,7 +165,7 @@ When we return to our running Alertmachine docker terminal we should see somethi
     {'header': {'match_engine': {'to': ['noc@your_company.local'], 'from': 'monitoring@your_company.local', 'template': 'host_email_alert', 'rule': '000-host-alert', 'subject': u'Alert - Host  some_host_001.local is  DOWN.'}}, 'data': u'Host notification.\n\nHostname                        : some_host_001.local\nIP                              : 127.0.0.1\nNotification Type               : DOWN\nTime                            : Fri Mar 21 15:30:28 CET 2014\nHost State                      : DOWN\n\nAdditional Info :\n\n        PING ok - Packet loss = 0%, RTA = 0.80 ms.'}
 
 
-If you actually want and alert send out by mail instead of sending it to SDOUT you should alter the `routing table`_ to connect **template.outbox** to **email.inbox**.
+If you actually want and alert send out by mail instead of sending it to SDOUT you should alter the bootstrap file's `routing table`_ and connect **template.outbox** to **email.inbox**.
 
 
 .. _previous article: http://smetj.net/an-aleternative-way-of-handling-nagios-and-naemon-alerts.html
