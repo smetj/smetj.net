@@ -10,22 +10,9 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
 
 
-#THEME = '/home/smetj/projects/github/pelican-themes/bootstrap2'
-THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
+THEME = '/home/smetj/data/projects/github/pelican-bootstrap3/'
 BOOTSTRAP_THEME = 'flatly'
-GITHUB_URL = 'http://github.com/smetj/'
 GITHUB_USER = 'smetj'
-
-# Feed generation is usually not desired when developing
-# FEED_ALL_ATOM = None
-# CATEGORY_FEED_ATOM = None
-# TRANSLATION_FEED_ATOM = None
-
-# Blogroll
-# LINKS =  (('Pelican', 'http://getpelican.com/'),
-#           ('Python.org', 'http://python.org/'),
-#           ('Jinja2', 'http://jinja.pocoo.org/'),
-#           ('You can modify those links in your config file', '#'),)
 
 PLUGIN_PATH = '/home/smetj/data/projects/github/pelican-plugins'
 PLUGINS = ['summary','sitemap']
@@ -47,8 +34,10 @@ SITEMAP = {
     }
 }
 
+DISPLAY_TAGS_ON_SIDEBAR = False
 LINKS = None
 PDF_GENERATOR = True
+DISPLAY_ARTICLE_INFO_ON_INDEX = True
 STATIC_PATHS = [
     'pics',
     'robots.txt'
@@ -67,5 +56,6 @@ TAG_FEED = None
 DISQUS_SITENAME = "smetj"
 GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
-# RELATIVE_URLS = True
+RELATIVE_URLS = True
 PYGMENTS_STYLE = "friendly"
+GITHUB_SKIP_FORK = True
