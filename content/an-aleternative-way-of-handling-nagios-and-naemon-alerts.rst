@@ -110,7 +110,7 @@ The bootstrap file might look like this:
       - funnel.outbox               -> validate.inbox
       - validate.outbox             -> match_engine.inbox
       - match_engine.email          -> template.inbox
-      - template.outbox             -> email.inbox
+      - template.outbox             -> stdout.inbox
     ...
 
 
