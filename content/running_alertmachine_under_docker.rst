@@ -167,6 +167,15 @@ When we return to our running Alertmachine docker terminal we should see somethi
 
 If you actually want and alert send out by mail instead of sending it to SDOUT you should alter the bootstrap file's `routing table`_ and connect **template.outbox** to **email.inbox**.
 
+Final words
+-----------
+
+Docker offers an interesting approach to share and deploy Wishbone instances.
+Using different bootstrap files, multiple instances could easily share the
+same *rules* and *templates* directory, consume alert events from
+*mod_gearman* and run in parallel.
+
+
 
 .. _previous article: http://smetj.net/an-aleternative-way-of-handling-nagios-and-naemon-alerts.html
 .. _docker: https://www.docker.io/
