@@ -8,7 +8,7 @@ Using MetricFactory to get Hadoop metrics into Graphite.
 
 Without metrics we're flying blind and that's very much the case with
  `Hadoop`_.  Hadoop is a well known framework to build reliable,
-scalable and distributed computing clusters.  The Hadoop framework  is a
+scalable and distributed computing clusters.  The Hadoop framework is a
 complex environment which "out of the box" hardly offers any metrics
 oversight on how the different components are performing.
 
@@ -75,7 +75,7 @@ MetricFactory
 
 MetricFactory's setup is controlled through so called `bootstrap
 files`_.  These files contain the information on which modules need to
-be loaded, how they are initiated and how  they are connected to each
+be loaded, how they are initiated and how they are connected to each
 other.
 
 For this scenario we need to have at least:
@@ -133,7 +133,7 @@ A standalone instance
 ---------------------
 
 We can now start to write the metrics into Graphite.  For this we
-require \ `a bootstrap file`_ which  actually writes the data into
+require `a bootstrap file`_ which actually writes the data into
 Graphite:
 
 ::

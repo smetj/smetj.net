@@ -6,7 +6,7 @@ Working with Moncli part2: Creating a simple request
 :tags: moncli, monitoringlove
 :slug: working-with-moncli-part2-creating-a-simple-request
 
-In our `previous post`_ we have covered how to  create an example plugin
+In our `previous post`_ we have covered how to create an example plugin
 which allows you to generate the size of directories as a metric.  A
 plugin on itself doesn't do that much at all.  When a plugin is executed
 it returns the values of that very moment.  Executing a plugin is done
@@ -16,14 +16,14 @@ possible.
 moncli\_request
 ~~~~~~~~~~~~~~~
 
-`A request is a JSON document`_ which is submitted to the messagebroker
+`A request is a JSON document`_ which is submitted to the message broker
 on which the Moncli clients are listening for incoming requests.
  Creating and submitting a request could be done by hand, but that's not
-pratical at all.  `Moncli\_request`_ is a simple request generator tool
+practical at all.  `Moncli\_request`_ is a simple request generator tool
 which generates and submits a valid JSON document to Moncli to work
 with.  Let's generate a request for our dir\_size plugin we created in
 the previous article.  Moncli\_request takes a base JSON document and
-completes  it with the parameters you feed to it.  So let run through
+completes it with the parameters you feed to it.  So let run through
 the required steps:
 
 #. Install moncli\_request from git:

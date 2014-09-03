@@ -10,7 +10,7 @@ Producing data
 ~~~~~~~~~~~~~~
 
 In the previous 2 posts we had an `introduction about Moncli`_ and we
-have seen how to \ `consume Moncli data (reports) from the Message
+have seen how to `consume Moncli data (reports) from the Message
 broker with Krolyk`_ and process them.  Now its time to let Moncli
 generate some data we can work with.  In the next couple of articles we
 will go through the process of building a new plugin and use it to

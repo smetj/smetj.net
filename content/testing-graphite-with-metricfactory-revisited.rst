@@ -277,7 +277,7 @@ Generating a predictable number of metrics can be practical to verify whether
 Graphite behaves as expected in different scenarios.  It becomes even more
 meaningful when you have a more complex environment with a number of relays
 with sharding and duplication policies.  By generating batches of continuous
-mertics it's possible to get an idea about the throughput of your Graphite
+metrics it's possible to get an idea about the throughput of your Graphite
 setup.
 
 .. _Metricfactory: https://github.com/smetj/metricfactory

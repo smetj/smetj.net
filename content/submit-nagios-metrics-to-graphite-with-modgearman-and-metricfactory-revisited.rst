@@ -48,7 +48,7 @@ performance data to the *perfdata* queue.
 Setting the value to *1* makes sure that performance data doesn't pile up
 endlessly in the queue when Metricfactory isn't consuming.  It's basically a
 precaution which prevents the queue to fill up to a point all available system
-memory is consumed.  Setting the value to \ *2* will append all performance
+memory is consumed.  Setting the value to *2* will append all performance
 data to the queue without overwriting old data.  When enabled you can execute
 the *gearman_top* command and you should see the *perfdata* queue appear:
 
@@ -106,7 +106,7 @@ Quick introduction
 Metricfactory makes use of Wishbone to build an pipeline of modules through
 which events travel and change.  The setup of the Metricfactory server is
 described in a bootstrapfile.  A bootstrap file contains which modules to
-initialize and which path data has to follow througout these modules.
+initialize and which path data has to follow throughout these modules.
 
 The idea behind a MetricFactory server is that it accepts metrics, converts
 them into a common format, which on its turn can be processed and/or converted
@@ -156,7 +156,7 @@ like when consuming it without modifications:
 
 Depending on your environment you will have to adapt some of the variables in
 the boostrap file. The *hostlist* variable (line 6) is a list of the
-Gearmand servers from which the *perfdata*  has to be consumed.  Usually this
+Gearmand servers from which the *perfdata* has to be consumed.  Usually this
 is a list containing just 1 server.  In some special cases you might add more
 servers here but that's in our case not likely.
 
@@ -166,11 +166,11 @@ mention there is no authentication, but without the decryption key you wont be
 able to read the data coming from the Gearmand server.
 
 The number of workers variable (line 10) determines how many workers should
-consume the *perfdata* queue.  If you notice perdata isn't consumed fast
+consume the *perfdata* queue.  If you notice perfdata isn't consumed fast
 enough, you could bump this number to a higher value.  In this case keep an
 eye on the the CPU usage of Metricfactory due to the decrypting. If you notice
-Metricfactory can't keep up because of high cpu usage then another strategy
-might be to leave this numer on 1 and start Metricfactory with the
+Metricfactory can't keep up because of high CPU usage then another strategy
+might be to leave this number on 1 and start Metricfactory with the
 *--instances x* parameter, where x is the number of parallel processes.
 
 In this example we have connected the *gearmand.output* queue to the

@@ -145,7 +145,7 @@ by the host (line 18) and metric (line 19) variables.  This means we're
 generating 100 unique metrics for 100 different nodes resulting into a
 total of 10000 metrics.
 
-The routing table (line 46) tells us events are travelling through the
+The routing table (line 46) tells us events are traveling through the
 modules in following order: hammer -> encodegraphite -> tcpout.  The
 tcpout module (line 38) submits the metrics over TCP to the destination
 defined with the pool variable (line 42).
