@@ -10,7 +10,7 @@ xxstart_summaryxx
 
 In a `previous article`_ I wrote about managing Naemon and Nagios alerts with
 **Alertmachine**.  In this article I will cover how you can run a fully
-operational *Alertmachine* container in a matter of minutes using Docker.
+operational *Alertmachine* container in a matter of minutes using Docker. [1]_
 
 xxend_summaryxx
 
@@ -78,7 +78,9 @@ To run the alertmachine container issue following command:
 
 ::
 
-    $ docker run -t -p 19283:19283/udp -v /home/smetj/data/projects/github/alertmachine/alertmachine:/share/alertmachine smetj/wishbone:alertmachine /usr/bin/wishbone debug --config /share/alertmachine/bootstrap/alertmachine.yaml
+    $ docker run -i -t --privileged -p 19283:19283/udp \
+      -v /home/smetj/data/projects/github/alertmachine/alertmachine:/share/alertmachine \
+      smetj/wishbone:alertmachine debug --config /share/alertmachine/bootstrap/alertmachine.yaml
 
 
 Now lets run over the most interesting options:
@@ -177,7 +179,7 @@ same *rules* and *templates* directory, consume alert events from
 
 If you take the Alertmachine container for a spin, send over your feedback.
 
-
+.. [1] `This article has been altered for correctness`_
 .. _previous article: http://smetj.net/an-aleternative-way-of-handling-nagios-and-naemon-alerts.html
 .. _docker: https://www.docker.io/
 .. _Docker repository: https://index.docker.io/u/smetj/wishbone/
@@ -186,3 +188,4 @@ If you take the Alertmachine container for a spin, send over your feedback.
 .. _bootstrap file: https://github.com/smetj/alertmachine/blob/master/alertmachine/bootstrap/alertmachine.yaml#L28
 .. _test event: https://github.com/smetj/alertmachine/blob/master/alertmachine/sample_json_alert_event/sample.json
 .. _routing table: https://github.com/smetj/alertmachine/blob/master/alertmachine/bootstrap/alertmachine.yaml#L55
+.. _This article has been altered for correctness: https://github.com/smetj/smetj.net/commits/master/content/running_alertmachine_under_docker.rst
