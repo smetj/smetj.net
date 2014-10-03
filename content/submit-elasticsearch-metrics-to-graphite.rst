@@ -146,10 +146,9 @@ execute following command:
 .. _Wishbone: https://wishbone.readthedocs.org/en/latest/
 .. _Metricfactory: https://github.com/smetj/metricfactory
 .. _wishbone.input.httpclient: http://wishbone.readthedocs.org/en/latest/builtin%20modules.html#wishbone-input-httpclient
-.. _wb_output_tcp: https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp
 .. _document: https://wishbone.readthedocs.org/en/latest/installation.html
 .. _standard metric format: http://wishbone.readthedocs.org/en/latest/router.html#format
-.. _Graphite builtin: http://wishbone.readthedocs.org/en/latest/modules.html#graphite
+.. _Graphite builtin: http://wishbone.readthedocs.org/en/latest/builtin%20modules.html#wishbone-encode-graphite
 .. _enhancement request: https://github.com/elasticsearch/elasticsearch/issues/4179
 .. _Indices stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
 .. _Cluster stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html
