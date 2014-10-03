@@ -114,16 +114,16 @@ like when consuming it without modifications:
               workers: 5
 
       decode:
-          module: metricfactory.decoder.modgearman
+          module: metricfactory.decode.modgearman
 
       encode:
-          module: wishbone.builtin.metrics.graphite
+          module: wishbone.encode.graphite
           arguments:
               prefix: nagios.
               script: false
 
       stdout:
-          module: wishbone.builtin.output.stdout
+          module: wishbone.output.stdout
 
   routingtable:
 
@@ -188,16 +188,16 @@ The next step is to decode the perfdata into a common format.
               workers: 5
 
       decode:
-          module: metricfactory.decoder.modgearman
+          module: metricfactory.decode.modgearman
 
       encode:
-          module: wishbone.builtin.metrics.graphite
+          module: wishbone.encode.graphite
           arguments:
               prefix: nagios.
               script: false
 
       stdout:
-          module: wishbone.builtin.output.stdout
+          module: wishbone.output.stdout
 
   routingtable:
 
@@ -241,16 +241,16 @@ can export its internal metrics to Graphite.
               workers: 5
 
       decode:
-          module: metricfactory.decoder.modgearman
+          module: metricfactory.decode.modgearman
 
       encode:
-          module: wishbone.builtin.metrics.graphite
+          module: wishbone.encode.graphite
           arguments:
               prefix: nagios.
               script: false
 
       stdout:
-          module: wishbone.builtin.output.stdout
+          module: wishbone.output.stdout
 
   routingtable:
 
@@ -305,7 +305,7 @@ name *tcpout* in the following bootstrap file:
               workers: 5
 
       decode:
-          module: metricfactory.decoder.modgearman
+          module: metricfactory.decode.modgearman
 
       encode:
           module: wishbone.encode.graphite
