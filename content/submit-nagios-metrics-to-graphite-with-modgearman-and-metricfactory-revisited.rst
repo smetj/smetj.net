@@ -77,28 +77,6 @@ You can install Metricfactory and its dependencies from Pypi using
 
     $ easy_install metricfactory
 
-You will require some extra Wishbone modules which can not be installed as
-separate Pypi packages yet. Checkout the repository from `Github`_ and install
-the module manually.
-
-::
-
-  $ git checkout https://github.com/smetj/wishboneModules.git
-
-Install wb_input_gearmand
-
-::
-
-  $ cd wishboneModules/wb_input_gearmand
-  $ python setup.py install
-
-Install wb_output_tcp
-
-::
-
-  $ cd wishboneModules/wb_output_tcp
-  $ python setup.py install
-
 
 Quick introduction
 ''''''''''''''''''
@@ -363,6 +341,8 @@ ModGearman and submit that to Graphite.  We covered in detail how data
 changes when traveling through the different modules to get a better
 understanding of the whole process.
 
+.. [1] `This article has been updated`_
+
 .. _Livestatus: http://mathias-kettner.de/checkmk_livestatus.html
 .. _Mod_Gearman: http://labs.consol.de/lang/en/nagios/mod-gearman/
 .. _Thruk: http://www.thruk.org/
@@ -373,6 +353,7 @@ understanding of the whole process.
 .. _documentation available: http://labs.consol.de/lang/en/nagios/mod-gearman/
 .. _Github: https://github.com/smetj/metricfactory
 .. _here: https://github.com/smetj/experiments/tree/master/metricfactory/modgearman2graphite
+.. _This article has been updated: https://github.com/smetj/smetj.net/commits/master/content/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.rst
 
 .. |gearman_top| image:: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
    :target: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
