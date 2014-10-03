@@ -54,7 +54,7 @@ defined through a Wishbone `bootstrap`_ file.
 The bootstrap file might look like this:
 
 .. code-block:: yaml
-    :linenos: inline
+    :linenos:
 
     ---
     modules:
@@ -144,7 +144,7 @@ automatically the moment rules are changed or added.
 An example rule looks like this:
 
 .. code-block:: yaml
-    :linenos: inline
+    :linenos
 
     ---
     condition:

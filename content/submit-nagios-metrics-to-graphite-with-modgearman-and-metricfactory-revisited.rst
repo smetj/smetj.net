@@ -100,7 +100,7 @@ First let's have a look how the perfdata looks
 like when consuming it without modifications:
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:
@@ -174,7 +174,7 @@ Decode Nagios format into generic format
 The next step is to decode the perfdata into a common format.
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:
@@ -227,7 +227,7 @@ example initiated with name encode.  The is a builtin module because Wishbone
 can export its internal metrics to Graphite.
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:
@@ -291,7 +291,7 @@ For this we require the *wishbone.output.tcp* module which we initiate with
 name *tcpout* in the following bootstrap file:
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:

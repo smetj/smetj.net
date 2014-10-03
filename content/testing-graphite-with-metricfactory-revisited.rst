@@ -73,7 +73,7 @@ under a predictable load.
 
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:
@@ -155,7 +155,7 @@ while killing parts of your Graphite setup to verify it behaves as expected
 and whether there is no metric loss.
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:
@@ -225,7 +225,7 @@ Graphite instance is able to receive.
 For this we use the below bootstrap file:
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos
 
   ---
   modules:
