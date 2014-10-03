@@ -9,7 +9,7 @@ Submit Elasticsearch metrics to Graphite
 
 If you're running an `Elasticsearch`_ cluster you might want to keep track of
 the metrics it produces.  In this article I explain how you can aggregate the
-metrics of an Elasticsearch cluster and submit them to Graphite. [1]_
+metrics of an Elasticsearch cluster and submit them to Graphite.
 
 xxend_summaryxx
 
@@ -22,21 +22,15 @@ Main software (installable from Pypi)
 
 - `Metricfactory`_
 
-Additional modules (Install from source)
-
-- `wb_input_httprequest`_
-- `wb_output_tcp`_
-
-
-This `document`_ describes how to install the different aspects of Wishbone
-and its modules.
+Installing MetricFactory will install the `Wishbone`_ framework as a
+dependency.
 
 Once installed you should have the *metricfactory* executable available.
 You can test this by issuing following command:
 
 ::
 
-  $ metricfactory list --group metricfactory.decoder
+  $ metricfactory list --group metricfactory.decode
 
 
 Elasticsearch
@@ -52,7 +46,7 @@ The available metrics resources are:
 Polling these resources returns a JSON formatted document containing metrics
 of different Elasticsearch parts.
 
-The `wb_input_httprequest`_ module allows us to poll and collect these
+The `wishbone.input.httpclient`_ module allows us to poll and collect these
 resources.
 
 Decode Elasticsearch metrics
@@ -71,12 +65,12 @@ Metricfactory requires a bootstrap file which defines the functionality and
 eventflow:
 
 .. code-block:: identifier
-  :linenos: inline
+  :linenos:
 
   ---
   modules:
     httprequest:
-      module: wishbone.input.httprequest
+      module: wishbone.input.httpclient
       arguments:
         url:
           - http://elasticsearch-node-001:9200/_cluster/stats
@@ -86,18 +80,18 @@ eventflow:
         interval: 1
 
     decode:
-      module: metricfactory.decoder.elasticsearch
+      module: metricfactory.decode.elasticsearch
       arguments:
         source: lhi
 
     encode:
-      module: wishbone.builtin.metrics.graphite
+      module: wishbone.encode.graphite
       arguments:
         prefix: application.elasticsearch.
         script: false
 
     output_screen:
-      module: wishbone.builtin.output.stdout
+      module: wishbone.output.stdout
 
     output_tcp:
       module: wishbone.output.tcp
@@ -106,9 +100,9 @@ eventflow:
         port: 2013
 
   routingtable:
-    - httprequest     -> decode.inbox
-    - decode.outbox   -> encode.inbox
-    - encode.outbox   -> output_tcp.inbox
+    - httprequest.outbox  -> decode.inbox
+    - decode.outbox       -> encode.inbox
+    - encode.outbox       -> output_tcp.inbox
   ...
 
 Lets run over the different sections of this bootstrap file.
@@ -140,14 +134,18 @@ the metrics to STDOUT by connecting *encode.outbox* to *output_screen.inbox*
 To start the server, save the above bootstrap configuration to a file and
 execute following command:
 
+.. code-block:: identifier
+
   $ metricfactory debug --config bootstrap.yaml
 
-.. [1] `This article has been altered for correctness`_
+
+
+`This article has been updated.`_
 
 .. _Elasticsearch: http://www.elasticsearch.org
 .. _Wishbone: https://wishbone.readthedocs.org/en/latest/
 .. _Metricfactory: https://github.com/smetj/metricfactory
-.. _wb_input_httprequest: https://github.com/smetj/wishboneModules/tree/master/wb_input_httprequest
+.. _wishbone.input.httpclient: http://wishbone.readthedocs.org/en/latest/builtin%20modules.html#wishbone-input-httpclient
 .. _wb_output_tcp: https://github.com/smetj/wishboneModules/tree/master/wb_output_tcp
 .. _document: https://wishbone.readthedocs.org/en/latest/installation.html
 .. _standard metric format: http://wishbone.readthedocs.org/en/latest/router.html#format
@@ -156,4 +154,4 @@ execute following command:
 .. _Indices stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
 .. _Cluster stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html
 .. _Nodes stats: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
-.. _This article has been altered for correctness: https://github.com/smetj/smetj.net/commits/master/content/submit-elasticsearch-metrics-to-graphite.rst
+.. _This article has been updated.: https://github.com/smetj/smetj.net/commits/master/content/submit-elasticsearch-metrics-to-graphite.rst
