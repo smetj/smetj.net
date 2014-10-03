@@ -308,13 +308,13 @@ name *tcpout* in the following bootstrap file:
           module: metricfactory.decoder.modgearman
 
       encode:
-          module: wishbone.builtin.metrics.graphite
+          module: wishbone.encode.graphite
           arguments:
               prefix: nagios.
               script: false
 
       stdout:
-          module: wishbone.builtin.output.stdout
+          module: wishbone.output.stdout
 
       tcpout:
           module: wishbone.output.tcp
