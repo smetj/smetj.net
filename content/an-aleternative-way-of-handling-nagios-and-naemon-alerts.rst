@@ -73,15 +73,13 @@ The bootstrap file might look like this:
                 queue: alert_event
 
         funnel:
-            module: wishbone.builtin.flow.funnel
+            module: wishbone.flow.funnel
 
-        validate:
-            module: wishbone.function.json
-            arguments:
-                mode: decode
+        decode:
+            module: wishbone.decode.json
 
         match_engine:
-            module: pyseps.sequentialmatch
+            module: wishbone.flow.match
             arguments:
                 location: rules/
 
@@ -100,18 +98,19 @@ The bootstrap file might look like this:
                 mta: localhost:25
 
         stdout:
-            module: wishbone.builtin.output.stdout
+            module: wishbone.output.stdout
             arguments:
                 complete: true
 
     routingtable:
       - input_udp.outbox            -> funnel.one
       - input_gearman.outbox        -> funnel.two
-      - funnel.outbox               -> validate.inbox
-      - validate.outbox             -> match_engine.inbox
+      - funnel.outbox               -> decode.inbox
+      - decode.outbox               -> match_engine.inbox
       - match_engine.email          -> template.inbox
       - template.outbox             -> stdout.inbox
     ...
+
 
 
 Input
@@ -121,25 +120,24 @@ The *submit_alert_event* script has support to submit events to Alertmachine
 via `mod_gearman`_ or directly to a UDP socket.
 
 These inputs are defined by the *input_udp* (line 4) and *input_gearman* (line
-7) module instances.
+9) module instances.
 
 
-Verification
-~~~~~~~~~~~~
+Decode JSON
+~~~~~~~~~~~
 
-To make sure that Alertmachine only processes valid JSON documents we have
-initialized the *validate* modules instance (line 13).  It is also responsible
-for deserializing the JSON data into a Python data structure (line 16) to
-allow further processing.
-
+Wishbone internally requires Python data objects to work with, therefor the
+JSON string has to be converted to a dictionary type.  That's what
+*wishbone.decode.json* (line 20)does.  Besides that, whenever a JSON fails to
+parse, it is dropped to make sure only valid JSON is accepted.
 
 Event evaluation
 ~~~~~~~~~~~~~~~~
 
-The `match_engine`_ (line 18) instance is responsible of evaluating any
-incoming documents against the `defined rules`_.  These rules are stored in
-YAML format in the directory defined by *location* (line 21) and loaded
-automatically the moment rules are changed or added.
+The `match_engine`_ (line 23) instance is responsible for evaluating documents
+against the `defined rules`_.  These rules are stored in YAML format in the
+directory defined by *location* (line 26) and loaded automatically the moment
+rules are changed or added.
 
 An example rule looks like this:
 
@@ -198,7 +196,7 @@ The available condition are:
 +------------+-------------------------+
 | =:         | Equal to                |
 +------------+-------------------------+
-| in:        | element in list         |
+| in:        | list membership         |
 +------------+-------------------------+
 
 The above example rule will match incoming alert events if the host is member
@@ -210,13 +208,13 @@ Generating Email alerts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Before sending out any mail, we have to create the content of the message
-first.  For this we use the `template`_ module instance (line 30 bootstrap
+first.  For this we use the `template`_ module instance (line 29 bootstrap
 file). The *template* module expects all templates available in the directory
-defined using the *location* variable (line 34).  The template module uses the
+defined using the *location* variable (line 32).  The template module uses the
 Jinja2 templating engine.  The key/value pairs of the JSON alert events can be
 used within the template.
 
-The *header_templates* variable (line 35) is a list of header key names which
+The *header_templates* variable (line 33) is a list of header key names which
 contain templates that also have to be processed by this module.  In this
 particular case, we declare that we have to process the *subject* key since we
 have added a template with that name to the header in our alert rule (line 13
@@ -227,18 +225,15 @@ evaluation rule (line 14 evaluation rule).  Make sure the name of the template
 to use **exactly** matches the name of the template defined in the evaluation
 rule (line 14).
 
-Once the template has been made, the event has been converted from a JSON
-document into the content defined by the template.
-
 
 Sending email
 ~~~~~~~~~~~~~
 
 The `email`_ module instance knows where to send the incoming events since it
 expects to find the subject, from and to values stored in the event header
-under the defined key (line 41 boostrap).  The *match_engine* instance writes
+under the defined key (line 39 boostrap).  The *match_engine* instance writes
 these values to the header as defined in the evaluation rule (line 10-13
-evaluation rule).  The email is then send via the defined MTA (line 42
+evaluation rule).  The email is then send via the defined MTA (line 40
 bootstrap file).
 
 
@@ -249,17 +244,23 @@ Given that you have defined the locations of the *rules* and *templates* and
 that you have set the correct email addresses in the alert rules, you should
 be able to start Alertmachine like this:
 
+.. code-block:: text
+
     $ wishbone debug --config /etc/alertmachine.yaml
+
 
 To execute a test we can submit a `test event`_ to the Alertmachine's UDP
 socket:
+
+
+.. code-block:: text
 
     $ cat sample.json|nc -u localhost 19283
 
 
 If you want to send the email events to STDOUT instead of actually sending
 them to your defined MTA, you should connect *template.outbox* to
-*email.inbox* (line 55 bootstrap file).
+*email.inbox* (line 53 bootstrap file).
 
 
 Final words
@@ -273,7 +274,8 @@ For now, alerts are only send out via email.  There are however more `output
 modules`_ available.  If there are any missing, these can be developed and
 added with relative ease.
 
-.. [1] `This article has been altered for correctness`_
+
+`This article has been updated`_
 
 
 .. _Alertmachine: https://github.com/smetj/alertmachine
@@ -292,4 +294,4 @@ added with relative ease.
 .. _email: https://pypi.python.org/pypi/wb_output_email
 .. _test event: https://github.com/smetj/alertmachine/blob/master/alertmachine/sample_json_alert_event/sample.json
 .. _output modules: https://github.com/smetj/wishboneModules
-.. _This article has been altered for correctness: https://github.com/smetj/smetj.net/commits/master/content/an-aleternative-way-of-handling-nagios-and-naemon-alerts.rst
+.. _This article has been updated: https://github.com/smetj/smetj.net/commits/master/content/an-aleternative-way-of-handling-nagios-and-naemon-alerts.rst
