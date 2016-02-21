@@ -6,7 +6,7 @@ Processing webhook events using Wishbone Part 1: Accept and validate
 :tags: wishbone, webhooks, python
 :slug: processing_webhooks_using_wishbone_part_1
 
-xxstart_summaryxx
+__start_summary__
 
 Many service providers offer `webhooks`_ as a means to integrate their service
 into another system.  Webhooks are basically a form of callbacks which can be
@@ -15,7 +15,7 @@ usually done by submitting some sort structured data like JSON into a http
 service. In this article we will cover how you can accept and validate JSON
 based webhook events using Wishbone.
 
-xxend_summaryxx
+__end_summary__
 
 Boostrapping a server
 ---------------------

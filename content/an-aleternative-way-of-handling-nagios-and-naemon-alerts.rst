@@ -6,7 +6,7 @@ An alternative way of handling Nagios and Naemon alerts
 :tags: monitoringlove, nagios, naemon
 :slug: an-aleternative-way-of-handling-nagios-and-naemon-alerts
 
-xxstart_summaryxx
+__start_summary__
 
 Nagios based monitoring frameworks organize alerting  by associating contacts
 to host and service objects.  This is not a very flexible approach and quickly
@@ -14,7 +14,7 @@ starts to become a pain to maintain. `Alertmachine`_ is a framework using easy
 to understand and flexible alert rules to process alert events outside the
 Nagios based monitoring solution.
 
-xxend_summaryxx
+__end_summary__
 
 The idea is to let the monitoring platform generate rich JSON events every
 time a host/service object changes state.  These JSON events contain all

@@ -10,7 +10,7 @@ Testing Graphite with MetricFactory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Read `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_ instead.
 
-xxend_summaryxx
+__end_summary__
 
 Graphite is great.  Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of

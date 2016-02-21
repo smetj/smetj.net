@@ -6,7 +6,7 @@ Exceptions as a feature
 :tags: python, wishbone
 :slug: exceptions_as_a_feature
 
-xxstart_summaryxx
+__start_summary__
 
 `Wishbone`_ `modules`_ process and transport messages in one way or the other.
 Obviously, this needs to happen as reliable as possible.  `Wishbone`_ has a
@@ -14,7 +14,7 @@ particular way of dealing with `exceptions`_.  In this article we cover the
 role unhandled code `exceptions`_ can play and how we can take advantage of
 them by  just allowing them to happen.
 
-xxend_summaryxx
+__end_summary__
 
 Failed and successful queues
 ----------------------------
