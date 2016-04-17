@@ -59,6 +59,7 @@ FEED_ATOM = None
 FEED_RSS = None
 TAG_FEED = None
 DISQUS_SITENAME = "smetj"
+DISQUSURL = 'http://smetj.net'
 GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
