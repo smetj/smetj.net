@@ -9,7 +9,7 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
 
 
-THEME = '/home/smetj/data/projects/github/pelican-bootstrap3/'
+THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
 BOOTSTRAP_THEME = 'flatly'
 GITHUB_USER = 'smetj'
 CUSTOM_CSS = 'css/custom.css'
