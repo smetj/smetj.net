@@ -12,6 +12,7 @@ DEFAULT_LANG = u'en'
 THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
 BOOTSTRAP_THEME = 'flatly'
 GITHUB_USER = 'smetj'
+GITHUB_SKIP_FORK = True
 CUSTOM_CSS = 'css/custom.css'
 PLUGIN_PATHS = [
     '/home/smetj/data/projects/github/pelican-plugins'
@@ -42,15 +43,11 @@ DISPLAY_ARTICLE_INFO_ON_INDEX = True
 STATIC_PATHS = [
     'pics',
     'robots.txt',
-    'extra/custom.css',
     ]
-EXTRA_PATH_METADATA = {
-    'extra/custom.css': {'path': 'css/custom.css'}
-}
 
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/smetj'),
-          ('github', 'http://github.com/smetj'),)
+          ('github', 'https://github.com/smetj'),)
 DEFAULT_PAGINATION = 10
 FEED_DOMAIN = None
 FEED_ALL_ATOM = None
@@ -64,4 +61,3 @@ GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
 PYGMENTS_STYLE = "friendly"
-GITHUB_SKIP_FORK = True
