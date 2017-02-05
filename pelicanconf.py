@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Jelle Smet'
 SITENAME = u'Project site of Jelle Smet'
-SITEURL = 'http://smetj.net'
+SITEURL = 'https://smetj.net'
 TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
 
