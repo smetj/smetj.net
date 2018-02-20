@@ -3,7 +3,7 @@ Using MetricFactory to get Hadoop metrics into Graphite.
 :date: 2013-01-10 00:40
 :author: smetj
 :category: #monitoringlove
-:tag: graphite, hadoop, metrics
+:tags: graphite, hadoop, metrics
 :slug: using-metricfactory-to-get-hadoop-metrics-into-graphite
 
 Without metrics we're flying blind and that's very much the case with
