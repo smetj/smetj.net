@@ -16,7 +16,7 @@ tweets. However, after some time you end with up with a long list of *likes* whi
 quickly outgrows a usable, searchable archive.
 
 Therefor, to have a solution which suits my needs, I created a Wishbone server
-to collect and archive my Twitter *likes* into an simple *"grep-able"* text
+to collect and archive my Twitter *likes* into a simple *"grep-able"* text
 file.
 
 __end_summary__
