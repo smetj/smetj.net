@@ -454,10 +454,10 @@ welcome and highly appreciated.
 
 .. _installation documentation: http://wishbone.readthedocs.io/en/master/installation/index.html
 .. _wishbone: http://wishbone.readthedocs.io
-.. _httpserver: https://github.com/smetj/wishbone-input-httpserver
+.. _httpserver: https://github.com/wishbone-modules/wishbone-input-httpserver
 .. _wishbone-input-httpserver: https://github.com/wishbone-modules/wishbone-input-httpserver
 .. _input module: http://wishbone.readthedocs.io/en/master/components/modules/input.html
-.. _travis-ci: https://travis-ci.org/smetj/wishbone-input-httpserver
+.. _travis-ci: https://travis-ci.org/wishbone-modules/wishbone-input-httpserver
 .. _bootstrap file: http://wishbone.readthedocs.io/en/master/bootstrap_cli/bootstrap_file.html
 .. _wishbone.module.input.inotify: http://wishbone.readthedocs.io/en/master/classes/input_modules.html#wishbone.module.wb_inotify.WBInotify
 .. _create your own wishbone module: http://wishbone.readthedocs.io/en/master/examples_recipes/creating_a_module.html
