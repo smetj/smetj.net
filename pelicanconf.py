@@ -17,7 +17,13 @@ CUSTOM_CSS = 'css/custom.css'
 PLUGIN_PATHS = [
     '/home/smetj/data/projects/github/pelican-plugins'
 ]
-PLUGINS = ['summary', 'sitemap', 'pelican_gist', 'simple_footnotes']
+PLUGINS = [
+    'summary',
+    'sitemap',
+    'pelican_gist',
+    'simple_footnotes',
+    'i18n_subsites'
+]
 
 SUMMARY_BEGIN_MARKER = "__start_summary__"
 SUMMARY_END_MARKER = "__end_summary__"
@@ -61,3 +67,7 @@ GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
 PYGMENTS_STYLE = "friendly"
+
+JINJA_ENVIRONMENT = {
+    'extensions': ['jinja2.ext.i18n'],
+}
