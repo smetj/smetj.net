@@ -11,8 +11,8 @@ DEFAULT_LANG = u'en'
 
 THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
 BOOTSTRAP_THEME = 'flatly'
-GITHUB_USER = 'smetj'
-GITHUB_SKIP_FORK = True
+# GITHUB_USER = 'smetj'
+# GITHUB_SKIP_FORK = True
 CUSTOM_CSS = 'css/custom.css'
 PLUGIN_PATHS = [
     '/home/smetj/data/projects/github/pelican-plugins'
@@ -54,6 +54,13 @@ STATIC_PATHS = [
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/smetj'),
           ('github', 'https://github.com/smetj'),)
+TRAVIS = [
+    {"name": "Wishbone", "id": "smetj/wishbone", "github": "smetj/wishbone"},
+    {"name": "AMQP input", "id": "wishbone-modules/wishbone-input-amqp", "github": "wishbone-modules/wishbone-input-amqp"},
+    {"name": "AMQP output", "id": "wishbone-modules/wishbone-output-amqp", "github": "wishbone-modules/wishbone-output-amqp"},
+    {"name": "HTTP input", "id": "wishbone-modules/wishbone-input-httpserver", "github": "wishbone-modules/wishbone-input-httpserver"},
+    {"name": "HTTP output", "id": "wishbone-modules/wishbone-output-http", "github": "wishbone-modules/wishbone-output-http"},
+]
 DEFAULT_PAGINATION = 10
 FEED_DOMAIN = None
 FEED_ALL_ATOM = None
