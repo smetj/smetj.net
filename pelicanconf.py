@@ -58,6 +58,7 @@ TRAVIS = [
     {"name": "Wishbone", "id": "smetj/wishbone", "github": "smetj/wishbone"},
     {"name": "AMQP input", "id": "wishbone-modules/wishbone-input-amqp", "github": "wishbone-modules/wishbone-input-amqp"},
     {"name": "AMQP output", "id": "wishbone-modules/wishbone-output-amqp", "github": "wishbone-modules/wishbone-output-amqp"},
+    {"name": "Azure Queue Storage In", "id": "wishbone-modules/wishbone-input-azure_queue_storage", "github": "wishbone-modules/wishbone-input-azure_queue_storage"},
     {"name": "HTTP input", "id": "wishbone-modules/wishbone-input-httpserver", "github": "wishbone-modules/wishbone-input-httpserver"},
     {"name": "HTTP output", "id": "wishbone-modules/wishbone-output-http", "github": "wishbone-modules/wishbone-output-http"},
 ]
