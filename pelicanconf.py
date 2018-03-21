@@ -67,6 +67,7 @@ TRAVIS = [
     {"name": "Azure Q Storage Out", "id": "wishbone-modules/wishbone-output-azure_queue_storage", "github": "wishbone-modules/wishbone-output-azure_queue_storage"},
     {"name": "HTTP input", "id": "wishbone-modules/wishbone-input-httpserver", "github": "wishbone-modules/wishbone-input-httpserver"},
     {"name": "HTTP output", "id": "wishbone-modules/wishbone-output-http", "github": "wishbone-modules/wishbone-output-http"},
+    {"name": "Twitter output", "id": "wishbone-modules/wishbone-output-twitter", "github": "wishbone-modules/wishbone-output-twitter"},
 ]
 DEFAULT_PAGINATION = 10
 FEED_DOMAIN = None
