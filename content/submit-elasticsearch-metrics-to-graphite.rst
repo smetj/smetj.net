@@ -2,7 +2,7 @@ Submit Elasticsearch metrics to Graphite
 ########################################
 :date: 2013-11-17 20:36
 :author: smetj
-:category: #monitoringlove
+:category: engineering
 :tags: monitoringlove, graphite, metricfactory, metrics, elasticsearch
 :slug: submit-elasticsearch-metrics-to-graphite
 

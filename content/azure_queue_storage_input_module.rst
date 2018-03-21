@@ -2,7 +2,7 @@ Azure Queue Storage input module
 ################################
 :date: 2018-03-18 15:00
 :author: smetj
-:category: development
+:category: automation
 :tags: wishbone, release, module, azure
 :slug: azure_queue_storage_input_module
 
@@ -11,10 +11,17 @@ Azure Queue Storage input module
 
 __start_summary__
 
-I have just released the first version of :text:`wishbone-input-azure_queue_storage`
-a Wishbone input module to consume messages from Microsoft's `Azure Queue Storage`_ service.
+Microsoft's `Azure Queue Storage`_ service provides cloud messaging between
+application components. Queue storage delivers asynchronous messaging for
+communication between application components, whether they are running in the
+cloud, on the desktop, on an on-premises server, or on a mobile device. Queue
+storage also supports managing asynchronous tasks and building process work
+flows.
 
-In this article we will run through a "Hello world" example illustrating its usage.
+In this article we will go through a "Hello world" example demonstrating
+Wishbone and the newly released :text:`wishbone-input-azure_queue_storage`
+module to consume messages from the Azure Queue Storage service and print them
+to STDOUT.
 
 __end_summary__
 
@@ -25,17 +32,18 @@ __end_summary__
 Goal
 ----
 
-In this article I will demonstrate how to consume messages from the `Azure
-Queue Storage` using the newly released
-`wishbone_contrib.module.input.azure_queue_storage`_ module and print it to STDOUT.
+This article demonstrates how to consume messages from the `Azure Queue
+Storage` service using Wishbone and the
+`wishbone_contrib.module.input.azure_queue_storage`_ module. The consumed
+messages will be simply printed to STDOUT.
 
 
 Boostrap file
 -------------
 
-The Wishbone boostrap we will be using looks similar to this:
+Consider the following bootstrap file:
 
-.. code-block:: yaml
+.. code-block:: YAML
 
     protocols:
       json:
@@ -57,6 +65,7 @@ The Wishbone boostrap we will be using looks similar to this:
     routingtable:
       - input.outbox -> output.inbox
 
+
 You will have to make sure you complete the bootstrap file with the correct
 values for :text:`account_name` and :text:`account_key`.
 
@@ -66,7 +75,7 @@ Boostrapping the server
 
 We will use the Docker container to bootstrap our server:
 
-.. code-block:: text
+.. code-block:: YAML
 
     $ docker run -t -i --privileged -v $(pwd)/bootstrap.yaml:/bootstrap.yaml \
         docker.io/smetj/wishbone-input-azure_queue_storage:latest start --config /bootstrap.yaml
@@ -78,13 +87,15 @@ We will use the Docker container to bootstrap our server:
 Sending a message
 -----------------
 
-We will use the Azure console to manually send a message. As you can see at
-this point the :text:`wishbone` has already been created.
+Using the Azure console we can manually send a message.
+
+As you can see at this point the :text:`wishbone` has already been created.
 
 |azure_1|
 
 
-On the server side we should see following output:
+Once the message is send, we we should see following output on the server
+side:
 
 .. code-block:: text
 
@@ -101,13 +112,12 @@ Delete message after successful processing
 ------------------------------------------
 
 For this we will make use of Wishbone module's default :text:`_success` queue
-and the :text:`delete` queue of :text:`wishbone_contrib.module.input.azure-
-queue-storage`.
+and the :text:`delete` queue of :text:`wishbone_contrib.module.input.azure-queue-storage`.
 
 Messages ending up in the :text:`delete` queue will be processed by the module
 to be deleted from the Azure queue.
 
-.. code-block:: yaml
+.. code-block:: YAML
 
     modules:
       input:
@@ -131,22 +141,18 @@ For this setup to work, we set :text:`visibility_timeout` to 2 seconds to
 indicate the message should reappear for other consumers to consume when our
 setup fails to process the said message properly.
 
-
 Conslusion
 ----------
 
-This initial version of `wishbone_contrib.module.input.azure_queue_storage`_
-allows us to consume messages from Azure queue storage with ease. The module is
-an initial version which doesn't support yet all features the queueing service
-offers.
-
-The `Wishbone`_ support for the `Azure Queue Storage`_ service allows you to
-develop servers which consume and process messages in no-time!
+While this initial release doesn't support yet all features the Azure queue
+storage service has to offer, it allows us to bootstrap a server and consume
+messages in no-time!
 
 Obviously, you will need to have the possibility to submit messages too, but
 that will be a new module and the next small project I'll be working on.
 
-If you have any questions, remarks or suggestions please feel free getting in touch.
+If you have any questions, remarks or suggestions please feel free getting in
+touch.
 
 
 .. _Azure Queue Storage: https://azure.microsoft.com/en-us/services/storage/queues/

@@ -2,7 +2,7 @@ Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited
 #############################################################################
 :date: 2013-11-07 23:00
 :author: smetj
-:category: #monitoringlove
+:category: engineering
 :tags: monitoringlove, graphite, metricfactory, metrics, nagios, mod_gearman
 :slug: submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited
 

@@ -2,7 +2,7 @@ Processing webhooks using Wishbone Part 2: Pagerduty Webhooks
 #############################################################
 :date: 2016-02-21 10:00
 :author: smetj
-:category: engineering
+:category: automation
 :tags: wishbone, webhooks, python
 :slug: processing_webhooks_using_wishbone_part_2
 

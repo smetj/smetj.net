@@ -2,7 +2,7 @@ Quis custodiet ipsos custodes: Monitoring a poll-based monitoring solution
 ##########################################################################
 :date: 2016-04-18 23:30
 :author: smetj
-:category: monitoring
+:category: automation
 :tags: wishbone, devops, monitoringlove, pagerduty
 :slug: monitoring_a_poll-based_monitoring_solution
 

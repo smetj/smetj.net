@@ -2,7 +2,7 @@ An alternative way of handling Nagios and Naemon alerts
 #######################################################
 :date: 2014-03-23 12:00
 :author: smetj
-:category: #monitoringlove
+:category: automation
 :tags: monitoringlove, nagios, naemon
 :slug: an-aleternative-way-of-handling-nagios-and-naemon-alerts
 

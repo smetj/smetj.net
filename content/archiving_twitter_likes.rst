@@ -2,7 +2,7 @@ Archiving Twitter likes
 #######################
 :date: 2016-08-21 15:42
 :author: smetj
-:category: monitoring
+:category: automation
 :tags: wishbone, twitter, archive, likes
 :slug: archiving_twitter_likes
 

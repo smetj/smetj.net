@@ -8,9 +8,13 @@ SITEURL = 'https://smetj.net'
 TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'en'
 
+BANNER = '/pics/banner.png'
+BANNER_SUBTITLE = 'Technical musings of an automator, developer and systems engineer.'
+BOOTSTRAP_FLUID = False
 
 THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
-BOOTSTRAP_THEME = 'flatly'
+# BOOTSTRAP_THEME = 'flatly'
+BOOTSTRAP_THEME = 'journal'
 # GITHUB_USER = 'smetj'
 # GITHUB_SKIP_FORK = True
 CUSTOM_CSS = 'css/custom.css'
@@ -24,6 +28,7 @@ PLUGINS = [
     'simple_footnotes',
     'i18n_subsites'
 ]
+BOOTSTRAP_NAVBAR_INVERSE = True
 
 SUMMARY_BEGIN_MARKER = "__start_summary__"
 SUMMARY_END_MARKER = "__end_summary__"
@@ -58,8 +63,8 @@ TRAVIS = [
     {"name": "Wishbone", "id": "smetj/wishbone", "github": "smetj/wishbone"},
     {"name": "AMQP input", "id": "wishbone-modules/wishbone-input-amqp", "github": "wishbone-modules/wishbone-input-amqp"},
     {"name": "AMQP output", "id": "wishbone-modules/wishbone-output-amqp", "github": "wishbone-modules/wishbone-output-amqp"},
-    {"name": "Azure Queue Storage In", "id": "wishbone-modules/wishbone-input-azure_queue_storage", "github": "wishbone-modules/wishbone-input-azure_queue_storage"},
-    {"name": "Azure Queue Storage Out", "id": "wishbone-modules/wishbone-output-azure_queue_storage", "github": "wishbone-modules/wishbone-output-azure_queue_storage"},
+    {"name": "Azure Q Storage In", "id": "wishbone-modules/wishbone-input-azure_queue_storage", "github": "wishbone-modules/wishbone-input-azure_queue_storage"},
+    {"name": "Azure Q Storage Out", "id": "wishbone-modules/wishbone-output-azure_queue_storage", "github": "wishbone-modules/wishbone-output-azure_queue_storage"},
     {"name": "HTTP input", "id": "wishbone-modules/wishbone-input-httpserver", "github": "wishbone-modules/wishbone-input-httpserver"},
     {"name": "HTTP output", "id": "wishbone-modules/wishbone-output-http", "github": "wishbone-modules/wishbone-output-http"},
 ]
@@ -74,8 +79,8 @@ DISQUS_SITENAME = "smetj"
 DISQUSURL = 'http://smetj.net'
 GOOGLE_ANALYTICS = "UA-40703057-1"
 # Uncomment following line if you want document-relative URLs when developing
-# RELATIVE_URLS = True
-PYGMENTS_STYLE = "friendly"
+RELATIVE_URLS = True
+PYGMENTS_STYLE = "manni"
 
 JINJA_ENVIRONMENT = {
     'extensions': ['jinja2.ext.i18n'],

@@ -2,7 +2,7 @@ An introduction to the wishbone-input-httpserver module
 #######################################################
 :date: 2018-02-25 14:40
 :author: smetj
-:category: wishbone
+:category: automation
 :tags: wishbone, http, webhooks, payload, events
 :slug: an_introduction_to_the_wishbone-input-httpserver_module
 

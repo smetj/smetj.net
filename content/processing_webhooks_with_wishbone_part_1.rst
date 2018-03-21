@@ -2,7 +2,7 @@ Processing webhook events using Wishbone Part 1: Accept and validate
 ####################################################################
 :date: 2015-10-04 15:00
 :author: smetj
-:category: engineering
+:category: automation
 :tags: wishbone, webhooks, python
 :slug: processing_webhooks_using_wishbone_part_1
 

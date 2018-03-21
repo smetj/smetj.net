@@ -2,7 +2,7 @@ Monitoring and metric collection across teams.
 ##############################################
 :date: 2012-01-29 17:02
 :author: smetj
-:category: #monitoringlove
+:category: engineering
 :tags: company, monitoring, tools
 :slug: monitoring-and-metrics-collection-across-teams
 

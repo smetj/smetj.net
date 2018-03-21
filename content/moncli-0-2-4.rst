@@ -2,7 +2,7 @@ Moncli 0.2.4
 ############
 :date: 2012-03-05 18:28
 :author: smetj
-:category: #monitoringlove
+:category: development
 :tags: moncli
 :slug: moncli-0-2-4
 
