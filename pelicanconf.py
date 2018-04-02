@@ -3,24 +3,40 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Jelle Smet'
-SITENAME = u'Project site of Jelle Smet'
-SITEURL = 'https://smetj.net'
-TIMEZONE = 'Europe/Paris'
-DEFAULT_LANG = u'en'
-
 BANNER = '/pics/banner.png'
 BANNER_SUBTITLE = 'Technical musings of an automator, developer and systems engineer.'
-BOOTSTRAP_FLUID = False
 
-THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
-# BOOTSTRAP_THEME = 'flatly'
+BOOTSTRAP_FLUID = False
+BOOTSTRAP_NAVBAR_INVERSE = True
 BOOTSTRAP_THEME = 'journal'
-# GITHUB_USER = 'smetj'
-# GITHUB_SKIP_FORK = True
-CUSTOM_CSS = 'css/custom.css'
-PLUGIN_PATHS = [
-    '/home/smetj/data/projects/github/pelican-plugins'
-]
+
+CATEGORY_FEED_ATOM = None
+
+DEFAULT_LANG = u'en'
+DEFAULT_PAGINATION = 10
+
+DISPLAY_ARTICLE_INFO_ON_INDEX = True
+DISPLAY_TAGS_ON_SIDEBAR = False
+
+DISQUS_SITENAME = "smetj"
+DISQUSURL = 'https://smetj.net'
+DISQUS_DISPLAY_COUNTS = True
+
+FEED_ALL_ATOM = None
+FEED_ATOM = None
+FEED_DOMAIN = None
+FEED_RSS = None
+
+GOOGLE_ANALYTICS = "UA-40703057-1"
+
+JINJA_ENVIRONMENT = {
+    'extensions': ['jinja2.ext.i18n'],
+}
+
+LINKS = None
+
+PDF_GENERATOR = True
+
 PLUGINS = [
     'summary',
     'sitemap',
@@ -28,11 +44,15 @@ PLUGINS = [
     'simple_footnotes',
     'i18n_subsites'
 ]
-BOOTSTRAP_NAVBAR_INVERSE = True
+PLUGIN_PATHS = [
+    '/home/smetj/data/projects/github/pelican-plugins'
+]
 
-SUMMARY_BEGIN_MARKER = "__start_summary__"
-SUMMARY_END_MARKER = "__end_summary__"
+PYGMENTS_STYLE = "manni"
 
+# RELATIVE_URLS = True  # Uncomment following line if you want document-relative URLs when developing
+
+SITENAME = u'Project site of Jelle Smet'
 SITEMAP = {
     'format': 'xml',
     'priorities': {
@@ -46,19 +66,25 @@ SITEMAP = {
         'pages': 'weekly'
     }
 }
+SITEURL = 'https://smetj.net'
 
-DISPLAY_TAGS_ON_SIDEBAR = False
-LINKS = None
-PDF_GENERATOR = True
-DISPLAY_ARTICLE_INFO_ON_INDEX = True
 STATIC_PATHS = [
     'pics',
     'robots.txt',
-    ]
+]
 
-# Social widget
 SOCIAL = (('twitter', 'http://twitter.com/smetj'),
           ('github', 'https://github.com/smetj'),)
+
+SUMMARY_BEGIN_MARKER = "__start_summary__"
+SUMMARY_END_MARKER = "__end_summary__"
+
+TAG_FEED = None
+
+THEME = '/home/smetj/data/projects/github/pelican-themes/pelican-bootstrap3'
+
+TIMEZONE = 'Europe/Paris'
+
 TRAVIS = [
     {"name": "Wishbone", "id": "smetj/wishbone", "github": "smetj/wishbone"},
     {"name": "AMQP input", "id": "wishbone-modules/wishbone-input-amqp", "github": "wishbone-modules/wishbone-input-amqp"},
@@ -69,20 +95,3 @@ TRAVIS = [
     {"name": "HTTP output", "id": "wishbone-modules/wishbone-output-http", "github": "wishbone-modules/wishbone-output-http"},
     {"name": "Twitter output", "id": "wishbone-modules/wishbone-output-twitter", "github": "wishbone-modules/wishbone-output-twitter"},
 ]
-DEFAULT_PAGINATION = 10
-FEED_DOMAIN = None
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-FEED_ATOM = None
-FEED_RSS = None
-TAG_FEED = None
-DISQUS_SITENAME = "smetj"
-DISQUSURL = 'http://smetj.net'
-GOOGLE_ANALYTICS = "UA-40703057-1"
-# Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
-PYGMENTS_STYLE = "manni"
-
-JINJA_ENVIRONMENT = {
-    'extensions': ['jinja2.ext.i18n'],
-}
