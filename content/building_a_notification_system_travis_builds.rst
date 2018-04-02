@@ -146,6 +146,6 @@ free to get in touch.
 .. _Twitter: https://twitter.com
 .. _Wishbone: http://wishbone.readthedocs.io
 .. _install Wishbone: http://wishbone.readthedocs.io/en/master/installation/index.html
-.. _Travis CI: travis-ci.org
+.. _Travis CI: https://travis-ci.org
 .. |twitter_banner| image:: pics/notifications.png
 .. |twitter_tweet| image:: pics/notifications_tweet.png
