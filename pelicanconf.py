@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+ABOUT_ME = '''
+You want to have an automation solution implemented? You want to integrate API's and add some business logic to it?
+</br><font color="EB6864"><a href="https://www.linkedin.com/in/jelle-smet-594a907b/">Get in touch and let's talk!</a></font>
+'''
+
 AUTHOR = u'Jelle Smet'
 BANNER = '/pics/banner.png'
 BANNER_SUBTITLE = 'Technical musings of an automator, developer and systems engineer.'
