@@ -139,6 +139,9 @@ and creates a Tweet build out of the submitted payload.
 In the next article we will cover how to accept `Travis CI`_ webhooks and
 create the notifications we like to see.
 
+The notification system described in this article will be referred to as the
+*base notification system* in the follow-up articles.
+
 If you have any questions, suggestions, recommendations or any feedback feel
 free to get in touch.
 
