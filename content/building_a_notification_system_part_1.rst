@@ -1,5 +1,5 @@
-Building a notification system: Part 1
-######################################
+Building a notification system part 1: Base system
+##################################################
 :date: 2018-04-02 12:00
 :author: smetj
 :category: automation
