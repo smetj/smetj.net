@@ -84,7 +84,7 @@ for everybody to read isn't a good idea.
 
 One option could have been to store the password as a hidden *environment
 variable* and use that variable in the URI but that's **not** supported.  Long
-story short, environment variables are simply not available to notifications
+story short, environment variables are simply not available to the notifications
 section of :text:`.travis.yml`. [ref] https://github.com/travis-ci/travis-ci/issues/9407 [/ref]
 
 Luckily Travis allows you to define *encrypted values* using your project's
