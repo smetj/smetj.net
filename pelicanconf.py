@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 ABOUT_ME = '''
-You want to have an automation solution implemented? You want to integrate API's and add some business logic to it?
+Do you want help with API integrations, automation, event processing or monitoring?
 </br><font color="EB6864"><a href="https://www.linkedin.com/in/jelle-smet-594a907b/">Get in touch and let's talk!</a></font>
 '''
 
