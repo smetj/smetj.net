@@ -40,7 +40,7 @@ ways. The Wishbone `installation documentation`_ describes the most common
 scenarios.
 
 In this article we will use the Docker image
-:text:`smetj/wishbone-input-httpserver:development` which is build by
+:text:`smetj/wishbone-input-httpserver:latest` which is build by
 `travis-ci`_ each time code is committed to the project or a new release is
 done.
 
@@ -55,7 +55,7 @@ You can validate whether the :text:`wishbone-input-httpserver` module is availab
 
 .. code-block:: sh
 
-    $ docker run -t -i smetj/wishbone-input-httpserver:development list
+    $ docker run -t -i smetj/wishbone-input-httpserver:latest list
 
 If *Wishbone* can find the *wishbone-input-httpserver* module it will be
 listed as :text:`wishbone_contrib.module.input.httpserver` since it is not a
@@ -82,7 +82,7 @@ To bootstrap the Wishbone server we mount the bootstrap file to the container:
     $ docker run -t -i \
         --volume $(pwd)/bootstrap.yaml:/bootstrap.yaml \
         -p 19283:19283 \
-        smetj/wishbone-input-httpserver:development start --config /bootstrap.yaml
+        smetj/wishbone-input-httpserver:latest start --config /bootstrap.yaml
 
 
 
@@ -102,7 +102,7 @@ At any time you can read a module's documentation using following command:
 
 .. code-block:: sh
 
-    $ docker run -t -i smetj/wishbone-input-httpserver:development show --docs wishbone_contrib.module.input.httpserver
+    $ docker run -t -i smetj/wishbone-input-httpserver:latest show --docs wishbone_contrib.module.input.httpserver
 
 
 Features
@@ -233,7 +233,7 @@ We start the Wishbone server using following option :text:`--instances 2`:
     $ docker run -t -i \
     --volume $(pwd)/bootstrap.yaml:/bootstrap.yaml \
     -p 19283:19283 \
-    smetj/wishbone-input-httpserver:development start --config /bootstrap.yaml --instances 2
+    smetj/wishbone-input-httpserver:latest start --config /bootstrap.yaml --instances 2
 
     Instances started in foreground with pid 9, 10
     2018-02-24T15:59:31.7313+00:00 wishbone[10] informational input: Webserver bound to 0.0.0.0:19283. Listening for incoming requests
@@ -417,7 +417,7 @@ When running the server you should the htpasswd file from the host.
       --volume $(pwd)/htpasswd:/htpasswd \
       --volume $(pwd)/bootstrap_2.yaml:/bootstrap.yaml \
       -p 19283:19283 \
-      smetj/wishbone-input-httpserver:development start --config /bootstrap.yaml
+      smetj/wishbone-input-httpserver:latest start --config /bootstrap.yaml
 
 Updating Bob's password:
 
