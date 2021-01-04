@@ -1,0 +1,60 @@
+A Terraform AWS Fargate recipe to load config files in containers
+#################################################################
+
+:date: 2020-09-27 15:00
+:author: smetj
+:category: devops
+:tags: aws, ecs, fargate, terraform
+:slug: a_terraform_aws_fargate_recipe_for_loading_configfiles_in_containers
+
+.. role:: text(code)
+   :language: text
+
+|picture|
+
+__start_summary__
+
+`AWS ECS Fargate`_ is a well known Amazon container runtime service offering
+which most prominent feature is its **serverless** capability.  It removes the
+need to provision and manage the underlying servers hence serverless. Removing
+the need to dealing with underlying server infrastructure also means that
+server layer is hidden and unreachable to the user.  This brings its own
+challenges, for example how to mount a config file into the container?  This
+article I will cover a recipe on how to deal with that using Terraform.
+
+__end_summary__
+
+Desired outcome
+---------------
+
+The properties my stack deployment should have are:
+
+- The config file is part of the Terraform deployment code. The reason for this
+- If the config file changes, the container should be rescheduled.
+
+
+
+Advantages and disadvantages
+----------------------------
+
+Disadvantage:
+
+- You need an adapted container
+-
+
+
+
+
+
+Final words
+-----------
+
+This Recipe is a very simple to contemplate about. There aren't any other
+CI/CD dependencies involved and yet everything is contained into a well
+defined, easy to grasp package.  There are various ways to achieve this
+result.  One could store the config file in question into EFS and mount the
+EFS filesystem directly into the Fargate container.  You could bake the config
+into your container making it a more stateful approach, depending on your
+taste and preferences your mileage might vary.
+
+.. _AWS ECS Fargate: https://aws.amazon.com/fargate/

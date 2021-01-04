@@ -6,7 +6,7 @@ TermFunk: Bridging the gap between Python and the terminal
 :tags: python, termfunk, bash, terminal
 :slug: termfunk_bridging_the_gap_between_python_and_the_terminal
 
-.. role:: text(code)
+.. role:: highlight(code)
    :language: text
 
 |picture|
