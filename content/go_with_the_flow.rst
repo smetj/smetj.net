@@ -6,13 +6,13 @@ Go with the flow: Wishbone flow modules
 :tags: wishbone, python, devops
 :slug: go_with_the_flow
 
-__start_summary__
+..start_summary..
 
 `Wishbone`_ servers are all about event flow flexibility.  In this article we
 will cover the role of the different built-in *flow* modules and how to shape
 the flow of events along with some practical examples.
 
-__end_summary__
+..end_summary..
 
 ----
 

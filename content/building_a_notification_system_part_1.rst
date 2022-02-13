@@ -11,7 +11,7 @@ Building a notification system part 1: Base system
 
 |twitter_banner|
 
-__start_summary__
+..start_summary..
 
 I would like to have a notification system on my phone and laptop to receive
 messages from various service events in order to keep track of events which
@@ -20,7 +20,7 @@ require my attention.
 So why not use `Twitter`_ and `Wishbone`_ to create a Twitter bot which does
 exactly what I need?
 
-__end_summary__
+..end_summary..
 
 
 ----

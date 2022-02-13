@@ -9,11 +9,11 @@ Wishbone release 3.0.3
 .. role:: text(code)
    :language: text
 
-__start_summary__
+..start_summary..
 
 Wishbone 3.0.3 release.
 
-__end_summary__
+..end_summary..
 
 
 ----

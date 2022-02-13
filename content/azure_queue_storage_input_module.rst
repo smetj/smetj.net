@@ -9,7 +9,7 @@ Azure Queue Storage input module
 .. role:: text(code)
    :language: text
 
-__start_summary__
+..start_summary..
 
 Microsoft's `Azure Queue Storage`_ service provides cloud messaging between
 application components. Queue storage delivers asynchronous messaging for
@@ -23,7 +23,7 @@ Wishbone and the newly released :text:`wishbone-input-azure_queue_storage`
 module to consume messages from the Azure Queue Storage service and print them
 to STDOUT.
 
-__end_summary__
+..end_summary..
 
 
 ----

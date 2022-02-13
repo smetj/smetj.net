@@ -6,7 +6,7 @@ Archiving Twitter likes
 :tags: wishbone, twitter, archive, likes
 :slug: archiving_twitter_likes
 
-__start_summary__
+..start_summary..
 
 I use Twitter to keep track of the latest tech information by following a
 tailored list of hash tags and people.  When interesting information is
@@ -19,7 +19,7 @@ Therefor, to have a solution which suits my needs, I created a Wishbone server
 to collect and archive my Twitter *likes* into a simple *"grep-able"* text
 file.
 
-__end_summary__
+..end_summary..
 
 ----
 

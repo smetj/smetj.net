@@ -44,7 +44,7 @@ PLUGIN_PATHS = ["/home/smetj/data/projects/github/pelican-plugins"]
 
 PYGMENTS_STYLE = "manni"
 
-RELATIVE_URLS = False
+RELATIVE_URLS = True
 
 SITENAME = "Project site of Jelle Smet"
 SITEMAP = {
@@ -61,8 +61,9 @@ SOCIAL = (
     ("github", "https://github.com/smetj"),
 )
 
-SUMMARY_BEGIN_MARKER = "__start_summary__"
-SUMMARY_END_MARKER = "__end_summary__"
+SUMMARY_BEGIN_MARKER = "..start_summary.."
+SUMMARY_END_MARKER = "..end_summary.."
+SUMMARY_USE_FIRST_PARAGRAPH = True
 
 TAG_FEED = None
 
@@ -72,8 +73,16 @@ TIMEZONE = "Europe/Paris"
 
 TRAVIS = [
     {"name": "Wishbone", "id": "smetj/wishbone", "github": "smetj/wishbone"},
-    {"name": "AMQP input", "id": "wishbone-modules/wishbone-input-amqp", "github": "wishbone-modules/wishbone-input-amqp",},
-    {"name": "AMQP output", "id": "wishbone-modules/wishbone-output-amqp", "github": "wishbone-modules/wishbone-output-amqp",},
+    {
+        "name": "AMQP input",
+        "id": "wishbone-modules/wishbone-input-amqp",
+        "github": "wishbone-modules/wishbone-input-amqp",
+    },
+    {
+        "name": "AMQP output",
+        "id": "wishbone-modules/wishbone-output-amqp",
+        "github": "wishbone-modules/wishbone-output-amqp",
+    },
     {
         "name": "Azure Q Storage In",
         "id": "wishbone-modules/wishbone-input-azure_queue_storage",
@@ -84,8 +93,24 @@ TRAVIS = [
         "id": "wishbone-modules/wishbone-output-azure_queue_storage",
         "github": "wishbone-modules/wishbone-output-azure_queue_storage",
     },
-    {"name": "Elasticsearch Output", "id": "wishbone-modules/wishbone-output-elasticsearch", "github": "wishbone-modules/wishbone-output-elasticsearch",},
-    {"name": "HTTP input", "id": "wishbone-modules/wishbone-input-httpserver", "github": "wishbone-modules/wishbone-input-httpserver",},
-    {"name": "HTTP output", "id": "wishbone-modules/wishbone-output-http", "github": "wishbone-modules/wishbone-output-http",},
-    {"name": "Twitter output", "id": "wishbone-modules/wishbone-output-twitter", "github": "wishbone-modules/wishbone-output-twitter",},
+    {
+        "name": "Elasticsearch Output",
+        "id": "wishbone-modules/wishbone-output-elasticsearch",
+        "github": "wishbone-modules/wishbone-output-elasticsearch",
+    },
+    {
+        "name": "HTTP input",
+        "id": "wishbone-modules/wishbone-input-httpserver",
+        "github": "wishbone-modules/wishbone-input-httpserver",
+    },
+    {
+        "name": "HTTP output",
+        "id": "wishbone-modules/wishbone-output-http",
+        "github": "wishbone-modules/wishbone-output-http",
+    },
+    {
+        "name": "Twitter output",
+        "id": "wishbone-modules/wishbone-output-twitter",
+        "github": "wishbone-modules/wishbone-output-twitter",
+    },
 ]

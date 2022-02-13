@@ -12,7 +12,7 @@ can use Wishbone to generate messages and submit them into a message broker
 such as RabbitMQ or Mosquitto and write the Wishbone performance metrics into
 Graphite.
 
-__end_summary__
+..end_summary..
 
 To install Wishbone and modules you can follow the instructions found in the
 project `documentation`_.

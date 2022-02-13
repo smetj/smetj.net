@@ -11,7 +11,7 @@ based event proxy which balances events to one or more TCP backends.  For this
 we will run through a couple of scenarios in which we highlight different
 approaches.
 
-__end_summary__
+..end_summary..
 
 Installation
 ~~~~~~~~~~~~

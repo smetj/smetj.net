@@ -12,7 +12,7 @@ Deploying AWS Lambdas with Terraform
 
 |picture|
 
-__start_summary__
+..start_summary..
 
 After reading the comments of this `Hackernews post`_ I noticed that a
 sentiment people seem to share is that Terraform isn't really suited to deploy
@@ -21,7 +21,7 @@ decide. Nevertheless I have been using a simple Terraform recipe which has
 proven to be quite useful to myself.  In this article I will explain the
 different parts involved.
 
-__end_summary__
+..end_summary..
 
 Lambda code repository
 ----------------------

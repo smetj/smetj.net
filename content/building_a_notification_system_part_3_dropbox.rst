@@ -9,7 +9,7 @@ Building a notification system part 3: Dropbox
 .. role:: highlight(code)
    :language: text
 
-__start_summary__
+..start_summary..
 
 Dropbox is a file hosting service operated by American company Dropbox, Inc.,
 headquartered in San Francisco, California, that offers cloud storage, file
@@ -19,7 +19,7 @@ In this article we will cover how to integrate Dropbox webhooks into the
 Wishbone based notification system we have built and configured in the first
 article of this series.
 
-__end_summary__
+..end_summary..
 
 ----
 

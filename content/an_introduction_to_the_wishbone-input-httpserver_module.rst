@@ -9,12 +9,12 @@ An introduction to the wishbone-input-httpserver module
 .. role:: text(code)
    :language: text
 
-__start_summary__
+..start_summary..
 
 In this article we will explore the current version of :text:`wishbone-input-httpserver`
 a *Wishbone* input module to receive events over http(s).
 
-__end_summary__
+..end_summary..
 
 
 ----

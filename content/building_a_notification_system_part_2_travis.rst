@@ -11,7 +11,7 @@ Building a notification system part 2: Travis CI
 
 |travis|
 
-__start_summary__
+..start_summary..
 
 `Travis CI`_ is a hosted, distributed continuous integration service used to
 build and test software projects hosted at GitHub. Travis CI can notify you
@@ -21,7 +21,7 @@ In this article we will cover how to integrate the Travis custom webhooks into
 the Wishbone based notification system we have built and configured in the first
 article of this series.
 
-__end_summary__
+..end_summary..
 
 ----
 

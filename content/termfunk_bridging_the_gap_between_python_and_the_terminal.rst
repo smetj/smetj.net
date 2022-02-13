@@ -11,7 +11,7 @@ TermFunk: Bridging the gap between Python and the terminal
 
 |picture|
 
-__start_summary__
+..start_summary..
 
 If you have been a systems engineer or sysadmin for some time you have
 probably written and gathered a collection of `shell scripts`_ to solve your
@@ -27,7 +27,7 @@ their arguments using auto-completion.
 In this article we will create a CLI tool to validate JSON and YAML files
 using Python and TermFunk.
 
-__end_summary__
+..end_summary..
 
 Prerequisites
 -------------

@@ -6,7 +6,7 @@ Processing webhooks using Wishbone Part 2: Pagerduty Webhooks
 :tags: wishbone, webhooks, python
 :slug: processing_webhooks_using_wishbone_part_2
 
-__start_summary__
+..start_summary..
 
 
 In `a previous article`_ we covered how to accept and validate webhook data
@@ -14,7 +14,7 @@ using `Wishbone`_.  In this article we will take things a step further by
 processing Pagerduty webhook events and convert them into Nagios external
 commands.
 
-__end_summary__
+..end_summary..
 
 ----
 
