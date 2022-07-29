@@ -2,21 +2,19 @@ Wishbone release 3.1.0
 ######################
 :date: 2018-03-17 10:00
 :author: smetj
-:category: development
-:tags: wishbone, release
+:category: technology
 :slug: wishbone_release_3.1.0
 
 .. role:: text(code)
    :language: text
 
-..start_summary..
+
 
 Wishbone 3.1.0 release.
 
-..end_summary..
 
 
-----
+
 
 Documentation
 -------------

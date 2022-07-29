@@ -2,14 +2,13 @@ Azure Queue Storage input module
 ################################
 :date: 2018-03-18 15:00
 :author: smetj
-:category: automation
-:tags: wishbone, release, module, azure
+:category: technology
 :slug: azure_queue_storage_input_module
 
 .. role:: text(code)
    :language: text
 
-..start_summary..
+
 
 Microsoft's `Azure Queue Storage`_ service provides cloud messaging between
 application components. Queue storage delivers asynchronous messaging for
@@ -23,14 +22,12 @@ Wishbone and the newly released :text:`wishbone-input-azure_queue_storage`
 module to consume messages from the Azure Queue Storage service and print them
 to STDOUT.
 
-..end_summary..
 
 
-----
+
 
 
 Goal
-----
 
 This article demonstrates how to consume messages from the `Azure Queue
 Storage` service using Wishbone and the
@@ -158,4 +155,4 @@ touch.
 .. _Azure Queue Storage: https://azure.microsoft.com/en-us/services/storage/queues/
 .. _wishbone_contrib.module.input.azure_queue_storage: https://github.com/wishbone-modules/wishbone-input-azure_queue_storage
 .. _Wishbone: http://wishbone.readthedocs.io
-.. |azure_1| image:: pics/azure_queue_storage_1.png
+.. |azure_1| image:: images/azure_queue_storage_1.png

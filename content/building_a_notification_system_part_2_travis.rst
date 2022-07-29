@@ -2,8 +2,7 @@ Building a notification system part 2: Travis CI
 ################################################
 :date: 2018-04-07 10:00
 :author: smetj
-:category: automation
-:tags: wishbone, notifications, automation, integration
+:category: technology
 :slug: building_a_notification_system_part_2_integrating_travis
 
 .. role:: text(code)
@@ -11,7 +10,7 @@ Building a notification system part 2: Travis CI
 
 |travis|
 
-..start_summary..
+
 
 `Travis CI`_ is a hosted, distributed continuous integration service used to
 build and test software projects hosted at GitHub. Travis CI can notify you
@@ -21,9 +20,8 @@ In this article we will cover how to integrate the Travis custom webhooks into
 the Wishbone based notification system we have built and configured in the first
 article of this series.
 
-..end_summary..
 
-----
+
 
 Abstract
 --------
@@ -252,8 +250,8 @@ Footnotes
 .. _Travis CI: https://travis-ci.org
 .. _wishbone_contrib.module.input.httpserver: https://github.com/wishbone-modules/wishbone-input-httpserver
 
-.. |travis| image:: {filename}pics/TravisCI-Full-Color.png
-.. |travis_tweet| image:: {filename}pics/travis_tweet.png
+.. |travis| image:: {static}images/TravisCI-Full-Color.png
+.. |travis_tweet| image:: {static}images/travis_tweet.png
 .. _travis: https://travis-ci.org
 
 

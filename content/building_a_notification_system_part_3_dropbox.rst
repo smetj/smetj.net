@@ -2,14 +2,13 @@ Building a notification system part 3: Dropbox
 ##############################################
 :date: 2018-04-14 18:00
 :author: smetj
-:category: automation
-:tags: wishbone, notifications, automation, integration
+:category: technology
 :slug: building_a_notification_system_part_3_dropbox
 
 .. role:: highlight(code)
    :language: text
 
-..start_summary..
+
 
 Dropbox is a file hosting service operated by American company Dropbox, Inc.,
 headquartered in San Francisco, California, that offers cloud storage, file
@@ -19,14 +18,13 @@ In this article we will cover how to integrate Dropbox webhooks into the
 Wishbone based notification system we have built and configured in the first
 article of this series.
 
-..end_summary..
 
-----
+
 
 Abstract
 --------
 
-.. image:: pics/tweet.png
+.. image:: images/tweet.png
    :align: right
 
 Dropbox can be configured to trigger webhooks the moment the content of a
@@ -207,7 +205,7 @@ which make more sense.
 
 |dropbox_2|
 
-Conslusion
+Conclusion
 ----------
 
 In this article we have covered how to configure and combine Wishbone and
@@ -220,14 +218,12 @@ Feedback welcome.
 Footnotes
 ---------
 
-
-
 .. _base notification server: /building_a_notification_system_part_1.html
 .. _first article of this series: /building_a_notification_system_part_1.html
 .. _link: https://smetj.net
 .. _traefik: https://traefik.io/
 .. _docs: https://www.dropbox.com/developers/reference/webhooks#documentation
 .. _wishbone.module.flow.count: http://wishbone.readthedocs.io/en/latest/classes/flow_modules.html#wishbone.module.count.Count
-.. |dropbox_1| image:: pics/dropbox_1.png
-.. |dropbox_2| image:: pics/dropbox_2.png
-.. |tweet| image:: pics/tweet.png
+.. |dropbox_1| image:: images/dropbox_1.png
+.. |dropbox_2| image:: images/dropbox_2.png
+.. |tweet| image:: images/tweet.png

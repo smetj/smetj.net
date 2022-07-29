@@ -2,11 +2,10 @@ Processing webhook events using Wishbone Part 1: Accept and validate
 ####################################################################
 :date: 2015-10-04 15:00
 :author: smetj
-:category: automation
-:tags: wishbone, webhooks, python
+:category: technology
 :slug: processing_webhooks_using_wishbone_part_1
 
-..start_summary..
+
 
 Many service providers offer `webhooks`_ as a means to integrate their service
 into another system.  Webhooks are basically a form of callbacks which can be
@@ -15,7 +14,7 @@ usually done by submitting some sort structured data like JSON into a http
 service. In this article we will cover how you can accept and validate JSON
 based webhook events using Wishbone.
 
-..end_summary..
+
 
 Boostrapping a server
 ---------------------
@@ -175,7 +174,7 @@ Submitting invalid JSON data
 
 Results into following output:
 
-.. image:: pics/webhooks_part1_1.png
+.. image:: images/webhooks_part1_1.png
    :scale: 50 %
    :align: left
 
@@ -194,7 +193,7 @@ Valid JSON not passing JSON-schema validation
 
 Results into following output:
 
-.. image:: pics/webhooks_part1_3.png
+.. image:: images/webhooks_part1_3.png
    :scale: 50 %
    :align: left
 
@@ -217,7 +216,7 @@ Valid JSON passing JSON-schema validation
 
 Results into following output:
 
-.. image:: pics/webhooks_part1_2.png
+.. image:: images/webhooks_part1_2.png
    :scale: 50 %
    :align: left
 

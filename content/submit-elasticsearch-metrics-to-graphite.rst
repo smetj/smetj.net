@@ -2,8 +2,7 @@ Submit Elasticsearch metrics to Graphite
 ########################################
 :date: 2013-11-17 20:36
 :author: smetj
-:category: engineering
-:tags: monitoringlove, graphite, metricfactory, metrics, elasticsearch
+:category: technology
 :slug: submit-elasticsearch-metrics-to-graphite
 
 
@@ -11,7 +10,7 @@ If you're running an `Elasticsearch`_ cluster you might want to keep track of
 the metrics it produces.  In this article I explain how you can aggregate the
 metrics of an Elasticsearch cluster and submit them to Graphite.
 
-..end_summary..
+
 
 Prerequisites
 ~~~~~~~~~~~~~

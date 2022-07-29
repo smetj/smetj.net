@@ -2,8 +2,7 @@ Monitoring and metric collection across teams.
 ##############################################
 :date: 2012-01-29 17:02
 :author: smetj
-:category: engineering
-:tags: company, monitoring, tools
+:category: technology
 :slug: monitoring-and-metrics-collection-across-teams
 
 There' s currently a lot of activity going on the monitoring and

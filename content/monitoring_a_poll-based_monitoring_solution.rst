@@ -2,11 +2,10 @@ Quis custodiet ipsos custodes: Monitoring a poll-based monitoring solution
 ##########################################################################
 :date: 2016-04-18 23:30
 :author: smetj
-:category: automation
-:tags: wishbone, devops, monitoringlove, pagerduty
+:category: technology
 :slug: monitoring_a_poll-based_monitoring_solution
 
-..start_summary..
+
 
 Your monitoring platform is susceptible to failure pretty much like any other
 component within your infrastructure. Having your monitoring monitored is a
@@ -14,9 +13,8 @@ topic you should consider spending some time on.  In this article we will
 cover how you can use Wishbone to cross check your monitoring setup and alert
 an external service such as Pagerduty in case of downtime.
 
-..end_summary..
 
-----
+
 
 A poll-based architecture
 -------------------------

@@ -2,17 +2,16 @@ Running Alertmachine under Docker
 #################################
 :date: 2014-03-30 21:00
 :author: smetj
-:category: automation
-:tags: monitoringlove, nagios, naemon, alertmachine, docker
+:category: technology
 :slug: running_alertmachine_under_docker
 
-..start_summary..
+
 
 In a `previous article`_ I wrote about managing Naemon and Nagios alerts with
 **Alertmachine**.  In this article I will cover how you can run a fully
 operational *Alertmachine* container in a matter of minutes using Docker. [1]_
 
-..end_summary..
+
 
 Docker
 ------

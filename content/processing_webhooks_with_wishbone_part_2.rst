@@ -2,11 +2,10 @@ Processing webhooks using Wishbone Part 2: Pagerduty Webhooks
 #############################################################
 :date: 2016-02-21 10:00
 :author: smetj
-:category: automation
-:tags: wishbone, webhooks, python
+:category: technology
 :slug: processing_webhooks_using_wishbone_part_2
 
-..start_summary..
+
 
 
 In `a previous article`_ we covered how to accept and validate webhook data
@@ -14,9 +13,8 @@ using `Wishbone`_.  In this article we will take things a step further by
 processing Pagerduty webhook events and convert them into Nagios external
 commands.
 
-..end_summary..
 
-----
+
 
 Our goal
 --------
@@ -33,7 +31,6 @@ The result is that whenever an incident is acknowledged in Pagerduty, the
 corresponding Nagios host or service alert will also become acknowledged
 without any user interaction.
 
-----
 
 Prepare connectivity
 --------------------
@@ -52,12 +49,11 @@ port tcp/19283[/ref]:
     $ ngrok http 19283
 
 
-----
 
 Enable Pagerduty webhooks
 -------------------------
 
-.. image:: pics/processing_webhooks_with_wishbone_part_2_1.png
+.. image:: images/processing_webhooks_with_wishbone_part_2_1.png
 
 Pagerduty webhooks are tied to `services`_.
 
@@ -65,7 +61,6 @@ That means every state change of an incident which came into Pagerduty through
 that *service* will cause a `webhook event`_ to be submitted to the defined
 webhook URL, which in our case will be the Wishbone server.
 
-----
 
 Install Wishbone
 ----------------
@@ -79,7 +74,6 @@ procedure.[/ref]
 
     $ docker pull smetj/wishbone:2.1.0
 
-----
 
 Use Wishbone
 ------------
@@ -154,7 +148,6 @@ type needs to be treated individually, we extract each entry and create a new
 event out of it using `wishbone.function.deserialize`_ prior to sending each
 event to the next module (line 70) for further processing.
 
-----
 
 Pattern Matching and event routing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -178,7 +171,6 @@ can be either **<hostname>** in case of a *host* alert or
 **<hostname/servicedescription>** in case of a service alert, hence the jq
 expression validating the content for a "/". (line 24, 28)[/ref]
 
-----
 
 Constructing the Nagios command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -252,7 +244,6 @@ has following format:
     }
 
 
-----
 
 Submitting the Nagios data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -268,7 +259,6 @@ Connecting queue *output_funnel.outbox* to queue *output_screen.inbox* instead
 prints the Nagios external command to STDOUT, which can be practical to
 inspect whether the desired result is achieved.
 
-----
 
 Final words
 -----------
@@ -290,7 +280,6 @@ If you find Wishbone useful, have questions of any kind or need my help
 implementing a Wishbone server, feel free to get in touch or to add your
 comments.
 
-----
 
 Footnotes:
 

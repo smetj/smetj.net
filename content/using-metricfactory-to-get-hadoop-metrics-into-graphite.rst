@@ -2,8 +2,7 @@ Using MetricFactory to get Hadoop metrics into Graphite.
 ########################################################
 :date: 2013-01-10 00:40
 :author: smetj
-:category: engineering
-:tags: graphite, hadoop, metrics
+:category: technology
 :slug: using-metricfactory-to-get-hadoop-metrics-into-graphite
 
 Without metrics we're flying blind and that's very much the case with
@@ -214,5 +213,5 @@ relatively easy.  If you require support you can submit a message to the
 .. _The UDSclient module: http://smetj.github.com/wishbone/docs/build/html/iomodules.html#wishbone.iomodules.udsclient.UDSClient
 .. _MetricFactory mailing list: https://groups.google.com/forum/?fromgroups#!forum/metricfactory
 
-.. |Screenshot from 2013-01-07 22:37:50| image:: pics/Screenshot-from-2013-01-07-223750-300x150.png
-   :target: pics/Screenshot-from-2013-01-07-223750.png
+.. |Screenshot from 2013-01-07 22:37:50| image:: images/Screenshot-from-2013-01-07-223750-300x150.png
+   :target: images/Screenshot-from-2013-01-07-223750.png

@@ -1,0 +1,153 @@
+body {
+    background-color: #fdf6e3;
+    font-family:Courier New,monospace;
+    font-size: 14px;
+    color: #073642;
+    max-width: 960px;
+    margin: 0 auto;
+    word-break: normal;
+}
+
+a:link {color:#d33682;text-decoration: underline}
+a:visited {color:#d33682;text-decoration: underline}
+a:active {color:#d33682;text-decoration: underline}
+a:hover {text-decoration: none; background-color:#d33682;color:#fdf6e3}
+
+h1 {
+    color: #073642;
+    text-decoration: none;
+}
+
+h2 {
+    color: #cb4b16;
+    text-decoration: none;
+}
+
+h3 {
+    color: #b58900;
+    text-decoration: none;
+}
+
+h4 {
+    color: #cb4b16;
+    text-decoration: none;
+}
+
+ol.blog {
+  list-style-type: none;
+  color:#999999;
+}
+ol.blog li:before {
+  content: '-';
+  position: absolute;
+  margin-left: -20px;
+}
+ol.blog li {
+  margin-top: 5px;
+}
+
+pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+p {
+  line-height: 1.5;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+
+code.highlight.text {
+  color:#fdf6e3;
+  background-color: #2aa198;
+  font-weight: bold;
+  border-radius:5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 1px;
+  padding-top: 0.7px;
+  box-shadow: none;
+}
+
+code {
+  color:#fdf6e3;
+  background-color: #d6b6b6;
+  font-weight: bold;
+  border-radius:5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0px;
+  padding-top: -0.1px;
+  box-shadow: none;
+}
+
+.admonition.note {
+  width:75%;
+  padding:10px;
+  position:relative;
+  left:25px;
+  border-radius:5px;
+  box-shadow:0 0 15px 5px #ccc;
+  background-color:#eee8d5;
+  border-left:5px solid #268bd2;
+}
+
+div.article-date {
+   text-align: right;
+}
+
+div.tags {
+  color:#839496;
+  display:inline;
+  font-weight: bold;
+}
+
+::selection {
+  color: #fdf6e3;
+  background: #b58900;
+}
+
+div.title   {
+  text-decoration: underline double #586e75;
+  text-underline-position: under;
+  text-decoration-thickness: 10%;
+}
+
+.tile-container{
+  position: relative;
+  margin: 5px 0px;
+  width:100%;
+  font-size:0; /* add */
+}
+
+.tile{
+  font-size:12px; /* or whatever you want */
+  width: 33%;
+  min-height:22px;
+  display: inline-block;
+  text-align: center;
+}
+
+.tile > a{
+  text-decoration: none;
+  background-color:#fdf6e3;
+  color:#586e75;
+  font-size: 16px;
+  font-weight: bold;
+}
+.tile > a:hover{
+  text-decoration: none;
+  background-color:#fdf6e3;
+  color:#586e75;
+  font-size: 16px;
+  font-weight: bold;
+}

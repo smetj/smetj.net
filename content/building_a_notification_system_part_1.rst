@@ -2,8 +2,7 @@ Building a notification system part 1: Base system
 ##################################################
 :date: 2018-04-02 12:00
 :author: smetj
-:category: automation
-:tags: wishbone, notifications
+:category: technology
 :slug: building_a_notification_system_part_1
 
 .. role:: text(code)
@@ -11,7 +10,7 @@ Building a notification system part 1: Base system
 
 |twitter_banner|
 
-..start_summary..
+
 
 I would like to have a notification system on my phone and laptop to receive
 messages from various service events in order to keep track of events which
@@ -20,10 +19,9 @@ require my attention.
 So why not use `Twitter`_ and `Wishbone`_ to create a Twitter bot which does
 exactly what I need?
 
-..end_summary..
 
 
-----
+
 
 Abstract
 --------
@@ -150,5 +148,5 @@ free to get in touch.
 .. _Wishbone: http://wishbone.readthedocs.io
 .. _install Wishbone: http://wishbone.readthedocs.io/en/master/installation/index.html
 .. _Travis CI: https://travis-ci.org
-.. |twitter_banner| image:: pics/notifications.png
-.. |twitter_tweet| image:: pics/notifications_tweet.png
+.. |twitter_banner| image:: images/notifications.png
+.. |twitter_tweet| image:: images/notifications_tweet.png

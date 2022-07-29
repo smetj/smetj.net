@@ -2,22 +2,20 @@ An introduction to the wishbone-input-httpserver module
 #######################################################
 :date: 2018-02-25 14:40
 :author: smetj
-:category: automation
-:tags: wishbone, http, webhooks, payload, events
+:category: technology
 :slug: an_introduction_to_the_wishbone-input-httpserver_module
 
 .. role:: text(code)
    :language: text
 
-..start_summary..
+
 
 In this article we will explore the current version of :text:`wishbone-input-httpserver`
 a *Wishbone* input module to receive events over http(s).
 
-..end_summary..
 
 
-----
+
 
 
 Introduction
@@ -299,13 +297,11 @@ authentication using a token or basic authentication.
 Once a user (for basic authentication) or a token is defined, the endpoints
 matching the regex require authentication.
 
-----
 
 **Obviously, when authentication comes in play (and even without), you should run**
 :text:`wishbone-input-httpserver` **with SSL certificates by setting the**
 :text:`ssl_key`, :text:`ssl_cert` **and** :text:`ssl_cacerts` **module parameters.**
 
-----
 
 Token based authentication
 ++++++++++++++++++++++++++

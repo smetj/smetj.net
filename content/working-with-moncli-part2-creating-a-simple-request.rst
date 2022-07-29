@@ -2,14 +2,14 @@ Working with Moncli part2: Creating a simple request
 ####################################################
 :date: 2012-03-11 22:12
 :author: smetj
-:category: Engineering
-:tags: moncli, monitoringlove
+:category: technology
 :slug: working-with-moncli-part2-creating-a-simple-request
+:tags:
 
-In our `previous post`_ we have covered how to create an example plugin
-which allows you to generate the size of directories as a metric.  A
-plugin on itself doesn't do that much at all.  When a plugin is executed
-it returns the values of that very moment.  Executing a plugin is done
+In our `previous post`_ we have covered how to create an example plugin
+which allows you to generate the size of directories as a metric. A
+plugin on itself doesn't do that much at all. When a plugin is executed
+it returns the values of that very moment. Executing a plugin is done
 by Moncli itself and we want to have control over that as much as
 possible.
 
@@ -18,12 +18,12 @@ moncli\_request
 
 `A request is a JSON document`_ which is submitted to the message broker
 on which the Moncli clients are listening for incoming requests.
- Creating and submitting a request could be done by hand, but that's not
-practical at all.  `Moncli\_request`_ is a simple request generator tool
+Creating and submitting a request could be doneby hand, but that's not
+practical at all. `Moncli\_request`_ is a simple request generator tool
 which generates and submits a valid JSON document to Moncli to work
-with.  Let's generate a request for our dir\_size plugin we created in
-the previous article.  Moncli\_request takes a base JSON document and
-completes it with the parameters you feed to it.  So let run through
+with. Let's generate a request for our dir\_size plugin we created in
+the previous article. Moncli\_request takes a base JSON document and
+completes it with the parameters you feed to it. So let run through
 the required steps:
 
 #. Install moncli\_request from git:
@@ -62,12 +62,12 @@ the required steps:
        }
 
    The name is the name of the plugin we created in the previous post
-   and stored in Moncli's local repository.  This actually corresponds
-   to the directory name containing the plugin.  The hash is the md5sum
-   of the plugin.  Parameters is a list of parameters we want to feed to
+   and stored in Moncli's local repository. This actually corresponds
+   to the directory name containing the plugin. The hash is the md5sum
+   of the plugin. Parameters is a list of parameters we want to feed to
    the script.
 
-#. Now execute moncli\_request without the --broker parameter.  This
+#. Now execute moncli\_request without the --broker parameter. This
    will print the request which you can submit to Moncli through the
    message broker on STDOUT:
 
@@ -94,7 +94,7 @@ the required steps:
 
 Keep in mind that the --broker parameter is the address/hostname of your
 broker and the --host is the hostname of the host on which Moncli is
-started.  Each started Moncli instance creates a queue in the broker
+started. Each started Moncli instance creates a queue in the broker
 with its hostname as the queue name.
 
 Report
@@ -168,12 +168,12 @@ Conclusion:
 ~~~~~~~~~~~
 
 We have seen how to create a plugin and how to generate a request for
-it.  We let Moncli execute the plugin by generating and submitting a
+it. We let Moncli execute the plugin by generating and submitting a
 request with moncli\_request and we have verified the incoming results.
- In this request we haven't done any evaluations which is something we
+In this request we haven't done any evaluations which is something we
 will cover in the next article in this series.
 
- 
+
 
 .. _previous post: http://smetj.net/2012/03/06/working-with-moncli-part1-creating-a-plugin/
 .. _A request is a JSON document: http://wiki.smetj.net/wiki/Moncli_documentation#Request

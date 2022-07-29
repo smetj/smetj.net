@@ -2,8 +2,7 @@ Hammer MQTT
 ###########
 :date: 2013-11-09 18:00
 :author: smetj
-:category: engineering
-:tags: wishbone, mqtt, amqp, rabbitmq, mosquitto, python
+:category: technology
 :slug: hammer-mqtt-amqp
 :status: draft
 
@@ -12,7 +11,7 @@ can use Wishbone to generate messages and submit them into a message broker
 such as RabbitMQ or Mosquitto and write the Wishbone performance metrics into
 Graphite.
 
-..end_summary..
+
 
 To install Wishbone and modules you can follow the instructions found in the
 project `documentation`_.
@@ -207,5 +206,5 @@ specific needs.
 
 .. _documentation: http://wishbone.readthedocs.org/en/latest/installation.html
 .. _Github: https://github.com/smetj/wishboneModules
-.. |diagram| image:: pics/anything-to-mqtt/diagram.png
-   :target: pics/anything-to-mqtt/diagram.png
+.. |diagram| image:: images/anything-to-mqtt/diagram.png
+   :target: images/anything-to-mqtt/diagram.png

@@ -2,14 +2,13 @@ Anything to MQTT
 ################
 :date: 2013-11-08 23:00
 :author: smetj
-:category: engineering
-:tags: wishbone, mqtt, python
+:category: technology
 :slug: anything-to-mqtt
 
 In this blog post I would like to demonstrate the how easy it is to setup a
 Wishbone server which allows you to send data from bash to a MQTT broker.
 
-..end_summary..
+
 
 To install Wishbone you can follow the instructions found in the project
 `documentation`_.
@@ -174,5 +173,5 @@ specific needs.
 
 .. _documentation: http://wishbone.readthedocs.org/en/latest/installation.html
 .. _Github: https://github.com/smetj/wishboneModules
-.. |diagram| image:: pics/anything-to-mqtt/diagram.png
-   :target: pics/anything-to-mqtt/diagram.png
+.. |diagram| image:: images/anything-to-mqtt/diagram.png
+   :target: images/anything-to-mqtt/diagram.png

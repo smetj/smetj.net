@@ -2,8 +2,7 @@ Moncli 0.2.4
 ############
 :date: 2012-03-05 18:28
 :author: smetj
-:category: development
-:tags: moncli
+:category: technology
 :slug: moncli-0-2-4
 
 A new version of Moncli is released:

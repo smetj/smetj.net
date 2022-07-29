@@ -3,16 +3,16 @@ Deploying AWS Lambdas with Terraform
 
 :date: 2021-01-03 15:00
 :author: smetj
-:category: devops
-:tags: aws, lambda, terraform
+:category: technology
 :slug: deploying_aws_lambdas_with_terraform
+:tags: devops,terraform
 
 .. role:: highlight(code)
    :language: text
 
 |picture|
 
-..start_summary..
+
 
 After reading the comments of this `Hackernews post`_ I noticed that a
 sentiment people seem to share is that Terraform isn't really suited to deploy
@@ -21,7 +21,7 @@ decide. Nevertheless I have been using a simple Terraform recipe which has
 proven to be quite useful to myself.  In this article I will explain the
 different parts involved.
 
-..end_summary..
+
 
 Lambda code repository
 ----------------------
@@ -83,7 +83,7 @@ to AWS Lambda.
 Cleanup the archive
 ===================
 
-.. code-block:: text
+.. code-block:: terraform
 
     resource "null_resource" "cleanup_lambda" {
       provisioner "local-exec" {
@@ -100,7 +100,7 @@ stack is destroyed.
 Deploying the lambda archive
 ============================
 
-.. code-block:: text
+.. code-block:: terraform
 
     resource "aws_lambda_function" "lambda" {
       filename      = ".tmp/lambda-${var.lambda_version}.zip"
@@ -143,4 +143,4 @@ comments or via Twitter (@smetj).
 
 .. _Hackernews post: https://news.ycombinator.com/item?id=25588898#25591164
 .. _AWS Lambdas: https://aws.amazon.com/lambda/
-.. |picture| image:: pics/deploying_aws_lambdas_with_terraform.png
+.. |picture| image:: images/deploying_aws_lambdas_with_terraform.png

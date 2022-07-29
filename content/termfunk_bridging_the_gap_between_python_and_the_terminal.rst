@@ -2,8 +2,7 @@ TermFunk: Bridging the gap between Python and the terminal
 ##########################################################
 :date: 2019-01-13 15:00
 :author: smetj
-:category: engineering
-:tags: python, termfunk, bash, terminal
+:category: technology
 :slug: termfunk_bridging_the_gap_between_python_and_the_terminal
 
 .. role:: highlight(code)
@@ -11,7 +10,7 @@ TermFunk: Bridging the gap between Python and the terminal
 
 |picture|
 
-..start_summary..
+
 
 If you have been a systems engineer or sysadmin for some time you have
 probably written and gathered a collection of `shell scripts`_ to solve your
@@ -27,7 +26,7 @@ their arguments using auto-completion.
 In this article we will create a CLI tool to validate JSON and YAML files
 using Python and TermFunk.
 
-..end_summary..
+
 
 Prerequisites
 -------------
@@ -126,4 +125,4 @@ get in touch.
 
 .. _TermFunk: https://github.com/smetj/TermFunk
 .. _shell scripts: https://en.wikipedia.org/wiki/Shell_script
-.. |picture| image:: pics/termfunk.png
+.. |picture| image:: images/termfunk.png

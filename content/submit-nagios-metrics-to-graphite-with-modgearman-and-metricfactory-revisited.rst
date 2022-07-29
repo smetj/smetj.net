@@ -2,8 +2,7 @@ Submit Nagios metrics to Graphite with ModGearman and MetricFactory revisited
 #############################################################################
 :date: 2013-11-07 23:00
 :author: smetj
-:category: engineering
-:tags: monitoringlove, graphite, metricfactory, metrics, nagios, mod_gearman
+:category: technology
 :slug: submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited
 
 When it comes down to monitoring Nagios is still the weapon of choice for
@@ -355,8 +354,8 @@ understanding of the whole process.
 .. _here: https://github.com/smetj/experiments/tree/master/metricfactory/modgearman2graphite
 .. _This article has been updated: https://github.com/smetj/smetj.net/commits/master/content/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory-revisited.rst
 
-.. |gearman_top| image:: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
-   :target: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
+.. |gearman_top| image:: ../images/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
+   :target: ../images/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/gearman_top.png
 
-.. |perfdata| image:: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata.png
-   :target: ../pics/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata.png
+.. |perfdata| image:: ../images/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata.png
+   :target: ../images/submit-nagios-metrics-to-graphite-with-modgearman-and-metricfactory/perfdata.png

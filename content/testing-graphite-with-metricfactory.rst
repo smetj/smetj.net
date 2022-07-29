@@ -2,15 +2,14 @@ Testing Graphite with MetricFactory
 ###################################
 :date: 2013-04-28 22:14
 :author: smetj
-:category: engineering
-:tags: monitoringlove, graphite, metricfactory, python
+:category: technology
 :slug: testing-graphite-with-metricfactory
 
 **This article is superseded**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Read `Testing Graphite with MetricFactory revisited <|filename|testing-graphite-with-metricfactory-revisited.rst>`_ instead.
 
-..end_summary..
+
 
 Graphite is great.  Not only because it's a great piece of software but
 also because of the community around it which brings forth all kinds of
@@ -352,6 +351,6 @@ throughput of your Graphite setup.
 .. _|graphite3|: http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite3/
 .. _The difference in Graphite throughput by changing the buffer events variable (line 34) from 100 to 1000.: http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite2/
 
-.. |graphite1| image:: pics/graphite1.png
-   :target: pics/graphite1.png
-.. |graphite3| image:: pics/graphite3.png
+.. |graphite1| image:: images/graphite1.png
+   :target: images/graphite1.png
+.. |graphite3| image:: images/graphite3.png

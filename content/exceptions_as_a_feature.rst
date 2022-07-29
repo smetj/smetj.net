@@ -2,11 +2,10 @@ Exceptions as a feature
 #######################
 :date: 2014-09-16 21:00
 :author: smetj
-:category: development
-:tags: python, wishbone
+:category: technology
 :slug: exceptions_as_a_feature
 
-..start_summary..
+
 
 `Wishbone`_ `modules`_ process and transport messages in one way or the other.
 Obviously, this needs to happen as reliable as possible.  `Wishbone`_ has a
@@ -14,7 +13,7 @@ particular way of dealing with `exceptions`_.  In this article we cover the
 role unhandled code `exceptions`_ can play and how we can take advantage of
 them by  just allowing them to happen.
 
-..end_summary..
+
 
 Failed and successful queues
 ----------------------------

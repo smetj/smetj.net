@@ -2,8 +2,7 @@ Testing Graphite with MetricFactory revisited
 #############################################
 :date: 2013-10-20 20:42
 :author: smetj
-:category: engineering
-:tags: monitoringlove, graphite, metricfactory, python
+:category: technology
 :slug: testing-graphite-with-metricfactory-revisited
 
 In this post we revisit a previously posted article on how we can test and
@@ -287,6 +286,6 @@ setup.
 .. _|graphite3|: http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite3/
 .. _The difference in Graphite throughput by changing the buffer events variable (line 34) from 100 to 1000.: http://smetj.net/2013/04/28/testing-graphite-with-metricfactory/graphite2/
 
-.. |graphite1| image:: pics/testing-graphite-with-metricfactory-revisited-001.png
-   :target: pics/testing-graphite-with-metricfactory-revisited-001.png
-.. |graphite3| image:: pics/scenario_3.png
+.. |graphite1| image:: images/testing-graphite-with-metricfactory-revisited-001.png
+   :target: images/testing-graphite-with-metricfactory-revisited-001.png
+.. |graphite3| image:: images/scenario_3.png

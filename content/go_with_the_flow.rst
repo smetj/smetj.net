@@ -2,19 +2,17 @@ Go with the flow: Wishbone flow modules
 #######################################
 :date: 2016-04-17 16:30
 :author: smetj
-:category: engineering
-:tags: wishbone, python, devops
+:category: technology
 :slug: go_with_the_flow
 
-..start_summary..
+
 
 `Wishbone`_ servers are all about event flow flexibility.  In this article we
 will cover the role of the different built-in *flow* modules and how to shape
 the flow of events along with some practical examples.
 
-..end_summary..
 
-----
+
 
 .. contents:: Table of Contents
    :depth: 2
@@ -54,7 +52,6 @@ servers in different availability zones:
 
 [gist:id=718879806ed24d1782c39e88b6d5e7b9,file=bootstrap.yaml]
 
-----
 
 Funnel
 ~~~~~~
@@ -71,7 +68,6 @@ Elasticsearch.
 
 [gist:id=d8f98e3dad07ca7ed4347cfa8360dfeb,file=bootstrap.yaml]
 
-----
 
 Fresh
 ~~~~~

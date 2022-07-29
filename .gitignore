@@ -37,3 +37,5 @@ nosetests.xml
 output/.*
 output/
 output
+
+styles

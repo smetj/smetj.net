@@ -2,8 +2,7 @@ Load balance and high availability patterns using Wishbone
 ##########################################################
 :date: 2013-11-02 22:48
 :author: smetj
-:category: engineering
-:tags: messaging, events, wishbone, python
+:category: technology
 :slug: loadbalance-and-ha-patterns-using-wishbone
 
 In this article I would like to explore the possibilities of creating a TCP
@@ -11,7 +10,7 @@ based event proxy which balances events to one or more TCP backends.  For this
 we will run through a couple of scenarios in which we highlight different
 approaches.
 
-..end_summary..
+
 
 Installation
 ~~~~~~~~~~~~
@@ -408,8 +407,8 @@ message flow.
 .. _roundrobin: https://wishbone.readthedocs.org/en/latest/modules.html#roundrobin
 .. _Wishbone output module patterns documentation: http://wishbone.readthedocs.org/en/latest/patterns.html#starting-state
 .. _documentation: http://wishbone.readthedocs.org/en/latest/patterns.html#handle-failed-and-successful-events
-.. |scenario_3| image:: pics/loadbalance-and-ha-patterns-using-wishbone/scenario_3_combo.png
+.. |scenario_3| image:: images/loadbalance-and-ha-patterns-using-wishbone/scenario_3_combo.png
    :align: top
-.. |scenario_1_graphite| image:: pics/loadbalance-and-ha-patterns-using-wishbone/scenario_1_graphite.png
+.. |scenario_1_graphite| image:: images/loadbalance-and-ha-patterns-using-wishbone/scenario_1_graphite.png
    :align: top
-.. |scenario_3_graphite| image:: pics/loadbalance-and-ha-patterns-using-wishbone/scenario_3_graphite.png
+.. |scenario_3_graphite| image:: images/loadbalance-and-ha-patterns-using-wishbone/scenario_3_graphite.png

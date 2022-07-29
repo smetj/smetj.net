@@ -2,11 +2,10 @@ Archiving Twitter likes
 #######################
 :date: 2016-08-21 15:42
 :author: smetj
-:category: automation
-:tags: wishbone, twitter, archive, likes
+:category: technology
 :slug: archiving_twitter_likes
 
-..start_summary..
+
 
 I use Twitter to keep track of the latest tech information by following a
 tailored list of hash tags and people.  When interesting information is
@@ -19,9 +18,8 @@ Therefor, to have a solution which suits my needs, I created a Wishbone server
 to collect and archive my Twitter *likes* into a simple *"grep-able"* text
 file.
 
-..end_summary..
 
-----
+
 
 The plan
 --------
@@ -94,7 +92,6 @@ The Twitter **input** module (*line 7)* needs the necessary authentication
 information you have to acquire by creating the OAuth access tokens on
 https://apps.twitter.com/.
 
-----
 
 filter_favs
 '''''''''''
@@ -107,7 +104,6 @@ been created by user "*smetj*".
 
 **Obviously you will have to alter the query to match your Twitter name.**
 
-----
 
 bookmark
 ''''''''
@@ -118,7 +114,6 @@ Twitter event.  Arguably this processing is perhaps not what you personally
 want.  Writing your own Wishbone processing module is `quite easy`_ if you
 want to do custom processing.
 
-----
 
 split_type, construct_bookmark, construct_text
 '''''''''''''''''''''''''''''''''''''''''''''''
@@ -128,7 +123,6 @@ types and routes the event to the *construct_bookmark* or *construct_text*
 respectively to construct the correct format (*line 50* and *line 58*) and set
 the filename to write the desired output to (*line 51* and *line 59*).
 
-----
 
 funnel, output
 ''''''''''''''

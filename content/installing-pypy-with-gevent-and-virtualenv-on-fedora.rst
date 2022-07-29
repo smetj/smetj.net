@@ -2,8 +2,7 @@ Installing PyPy with Gevent and virtualenv on Fedora
 ####################################################
 :date: 2013-06-05 01:26
 :author: smetj
-:category: development
-:tags: python, gevent, pypy
+:category: technology
 :slug: installing-pypy-with-gevent-and-virtualenv-on-fedora
 
 PyPy has been on my radar for a while but I have never really brought
