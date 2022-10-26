@@ -7,7 +7,7 @@ status: hidden
 
 ## Current position
 
-- Senior SRE engineer at [TomTom](https://www.tomtom.com)
+- Expert SRE engineer at [TomTom](https://www.tomtom.com)
 
 ## Technology interests
 
