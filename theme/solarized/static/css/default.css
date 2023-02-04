@@ -1,12 +1,26 @@
 body {
     background-color: #fdf6e3;
     font-family:Courier New,monospace;
-    font-size: 14px;
+    font-size: 95%;
     color: #073642;
+    word-break: normal;
     max-width: 960px;
     margin: 0 auto;
-    word-break: normal;
+    padding: 0;
 }
+
+html {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+@media (min-width: 10px) {
+    body { font-size: 50%; }
+}
+@media (min-width: 750px) {
+    body { font-size: 95%; }
+}
+
 
 a:link {color:#d33682;text-decoration: underline}
 a:visited {color:#d33682;text-decoration: underline}
@@ -57,6 +71,9 @@ pre {
 
 p {
   line-height: 1.5;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
 }
 
 img {
@@ -65,40 +82,47 @@ img {
   object-fit: contain;
 }
 
-
-code.highlight.text {
-  color:#fdf6e3;
-  background-color: #2aa198;
-  font-weight: bold;
-  border-radius:5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 1px;
-  padding-top: 0.7px;
-  box-shadow: none;
+code {
+    margin: 0 -0.4em;
+    padding: 0.1em 0.4em;
+    border-radius: 0.8em 0.3em;
+    background: transparent;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 225, 0, 0.1),
+      rgba(255, 225, 0, 0.7) 4%,
+      rgba(255, 225, 0, 0.3)
+    );
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    font-size: 1.1em;
 }
 
-code {
-  color:#fdf6e3;
-  background-color: #d6b6b6;
-  font-weight: bold;
-  border-radius:5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 0px;
-  padding-top: -0.1px;
-  box-shadow: none;
+pre > code {
+    font-size: 110%;
+    margin: inherit;
+    padding: inherit;
+    border-radius: inherit;
+    background-image: inherit;
+    -webkit-box-decoration-break: inherit;
+    box-decoration-break: inherit;
+}
+
+div.highlight {
+  background-color: #eee8d5;
+  padding: 5px;
 }
 
 .admonition.note {
-  width:75%;
-  padding:10px;
+  width:100%;
+  padding:5px;
   position:relative;
-  left:25px;
   border-radius:5px;
-  box-shadow:0 0 15px 5px #ccc;
+  box-shadow:0 0 10px 5px #ccc;
   background-color:#eee8d5;
   border-left:5px solid #268bd2;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 div.article-date {
