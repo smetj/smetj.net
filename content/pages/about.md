@@ -16,9 +16,11 @@ In no particular order:
 - Linux
 - Python
 - Observability/Monitoring
-- Automation
-- DevOps
 - SRE topics
+- Process automation
+- Build automation tooling/API's
+- Incident management process
+- DevOps
 - Terraform
 - AWS/Azure
 
