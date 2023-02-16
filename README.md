@@ -1,1 +1,1 @@
-http://smetj.net
+https://smetj.net

@@ -1,12 +1,11 @@
-Title: Understanding your metrics with Xpectd.
-Date: 2023-01-10 20:00
+Title: Exploring Prometheus metrics using Xpectd.
+Date: 2023-02-07 21:00
 Author: smetj
-Category: observability
-Tags: xpectd, prometheus, traefik, metrics, observability
-Slug: understanding_your_metrics_with_xpectd
-Status: hidden
+Category: technology
+Tags: observability
+Slug: exploring_prometheus_metrics_using_xpectd
 
-![](images/understanding-metrics-with-xpectd.png)
+![](images/exploring-prometheus-metrics-using-xpectd-1.png)
 
 When exploring and experimenting with Prometheus its often hard to tell with
 certainty whether the outcomes of your queries are actually correct. Probably
@@ -56,8 +55,8 @@ scenarios:
           max_time: 3
 
 ```
-Once deployed, the `/hello_world` endpoint will always respond with a *200*
-between *0* and *0.5* seconds (plus some overhead).
+Once deployed, the `/hello_world` endpoint will always respond with a **200**
+between **0** and **0.5** seconds (plus some overhead).
 
 Any web client such as Curl, Wget, Ab, Jmeter, etc can be used to generate requests
 to  Xpectd in a similar fashion:
@@ -82,7 +81,7 @@ histogram_quantile(0.50, sum(rate(traefik_service_request_duration_seconds_bucke
 ```
 This results into the following graph:
 
-[![](images/validating-metrics-1.png)](images/validating-metrics-1.png)
+[![](images/exploring-prometheus-metrics-using-xpectd-2.png)](images/validating-metrics-1.png)
 
 !!! note "(☞ﾟ∀ﾟ)☞"
     As expected, the results float a little over **0.25** given **min_time** is
@@ -98,7 +97,7 @@ histogram_quantile(0.99, sum(rate(traefik_service_request_duration_seconds_bucke
 ```
 This results into the following graph:
 
-[![](images/validating-metrics-2.png)](images/validating-metrics-2.png)
+[![](images/exploring-prometheus-metrics-using-xpectd-3.png)](images/validating-metrics-2.png)
 
 !!! note "ಠ_ಠ"
     This graph indicates that **99%** of all requests are below **1.17**.
@@ -142,9 +141,9 @@ histogram_quantile(1, sum(rate(traefik_service_request_duration_seconds_bucket{s
 ## Final words
 
 When using Prometheus histograms it's important to realize that the choice of
-bucket distribution can influence the *resolution* of your measurements
-leading to unexpected results. In the case of Traefik it might be useful to at
-least review the defaults and possibly override these with more granular
+bucket distribution influences the *granularity* of your measurements which
+might lead to unexpected results. In the case of Traefik it might be useful to
+at least review the defaults and possibly override these with more granular
 buckets.
 
 If you have any questions or remarks you can reach out to

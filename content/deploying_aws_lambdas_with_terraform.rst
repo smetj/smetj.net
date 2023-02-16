@@ -5,7 +5,7 @@ Deploying AWS Lambdas with Terraform
 :author: smetj
 :category: technology
 :slug: deploying_aws_lambdas_with_terraform
-:tags: devops,terraform
+:tags: devops
 
 .. role:: highlight(code)
    :language: text
