@@ -15,17 +15,34 @@ html {
 }
 
 @media (min-width: 10px) {
-    body { font-size: 50%; }
+    body { font-size: 65%; }
 }
 @media (min-width: 750px) {
     body { font-size: 95%; }
 }
 
 
-a:link {color:#d33682;text-decoration: underline}
-a:visited {color:#d33682;text-decoration: underline}
-a:active {color:#d33682;text-decoration: underline}
-a:hover {text-decoration: none; background-color:#d33682;color:#fdf6e3}
+a:link {
+  color:#268bd2;
+  text-decoration: underline;
+  font-weight: bold;
+}
+a:visited {
+  color:#268bd2;
+  text-decoration: underline;
+  font-weight: bold;
+}
+a:active {
+  color:#268bd2;
+  text-decoration: underline;
+  font-weight: bold;
+}
+a:hover {
+  text-decoration: none;
+  background-color:#268bd2;
+  color:#fdf6e3;
+  font-weight: bold;
+}
 
 h1 {
     color: #073642;
@@ -53,7 +70,7 @@ h4 {
 
 ol.blog {
   list-style-type: none;
-  color:#999999;
+  color:#657b83;
 }
 ol.blog li:before {
   content: '-';
