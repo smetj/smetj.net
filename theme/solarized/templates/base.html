@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock html_lang %}">
 <head>
-        <link href="{{ SITEURL }}/theme/css/default.css?version=1" rel="stylesheet">
-        <link href="{{ SITEURL }}/theme/css/pygment.css?version=1" rel="stylesheet">
+        <link href="{{ SITEURL }}/theme/css/default.css?version=2" rel="stylesheet">
+        <link href="{{ SITEURL }}/theme/css/pygment.css?version=2" rel="stylesheet">
         {% block head %}
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
         <meta charset="utf-8" />
@@ -33,17 +33,16 @@
         <link href="{{ FEED_DOMAIN }}/{% if TAG_FEED_RSS_URL %}{{ TAG_FEED_RSS_URL.format(slug=tag.slug) }}{% else %}{{ TAG_FEED_RSS.format(slug=tag.slug) }}{% endif %}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
         {% endif %}
         {% endblock head %}
+        <script type="text/javascript">
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "fy52k26lwt");
+        </script>
 </head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4TDM3NSF7R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-4TDM3NSF7R');
-</script>
 
 <body id="index" class="home">
   <div class="total">
