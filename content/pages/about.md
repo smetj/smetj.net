@@ -9,6 +9,13 @@ status: hidden
 
 - Expert SRE engineer at [TomTom](https://www.tomtom.com)
 
+## Mantra
+
+- Challenge the status quo.
+- Predictability enables automation
+- Separation of concerns above all else
+- A minimum of user input for a maximum of automation
+
 ## Technology interests
 
 In no particular order:
