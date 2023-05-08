@@ -2,7 +2,7 @@ Title: Productivity Hacks - Search results
 Date: 2023-02-19 15:00
 Modified: 2023-02-19 15:00
 category: productivity
-Tags: firefox
+Tags: productivity
 Slug: productivity-hacks-search-results
 Authors: Jelle Smet
 Summary: Short articles to describe productivity hacks I

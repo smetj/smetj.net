@@ -2,7 +2,7 @@ Title: Exploring Prometheus metrics using Xpectd.
 Date: 2023-02-07 21:00
 Author: smetj
 Category: technology
-Tags: observability
+Tags: observability, sre, xpectd
 Slug: exploring_prometheus_metrics_using_xpectd
 
 ![](images/exploring-prometheus-metrics-using-xpectd-1.png)

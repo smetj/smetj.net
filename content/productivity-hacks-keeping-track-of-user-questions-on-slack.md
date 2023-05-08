@@ -2,7 +2,7 @@ Title: Productivity hacks - Keeping track of user questions on Slack
 Date: 2023-03-01 17:00
 Modified: 2023-03-01 17:00
 category: productivity
-Tags: slack
+Tags: productivity
 Slug: keeping-track-of-user-questions-on-slack
 Authors: Jelle Smet
 Summary: Keeping track of user questions on Slack
