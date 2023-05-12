@@ -24,28 +24,27 @@ html {
 
 a:link {
   color:#268bd2;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
 }
 a:visited {
   color:#268bd2;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
 }
 a:active {
   color:#268bd2;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
 }
 a:hover {
   text-decoration: none;
-  background-color:#268bd2;
-  color:#fdf6e3;
+  color:#268bd2;
   font-weight: bold;
 }
 
 h1 {
-    color: #073642;
+    color: #cb4b16;
     text-decoration: none;
     margin-top: 50px;
 }
@@ -57,7 +56,7 @@ h2 {
 }
 
 h3 {
-    color: #b58900;
+    color: #cb4b16;
     text-decoration: none;
     margin-top: 30px;
 }
@@ -106,27 +105,20 @@ img {
 code {
     margin: 0 -0.4em;
     padding: 0.1em 0.4em;
-    border-radius: 0.8em 0.3em;
-    background: transparent;
-    background-image: linear-gradient(
-      to right,
-      rgba(255, 225, 0, 0.1),
-      rgba(255, 225, 0, 0.7) 4%,
-      rgba(255, 225, 0, 0.3)
-    );
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
     font-size: 1.1em;
+    font-weight: bold;
+    border-radius:5px;
+    background-color: #dcdcdc;
 }
 
 pre > code {
-    font-size: 110%;
-    margin: inherit;
-    padding: inherit;
-    border-radius: inherit;
-    background-image: inherit;
-    -webkit-box-decoration-break: inherit;
-    box-decoration-break: inherit;
+    margin: initial;
+    padding: initial;
+    font-size: 1.25em;
+    font-weight: 550;
+    line-height: initial;
+    background-color: initial;
+    font-family:monospace;
 }
 
 div.highlight {
@@ -157,11 +149,11 @@ div.tags {
 }
 
 ::selection {
-  color: #fdf6e3;
-  background: #b58900;
+  background: #ffbdbd;
 }
 
-div.title   {
+div.title h1  {
+  color:#000000;
   text-decoration: underline double #586e75;
   text-underline-position: under;
   text-decoration-thickness: 10%;

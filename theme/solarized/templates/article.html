@@ -37,8 +37,9 @@
 
     {% if article.tags | length > 0 %}
       <div class="tags">Tags:</div>
+      {% set comma = joiner("| ") %}
       {% for tag in article.tags %}
-            <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+            {{ comma() }}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
       {% endfor %}
     {% endif %}
   </header>
