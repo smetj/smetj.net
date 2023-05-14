@@ -273,7 +273,7 @@ if __name__ == "__main__":
 2023-05-07 12:24:08,761 - INFO - my_infra::MyCompanyServiceSocialMedia(twitter-api)::test_host_up - OK
 ```
 
-# Conclusion
+# Final Notes
 
 During incidents people run diagnostic tests for various reasons. Instead of
 doing this ad-hoc and manually, the article explores the possibility to use
