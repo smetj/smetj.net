@@ -197,11 +197,12 @@ during incident. By encapsulating past incident experience in a programmatic
 way, we can build up a library of checks which validate the usual suspects
 which could cause or already have caused an outage.
 
-The names of diagnostic checks could become quite cryptic or need again domain
-specific knowledge to understand their meaning and what they represent. In
-this article we have covered how *Diagnostics-TK* uses docstrings and how we
-can use those to our advantage by presenting a validation as a **question and
-answer** for everyone to understand involved during or after the incident.
+The names of diagnostic checks could become quite cryptic and therefore are in
+need again for domain specific knowledge to understand their meaning and what
+they represent. In this article we have covered how *Diagnostics-TK* uses
+docstrings and how we can use those to our advantage by presenting a
+validation as a **question and answer** for everyone to understand involved
+during and after the incident.
 
 Keep in mind that the above examples, although useful, are simple in nature
 and are already easy to understand for for many familiar with the topic. The
