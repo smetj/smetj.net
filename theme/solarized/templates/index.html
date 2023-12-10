@@ -15,9 +15,10 @@ Automation ≠ Rube Goldberg machines
 Why?
 </center>
 </br>
-<div class="tags">Tags:</div>
-{% for tag, articles in tags|sort %}
-    <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a> ({{ articles|count }})
+
+<div class="tags">Categories:</div>
+{% for category, articles in categories|sort %}
+    <a href="{{ SITEURL }}/{{ category.url }}">{{ category }}</a> ({{ articles|count }})
 {% endfor %}
 
 <ol id="post-list" class="blog">
