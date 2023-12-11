@@ -5,7 +5,8 @@ category: technology
 Tags: pelican, publishing
 Slug: story-of-lorum-ipsum
 Authors: Jelle Smet
-Summary: Just a blah blah blah
+description: A little bit of lorum ipsum
+image: images/a-trekkers-best-friends-1.png 
 status: hidden
 
 ## chapter 1
@@ -18,7 +19,7 @@ varius sit. Cras adipiscing enim eu turpis egestas pretium aenean pharetra
 magna. Sociis natoque penatibus et magnis dis parturient montes. Facilisi
 etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Odio ut sem
 nulla pharetra diam sit. Id nibh tortor id aliquet lectus proin nibh. Facilisi
-etiam `dignissim` diam quis.
+etiam `dignissim` diam quis.[^1]
 
 ### chapter 1.1
 varius sit. Cras adipiscing enim eu turpis egestas pretium aenean pharetra
@@ -94,3 +95,7 @@ asf
 asf
 as
 ```
+
+# Footnotes
+
+[^1]: Pulvinar elementum integer enim neque volutpat ac tincidunt.
