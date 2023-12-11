@@ -5,16 +5,23 @@ status: hidden
 
 # Jelle Smet
 
+Email           : web |at| smetj |dot| net
+
+Twitter         : [@smetj](https://twitter.com/smetj)
+
+Linkedin        : [Jelle Smet](https://www.linkedin.com/in/jelle-smet-594a907b/)
+
 ## Current position
 
 - Expert SRE engineer at [TomTom](https://www.tomtom.com)
 
-## Mantra
+## Words to live by
 
 - Challenge the status quo.
 - Predictability enables automation
 - Separation of concerns above all else
 - A minimum of user input for a maximum of automation
+- Not all those who wander are lost
 
 ## Technology interests
 
@@ -31,10 +38,6 @@ In no particular order:
 - Terraform
 - AWS/Azure
 
-## Contact
+## Other interests
 
-Email           : web |at| smetj |dot| net
-
-Twitter         : [@smetj](https://twitter.com/smetj)
-
-Linkedin        : [Jelle Smet](https://www.linkedin.com/in/jelle-smet-594a907b/)
+- Hiking
