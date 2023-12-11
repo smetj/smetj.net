@@ -5,10 +5,8 @@ category: hiking
 Tags: gear
 Slug: a-trekkers-best-friends
 Authors: Jelle Smet
-Summary: A good pair of hiking boots are a trekker's best friends
-
-![](images/a-trekkers-best-friends-1.png)
-
+description: About choosing a new pair of hiking boots.
+image: images/a-trekkers-best-friends-1.png 
 
 ## Old friends
 
