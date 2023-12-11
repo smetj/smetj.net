@@ -11,13 +11,36 @@
     {{ translations.entry_hreflang(article) }}
   {% endif %}
 
-  {% if article.description %}
+  {% if article.description -%}
     <meta name="description" content="{{article.description}}" />
-  {% endif %}
+  {%- endif %}
 
-  {% for tag in article.tags %}
+  {% for tag in article.tags -%}
     <meta name="tags" content="{{tag}}" />
-  {% endfor %}
+  {%- endfor %}
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:domain" content="smetj.net" />
+
+  {% if article.title -%}
+    <meta property='og:title' content="{{ article.title }}"/>
+    <meta name="twitter:title" content="{{ article.title }}"/>
+  {%- endif %}
+
+  {% if article.image -%}
+    <meta property='og:image' content='{{ SITEURL }}/{{ article.image }}'/>
+    <meta name='twitter:image' content='{{ SITEURL }}/{{ article.image }}'/>
+  {%- endif %}
+
+  {% if article.description -%}
+    <meta property='og:description' content="{{ article.description }}"/>
+    <meta name='twitter:description' content="{{ article.description }}"/>
+  {%- endif %}
+
+  {% if article.url -%}
+    <meta property='og:url' content='{{ SITEURL }}/{{ article.slug }}.html'/>
+    <meta name='twitter:url' content='{{ SITEURL }}/{{ article.slug }}.html'/>
+  {%- endif %}
 
 {% endblock %}
 
@@ -45,6 +68,9 @@
 
   </header>
   <div class="entry-content">
+    {% if article.image %}
+    <p><img src="{{ article.image }}"></p>
+    {% endif %}
     {{ article.content }}
   </div>
 </section>

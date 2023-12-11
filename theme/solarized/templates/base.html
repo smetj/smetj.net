@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-        </br>
+        <br/>
         <hr>
         {% if DISPLAY_PAGES_ON_MENU %}
           {% for p in pages %}
@@ -67,7 +67,6 @@
             <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
           {% endfor %}
         {% endif %}
-        </ul></nav><!-- /#menu -->
         {% block content %}
         {% endblock %}
 </br></br></br>
