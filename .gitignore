@@ -34,8 +34,6 @@ nosetests.xml
 .project
 .pydevproject
 
-output/.*
-output/
-output
+output2
 
 publish.sh

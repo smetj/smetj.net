@@ -1,22 +1,22 @@
 name: Validate
 
 on:
-  # pull_request:
-  #   branches:
-  #     - master
-  # push:
-  #   branches:
-  #     - master
+  push:
+    branches:
+      - master
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         with:
@@ -25,41 +25,23 @@ jobs:
       - name: 'Install deps'
         run: |
           pip install \
-          pelican==4.7.2 \
+          pelican==4.9.1 \
           pelican-gist==0.3.4 \
           pelican-simple-footnotes==1.0.2 \
-          Pygments==2.12.0
+          Pygments==2.16.1
 
-      - name: 'Validate Pelican build'
+      - name: 'Generate site'
         run: |
-          pelican content --fatal errors
+          pelican
 
-      - name: Get changed files
-        if: github.event_name == 'pull_request'
-        id: changed-files
-        uses: tj-actions/changed-files@v24.1
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          use_fork_point: true
-          files: |
-            **/*.md
+          path: output
 
-      - name: Echo changed files
-        run: |
-          echo ${{steps.changed-files.outputs.all_changed_and_modified_files}}
-
-      - name: 'Install Vale'
-        if: steps.changed-files.outputs.all_changed_and_modified_files != '' && github.event_name == 'pull_request'
-        run: |
-          wget https://github.com/errata-ai/vale/releases/download/v2.20.1/vale_2.20.1_Linux_64-bit.tar.gz -O - |tar -xz
-
-      - name: 'Validate with Vale'
-        if: steps.changed-files.outputs.all_changed_and_modified_files != '' && github.event_name == 'pull_request'
-        run: |
-          ./vale ${{steps.changed-files.outputs.all_changed_files}}
-
-      - name: Deploy to smetj.net
-        if: github.event_name == 'push'
-        run: |
-          echo ${{ secrets.SSH_KEY }} > /tmp/id_rsa
-          chmod 600 /tmp/id_rsa
-          rsync --rsh='ssh -i /tmp/id_rsa -p 33221' -r output/* publish@smetj.net:~/smetj.net
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
