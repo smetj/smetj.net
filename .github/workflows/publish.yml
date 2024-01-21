@@ -28,11 +28,12 @@ jobs:
           pelican==4.9.1 \
           pelican-gist==0.3.4 \
           pelican-simple-footnotes==1.0.2 \
-          Pygments==2.16.1
+          Pygments==2.16.1 \
+          Markdown==3.3.7
 
       - name: 'Generate site'
         run: |
-          pelican
+          pelican --relative-urls
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
