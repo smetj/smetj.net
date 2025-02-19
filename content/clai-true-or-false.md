@@ -28,12 +28,6 @@ You can only answer using one of 3 values: true, false, or inconclusive. True to
 The results were inconsistent, with no clear way to understand why, as it only
 responded with true, false, or inconclusive.
 
-!!! note "¬‿¬"  
-    An initial realization was that, despite aligning various model parameters,
-    I could not achieve the same results through the API as compared to the UI.
-    I'm not entirely sure why, but prompts through the UI were significantly
-    more accurate than those done through the API.
-
 One example I couldn't get to work was:
 
 ```bash
@@ -42,6 +36,12 @@ inconclusive
 ```
 
 Even clearly flawed examples were stubbornly answered with `inconclusive`, while the same prompt done over the UI was consistently correct.
+
+!!! note "¬‿¬"  
+    An initial realization was that, despite aligning various model parameters,
+    I could not achieve the same results through the API as compared to the UI.
+    I'm not entirely sure why, but prompts through the UI were significantly
+    more accurate than those done through the API.
 
 ## Revisiting the Approach
 
