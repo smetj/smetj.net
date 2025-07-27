@@ -137,32 +137,32 @@ div.highlight {
 }
 
 .admonition.attention {
-  background-color: #ffeb3b;
+  background-color: #eee8d5;
   border-left: 5px solid #fbc02d;
 }
 
 .admonition.caution {
-  background-color: #ff9800;
+  background-color: #eee8d5;
   border-left: 5px solid #f57c00;
 }
 
 .admonition.danger {
-  background-color: #f44336;
+  background-color: #eee8d5;
   border-left: 5px solid #d32f2f;
 }
 
 .admonition.error {
-  background-color: #e57373;
+  background-color: #eee8d5;
   border-left: 5px solid #d32f2f;
 }
 
 .admonition.hint {
-  background-color: #8bc34a;
+  background-color: #eee8d5;
   border-left: 5px solid #689f38;
 }
 
 .admonition.important {
-  background-color: #ff5722;
+  background-color: #eee8d5;
   border-left: 5px solid #e64a19;
 }
 
@@ -172,12 +172,12 @@ div.highlight {
 }
 
 .admonition.tip {
-  background-color: #4caf50;
+  background-color: #eee8d5;
   border-left: 5px solid #388e3c;
 }
 
 .admonition.warning {
-  background-color: #ffeb3b;
+  background-color: #eee8d5;
   border-left: 5px solid #fbc02d;
 }
 
