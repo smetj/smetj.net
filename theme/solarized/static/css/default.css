@@ -126,16 +126,59 @@ div.highlight {
   padding: 5px;
 }
 
-.admonition.note {
-  width:98%;
-  padding:5px;
-  position:relative;
-  border-radius:5px;
-  box-shadow:0 0 10px 5px #ccc;
-  background-color:#eee8d5;
-  border-left:5px solid #2aa198;
+.admonition {
+  width: 98%;
+  padding: 5px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 5px #ccc;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.admonition.attention {
+  background-color: #ffeb3b;
+  border-left: 5px solid #fbc02d;
+}
+
+.admonition.caution {
+  background-color: #ff9800;
+  border-left: 5px solid #f57c00;
+}
+
+.admonition.danger {
+  background-color: #f44336;
+  border-left: 5px solid #d32f2f;
+}
+
+.admonition.error {
+  background-color: #e57373;
+  border-left: 5px solid #d32f2f;
+}
+
+.admonition.hint {
+  background-color: #8bc34a;
+  border-left: 5px solid #689f38;
+}
+
+.admonition.important {
+  background-color: #ff5722;
+  border-left: 5px solid #e64a19;
+}
+
+.admonition.note {
+  background-color: #eee8d5;
+  border-left: 5px solid #2aa198;
+}
+
+.admonition.tip {
+  background-color: #4caf50;
+  border-left: 5px solid #388e3c;
+}
+
+.admonition.warning {
+  background-color: #ffeb3b;
+  border-left: 5px solid #fbc02d;
 }
 
 div.article-date {
