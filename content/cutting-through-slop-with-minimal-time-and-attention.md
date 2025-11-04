@@ -2,7 +2,7 @@ Title: Cutting through slop with minimal time and attention
 Date: 2025-10-30 20:00
 Modified: 2025-10-30 20:00
 category: productivity
-Tags: clai, youtube, AI
+Tags: clai, youtube, ai, llm
 Slug: cutting-through-slop-with-minimal-time-and-attention
 Authors: Jelle Smet
 image: images/cutting-through-slop-with-minimal-time-and-attention.png

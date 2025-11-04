@@ -1,7 +1,7 @@
 Title: Clai - True or False
 Date: 2025-02-18 21:00  
 Modified: 2025-02-18 21:00  
-Category: Technology  
+Category: technology
 Tags: cli, llm, ai
 Slug: clai-true-or-false
 Authors: Jelle Smet  
