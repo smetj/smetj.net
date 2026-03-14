@@ -197,6 +197,7 @@ div.tags {
 
 div.title h1  {
   color:#000000;
+  line-height: 1.2;
   text-decoration: underline double #586e75;
   text-underline-position: under;
   text-decoration-thickness: 10%;
