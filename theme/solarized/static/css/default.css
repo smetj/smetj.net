@@ -197,10 +197,11 @@ div.tags {
 
 div.title h1  {
   color:#000000;
-  line-height: 1.2;
+  line-height: 1.45;
   text-decoration: underline double #586e75;
   text-underline-position: under;
-  text-decoration-thickness: 10%;
+  text-underline-offset: 0.0em;
+  text-decoration-thickness: 8%;
 }
 
 .tile-container{
